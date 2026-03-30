@@ -562,7 +562,7 @@ Responda APENAS com o JSON, sem texto adicional, sem markdown, sem backticks.`;
           </div>
           <div className="header-status">
             <div className="dot" />
-            CLAUDE API · ONLINE
+            CLAUDE API · ATIVA
           </div>
         </header>
 
@@ -1246,11 +1246,11 @@ Responda APENAS com o JSON, sem texto adicional, sem markdown, sem backticks.`;
                           lineHeight: 1.7,
                         }}
                       >
-                        <div style={{ color: "var(--text-dim)" }}>// N8N → HTTP Request Node</div>
+                        <div style={{ color: "var(--text-dim)" }}>// N8N → Nó de Requisição HTTP</div>
                         <div>POST api.anthropic.com/v1/messages</div>
-                        <div style={{ color: "var(--text-dim)" }}>// Headers:</div>
+                        <div style={{ color: "var(--text-dim)" }}>// Cabeçalhos:</div>
                         <div>x-api-key: {"{{$env.ANTHROPIC_KEY}}"}</div>
-                        <div style={{ color: "var(--text-dim)" }}>// Body: prospect data → profile + message</div>
+                        <div style={{ color: "var(--text-dim)" }}>// Corpo: dados do prospect → perfil + mensagem</div>
                       </div>
                       <div style={{ marginTop: 14, fontSize: 11, color: "var(--text-dim)", lineHeight: 1.7 }}>
                         Resultado: N8N chama Claude, Claude devolve JSON estruturado com perfil + mensagem, N8N envia para Chatwoot e notifica seu Telegram. Sistema completo.
