@@ -3,6 +3,13 @@ import os
 
 import anthropic
 from dotenv import load_dotenv
+
+# Carrega credenciais: primeiro tenta secrets/, depois .env local
+_secrets_dir = os.path.join(os.path.dirname(__file__), "..", "secrets")
+load_dotenv(os.path.join(_secrets_dir, "telegram.env"))
+load_dotenv(os.path.join(_secrets_dir, "anthropic.env"))
+# Fallback: .env local na pasta telegram_bot/
+load_dotenv()
 from telegram import Update
 from telegram.constants import ParseMode
 from telegram.ext import (
