@@ -247,9 +247,10 @@
     },
     {
       "parameters": {
-        "resource": "message",
-        "operation": "create",
+        "resource": "conversation",
+        "operation": "sendMessage",
         "accountId": {"__rl": true, "value": "1", "mode": "list", "cachedResultName": "#1 - Chatwoot Lotus Projeto"},
+        "inboxId": {"__rl": true, "value": "1", "mode": "list", "cachedResultName": "#1 - Alexandre"},
         "conversationId": {"__rl": true, "value": "={{ $json.conversationId }}", "mode": "id"},
         "content": "={{ $json.textResponse }}"
       },
