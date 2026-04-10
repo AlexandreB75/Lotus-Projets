@@ -1,154 +1,280 @@
 {
+  "name": "Lótus Business - Atendimento Inteligente v2",
   "nodes": [
     {
       "parameters": {
-        "accountId": {
-          "__rl": true,
-          "value": "1",
-          "mode": "list",
-          "cachedResultName": "#1 - Chatwoot Lotus Projeto"
-        },
+        "accountId": {"__rl": true, "value": "1", "mode": "list", "cachedResultName": "#1 - Chatwoot Lotus Projeto"},
         "events": ["message_incoming"],
-        "inboxId": {
-          "__rl": true,
-          "value": "1",
-          "mode": "list",
-          "cachedResultName": "#1 - Alexandre"
-        }
+        "inboxId": {"__rl": true, "value": "1", "mode": "list", "cachedResultName": "#1 - Alexandre"}
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwootTrigger",
       "typeVersion": 1,
-      "position": [-80, 0],
-      "id": "4821e511-82e3-48f4-8ce6-18d6c094e525",
+      "position": [0, 300],
+      "id": "a1000001-0001-0001-0001-000000000001",
       "name": "Chatwoot Trigger",
       "webhookId": "178007c6-642f-41ce-85e1-fe9e2a191a2b",
       "credentials": {
-        "fazerAiChatwootApi": {
-          "id": "KwRUoHTBmlc9WdaS",
-          "name": "Chatwoot fazer.ai account"
-        }
+        "fazerAiChatwootApi": {"id": "KwRUoHTBmlc9WdaS", "name": "Chatwoot fazer.ai account"}
       }
     },
     {
       "parameters": {
         "conditions": {
-          "string": [
+          "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+          "conditions": [
             {
-              "value1": "={{ $json.message_type }}",
-              "value2": "incoming"
+              "id": "cond-incoming",
+              "leftValue": "={{ $json.message_type }}",
+              "rightValue": "incoming",
+              "operator": {"type": "string", "operation": "equals"}
             }
-          ]
-        }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
       },
       "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [200, 0],
-      "id": "7ab151be-755e-4476-84a5-acf2cd386cd9",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "id": "a1000002-0001-0001-0001-000000000002",
       "name": "Apenas Mensagens Recebidas"
     },
     {
       "parameters": {
+        "conditions": {
+          "options": {"caseSensitive": false, "leftValue": "", "typeValidation": "strict"},
+          "conditions": [
+            {
+              "id": "cond-not-personal",
+              "leftValue": "={{ !['pessoal','interno','equipe','parceiro'].some(l => ($json.conversation.labels || []).includes(l)) }}",
+              "rightValue": true,
+              "operator": {"type": "boolean", "operation": "equals"}
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [480, 300],
+      "id": "a1000025-0001-0001-0001-000000000025",
+      "name": "Filtrar Contatos Pessoais"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "={{ `INSERT INTO n8n_fila_mensagens (conversation_id, message_id, received_at) VALUES ('${$('Chatwoot Trigger').first().json.conversation.id}', '${$('Chatwoot Trigger').first().json.id}', NOW()) ON CONFLICT DO NOTHING` }}"
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [720, 300],
+      "id": "a1000003-0001-0001-0001-000000000003",
+      "name": "Inserir na Fila",
+      "credentials": {
+        "postgres": {"id": "POSTGRES_CRED_ID", "name": "Postgres Coolify"}
+      }
+    },
+    {
+      "parameters": {
+        "unit": "seconds",
+        "amount": 16
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [720, 300],
+      "id": "a1000004-0001-0001-0001-000000000004",
+      "name": "Aguardar 16s"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "={{ `SELECT message_id FROM n8n_fila_mensagens WHERE conversation_id = '${$('Chatwoot Trigger').first().json.conversation.id}' ORDER BY received_at DESC LIMIT 1` }}"
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [960, 300],
+      "id": "a1000005-0001-0001-0001-000000000005",
+      "name": "Buscar Última Mensagem",
+      "credentials": {
+        "postgres": {"id": "POSTGRES_CRED_ID", "name": "Postgres Coolify"}
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all();\nif (!rows || rows.length === 0) {\n  return [{ json: { isLatest: false } }];\n}\nconst latestId = String(rows[0].json.message_id || '');\nconst currentId = String($('Chatwoot Trigger').first().json.id || '');\nreturn [{ json: { isLatest: latestId === currentId } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1200, 300],
+      "id": "a1000006-0001-0001-0001-000000000006",
+      "name": "Comparar IDs"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+          "conditions": [
+            {
+              "id": "cond-latest",
+              "leftValue": "={{ $json.isLatest }}",
+              "rightValue": true,
+              "operator": {"type": "boolean", "operation": "equals"}
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1440, 300],
+      "id": "a1000007-0001-0001-0001-000000000007",
+      "name": "É a Última Mensagem?"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "={{ `SELECT COALESCE((SELECT lock_conversa FROM n8n_status_atendimento WHERE conversation_id = '${$('Chatwoot Trigger').first().json.conversation.id}'), false) AS lock_conversa` }}"
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1680, 300],
+      "id": "a1000008-0001-0001-0001-000000000008",
+      "name": "Verificar Lock",
+      "credentials": {
+        "postgres": {"id": "POSTGRES_CRED_ID", "name": "Postgres Coolify"}
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+          "conditions": [
+            {
+              "id": "cond-lock",
+              "leftValue": "={{ $json.lock_conversa }}",
+              "rightValue": true,
+              "operator": {"type": "boolean", "operation": "equals"}
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1920, 300],
+      "id": "a1000009-0001-0001-0001-000000000009",
+      "name": "Está Travado?"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "={{ `INSERT INTO n8n_status_atendimento (conversation_id, lock_conversa, atualizado_em) VALUES ('${$('Chatwoot Trigger').first().json.conversation.id}', true, NOW()) ON CONFLICT (conversation_id) DO UPDATE SET lock_conversa = true, atualizado_em = NOW()` }}"
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [2160, 300],
+      "id": "a1000010-0001-0001-0001-000000000010",
+      "name": "Setar Lock",
+      "credentials": {
+        "postgres": {"id": "POSTGRES_CRED_ID", "name": "Postgres Coolify"}
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const trigger = $('Chatwoot Trigger').first().json;\nconst conversation = trigger.conversation || {};\nconst meta = trigger.meta || {};\nconst sender = meta.sender || {};\nconst kanbanTask = conversation.kanban_task || null;\n\nconst rawEmail = sender.email || '';\nconst hasRealEmail = rawEmail.includes('@') && !rawEmail.includes('whatsapp');\nconst hubspotEmail = hasRealEmail\n  ? rawEmail\n  : `wp-conv-${conversation.id || 'unknown'}@lotus-lead.local`;\n\nreturn [{\n  json: {\n    conversationId: String(conversation.id || ''),\n    messageContent: trigger.content || '',\n    contactName: sender.name || 'Lead WhatsApp',\n    contactPhone: sender.phone_number || '',\n    contactEmail: rawEmail,\n    hubspotEmail,\n    kanbanTaskId: kanbanTask ? String(kanbanTask.id) : null,\n    kanbanCurrentStep: kanbanTask ? (kanbanTask.board_step_id || null) : null\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2400, 300],
+      "id": "a1000011-0001-0001-0001-000000000011",
+      "name": "Extrair Info da Conversa"
+    },
+    {
+      "parameters": {
         "promptType": "define",
-        "text": "={{ $json.content }}",
+        "text": "={{ $json.messageContent }}",
         "options": {
-          "systemMessage": "# AGENTE COMERCIAL — LÓTUS BUSINESS v5\n\n## QUEM VOCÊ É\n\nVocê é o atendente comercial do Lótus Business.\nAge como uma pessoa real no WhatsApp.\nVocê é um consultor de investimento patrimonial — não um corretor comum.\n\n## PRODUTO — LÓTUS BUSINESS\n\n- Incorporadora: HK Nove | CEO: KK Borges\n- 31 andares | 35.000m² | 100% comercial\n- 112 salas | aproximadamente 30 já vendidas\n- Salas: 60m² a 175m² | 8 salas por andar\n- Lajes corporativas: 968m² por andar completo\n- Localização: Bairro Andorinha, Itapema-SC, ao lado da BR-101\n- 600m do Hotel Hilton com Shopping e Heliponto\n- Próximo à Praia de Meia Praia\n- Obras iniciadas janeiro de 2023 | Prazo 36 meses\n- Estacionamento: mais de 450 vagas rotativas\n- Vaga para compra: R$100.000 | Rotativo: R$350 por mês\n- Rooftop com bistrôs | Centro de convenções | Espaço gastronômico\n- Samsung e grandes empresas confirmadas na região\n- Maior empreendimento comercial do litoral catarinense\n\n## FILOSOFIA DE VENDA\n\nVocê não vende metro quadrado. Você vende renda, marca e posicionamento.\nUma bolsa de couro sem marca custa R$500. A mesma bolsa com marca custa R$15.000. Mesmo material. O que mudou foi o que ela representa.\nVocê vende: renda recorrente mensal, network de alto nível, posicionamento, proteção patrimonial.\n\n## ARGUMENTO DE RENDA — USE SEMPRE ANTES DA METRAGEM\n\nNunca comece pela metragem. Comece pela renda.\n60m² = R$6.000 por mês\n100m² = R$10.000 por mês\n170m² = R$17.000 por mês\n\nFrase chave: Você não compra tamanho. Você compra renda. Qual aluguel quer receber por mês?\n\n## IMÓVEL ATIVO VS PASSIVO\n\nResidencial: você paga condomínio, IPTU, manutenção. Inquilino imprevisível.\nComercial: gera renda mensal. Empresas pagam melhor e ficam mais tempo.\nRenda fixa: rende mas o dinheiro é do banco. Aqui o ativo é seu.\n\n## REGRA ABSOLUTA — PREÇO\n\nNunca revelar valor, tabela ou condição financeira.\nVariação 1: O valor varia pelo tipo e tamanho da sala. Me conta o que você procura.\nVariação 2: Qual renda mensal você quer gerar? Assim mostro o que faz sentido.\nVariação 3 se insistir: Não quero te passar número errado. Posso te conectar com quem monta proposta real?\n\n## TÉCNICA DO CASAL\n\nPara decisões patrimoniais nunca conduza fechamento sem o casal presente.\nFrase: Faz sentido ver isso com sua esposa. É patrimonial, melhor os dois entenderem juntos. Quando vocês dois podem conversar com a gente?\n\n## REVERSÃO DE OBJEÇÕES\n\nSem garagem: Tem rotativo R$350 por mês e vaga pra compra. Cidade que cresce sempre resolve.\nObra entrega?: Começou jan de 2023, em andamento. Posso mostrar. O que gerou essa dúvida?\nComparando outro: Faz sentido. O que você pesa mais, localização, renda ou metragem?\nPreciso pensar: Claro. O que ficou em aberto? Às vezes uma info só resolve.\nRenda fixa: Renda fixa rende mas o dinheiro é do banco. Aqui o ativo é seu. Quanto quer alocar?\nEstá caro: Caro em relação a quê? Me conta o que você compara que te ajudo a visualizar melhor.\n\n## PIPELINE — ETAPAS\n\n1. Novo Lead: primeira resposta com uma pergunta\n2. Qualificando: uma pergunta por vez — (1) uso ou investimento (2) renda desejada ou metragem (3) prazo (4) decisor (5) cidade\n3. Engajado: aprofundar, diferenciais reais, conduzir para visita ou proposta\n4. Proposta Enviada: aguardar 48h\n5. Negociação: prioridade máxima, responder objeções com calma\n6. Oportunidade Ganha: registrar\n7. Oportunidade Perdida: Tudo bem, sem problema. Se mudar de ideia é só chamar.\n\n## REGRA OBRIGATÓRIA — SCORING\n\nVocê DEVE incluir EXATAMENTE o seguinte bloco na ÚLTIMA LINHA de TODA resposta.\nNão pule linha depois. Sem espaço antes do {. Aspas duplas obrigatórias. JSON em uma única linha:\n\nSCORING_JSON:{\"orcamento\":false,\"prazo\":null,\"decisor\":null,\"necessidade\":null,\"conhece\":false,\"estagio\":\"Novo Lead\",\"notas\":\"\"}\n\nRegras de preenchimento:\n- orcamento: true se lead mencionou capacidade financeira ou valor disponível\n- prazo: número inteiro em meses (ex: 6) ou null\n- decisor: \"solo\", \"casal\", \"empresa\" ou null\n- necessidade: \"uso\", \"investimento\", \"expansao\" ou null\n- conhece: true se já conhece o empreendimento Lótus Business\n- estagio: EXATAMENTE um de: \"Novo Lead\", \"Qualificando\", \"Engajado\", \"Proposta Enviada\", \"Negociação\", \"Oportunidade Ganha\", \"Oportunidade Perdida\"\n- notas: observação curta sobre o perfil do lead (máx 100 caracteres)\n\nEXEMPLO de resposta com SCORING correto:\nOlá! O Lótus Business é o maior empreendimento comercial do litoral catarinense. Me conta, você busca um espaço para uso próprio ou para investimento e gerar renda?\nSCORING_JSON:{\"orcamento\":false,\"prazo\":null,\"decisor\":null,\"necessidade\":null,\"conhece\":false,\"estagio\":\"Novo Lead\",\"notas\":\"primeiro contato\"}"
+          "systemMessage": "# AGENTE COMERCIAL — LÓTUS BUSINESS v5\n\n## QUEM VOCÊ É\n\nVocê é o atendente comercial do Lótus Business.\nAge como uma pessoa real no WhatsApp.\nVocê é um consultor de investimento patrimonial — não um corretor comum.\n\n## PRODUTO — LÓTUS BUSINESS\n\n- Incorporadora: HK Nove | CEO: KK Borges\n- 31 andares | 35.000m² | 100% comercial\n- 112 salas | aproximadamente 30 já vendidas\n- Salas: 60m² a 175m² | 8 salas por andar\n- Lajes corporativas: 968m² por andar completo\n- Localização: Bairro Andorinha, Itapema-SC, ao lado da BR-101\n- 600m do Hotel Hilton com Shopping e Heliponto\n- Próximo à Praia de Meia Praia\n- Obras iniciadas janeiro de 2023 | Prazo 36 meses\n- Estacionamento: mais de 450 vagas rotativas\n- Vaga para compra: R$100.000 | Rotativo: R$350 por mês\n- Rooftop com bistrôs | Centro de convenções | Espaço gastronômico\n- Samsung e grandes empresas confirmadas na região\n- Maior empreendimento comercial do litoral catarinense\n\n## FILOSOFIA DE VENDA\n\nVocê não vende metro quadrado. Você vende renda, marca e posicionamento.\nUma bolsa de couro sem marca custa R$500. A mesma bolsa com marca custa R$15.000. Mesmo material. O que mudou foi o que ela representa.\nVocê vende: renda recorrente mensal, network de alto nível, posicionamento, proteção patrimonial.\n\n## ARGUMENTO DE RENDA — USE SEMPRE ANTES DA METRAGEM\n\nNunca comece pela metragem. Comece pela renda.\n60m² = R$6.000 por mês\n100m² = R$10.000 por mês\n170m² = R$17.000 por mês\n\nFrase chave: Você não compra tamanho. Você compra renda. Qual aluguel quer receber por mês?\n\n## IMÓVEL ATIVO VS PASSIVO\n\nResidencial: você paga condomínio, IPTU, manutenção. Inquilino imprevisível.\nComercial: gera renda mensal. Empresas pagam melhor e ficam mais tempo.\nRenda fixa: rende mas o dinheiro é do banco. Aqui o ativo é seu.\n\n## REGRA ABSOLUTA — PREÇO\n\nNunca revelar valor, tabela ou condição financeira.\nVariação 1: O valor varia pelo tipo e tamanho da sala. Me conta o que você procura.\nVariação 2: Qual renda mensal você quer gerar? Assim mostro o que faz sentido.\nVariação 3 se insistir: Não quero te passar número errado. Posso te conectar com quem monta proposta real?\n\n## TÉCNICA DO CASAL\n\nPara decisões patrimoniais nunca conduza fechamento sem o casal presente.\nFrase: Faz sentido ver isso com sua esposa. É patrimonial, melhor os dois entenderem juntos. Quando vocês dois podem conversar com a gente?\n\n## REVERSÃO DE OBJEÇÕES\n\nSem garagem: Tem rotativo R$350 por mês e vaga pra compra. Cidade que cresce sempre resolve.\nObra entrega?: Começou jan de 2023, em andamento. Posso mostrar. O que gerou essa dúvida?\nComparando outro: Faz sentido. O que você pesa mais, localização, renda ou metragem?\nPreciso pensar: Claro. O que ficou em aberto? Às vezes uma info só resolve.\nRenda fixa: Renda fixa rende mas o dinheiro é do banco. Aqui o ativo é seu. Quanto quer alocar?\nEstá caro: Caro em relação a quê? Me conta o que você compara que te ajudo a visualizar melhor.\n\n## PIPELINE — ETAPAS\n\n1. Novo Lead: primeira mensagem, ainda sem resposta da sua parte\n2. Contato Iniciado: você respondeu, conversa em andamento\n3. Qualificando: fazendo perguntas — (1) uso ou investimento (2) renda desejada ou metragem (3) prazo (4) decisor (5) cidade\n4. Engajado: lead respondendo ativamente, aprofundar diferenciais, conduzir para visita ou proposta\n5. Proposta Enviada: proposta formal enviada, aguardar 48h\n6. Negociação: objeções ativas, prioridade máxima, responder com calma\n7. Follow-up: lead parou de responder, aguardando reativação\n8. Oportunidade Ganha: venda confirmada\n9. Oportunidade Perdida: Tudo bem, sem problema. Se mudar de ideia é só chamar.\n\n## REGRA OBRIGATÓRIA — SCORING\n\nVocê DEVE incluir EXATAMENTE o seguinte bloco na ÚLTIMA LINHA de TODA resposta.\nNão pule linha depois. Sem espaço antes do {. Aspas duplas obrigatórias. JSON em uma única linha:\n\nSCORING_JSON:{\"orcamento\":false,\"prazo\":null,\"decisor\":null,\"necessidade\":null,\"conhece\":false,\"estagio\":\"Contato Iniciado\",\"notas\":\"\"}\n\nRegras de preenchimento:\n- orcamento: true se lead mencionou capacidade financeira ou valor disponível\n- prazo: número inteiro em meses (ex: 6) ou null\n- decisor: \"solo\", \"casal\", \"empresa\" ou null\n- necessidade: \"uso\", \"investimento\", \"expansao\" ou null\n- conhece: true se já conhece o empreendimento Lótus Business\n- estagio: EXATAMENTE um de: \"Novo Lead\", \"Contato Iniciado\", \"Qualificando\", \"Engajado\", \"Proposta Enviada\", \"Negociação\", \"Follow-up\", \"Oportunidade Ganha\", \"Oportunidade Perdida\"\n- notas: observação curta sobre o perfil do lead (máx 100 caracteres)\n\nEXEMPLO de resposta com SCORING correto:\nOlá! O Lótus Business é o maior empreendimento comercial do litoral catarinense. Me conta, você busca um espaço para uso próprio ou para investimento e gerar renda?\nSCORING_JSON:{\"orcamento\":false,\"prazo\":null,\"decisor\":null,\"necessidade\":null,\"conhece\":false,\"estagio\":\"Contato Iniciado\",\"notas\":\"primeiro contato\"}"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
-      "position": [500, -80],
-      "id": "9cab9667-6d22-44b9-bf04-0f4e9f6812fb",
+      "position": [2640, 300],
+      "id": "a1000012-0001-0001-0001-000000000012",
       "name": "AI Agent Lótus"
     },
     {
       "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4o",
-          "mode": "list",
-          "cachedResultName": "gpt-4o"
-        },
+        "model": {"__rl": true, "value": "gpt-4o", "mode": "list", "cachedResultName": "gpt-4o"},
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
-      "position": [400, 180],
-      "id": "807bd155-d369-41d3-848a-a96a625d5bfe",
+      "position": [2520, 520],
+      "id": "a1000013-0001-0001-0001-000000000013",
       "name": "OpenAI Chat Model",
       "credentials": {
-        "openAiApi": {
-          "id": "FBaV86h496iktOtq",
-          "name": "OpenAI account"
-        }
+        "openAiApi": {"id": "FBaV86h496iktOtq", "name": "OpenAI account"}
       }
     },
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "={{ $('Chatwoot Trigger').item.json.conversation.id }}",
-        "contextWindowLength": 50
+        "sessionKey": "={{ $('Chatwoot Trigger').first().json.conversation.id }}",
+        "tableName": "n8n_chat_histories"
       },
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
-      "position": [620, 180],
-      "id": "f5071a0c-afc4-417e-9a05-49d78e49705f",
-      "name": "Memória da Conversa"
+      "position": [2760, 520],
+      "id": "a1000014-0001-0001-0001-000000000014",
+      "name": "Memória Postgres",
+      "credentials": {
+        "postgres": {"id": "POSTGRES_CRED_ID", "name": "Postgres Coolify"}
+      }
     },
     {
       "parameters": {
-        "jsCode": "// =============================================================\n// PARSEAR E SCORING — LÓTUS BUSINESS\n// Extrai o SCORING_JSON do output do AI Agent e prepara dados\n// =============================================================\n\nconst output = $json.output || '';\n\n// --- 1. Extrair SCORING_JSON ---\n// O prompt instrui colocar SCORING_JSON:{...} na última linha\nlet scoring = {\n  orcamento: false,\n  prazo: null,\n  decisor: null,\n  necessidade: null,\n  conhece: false,\n  estagio: 'Novo Lead',\n  notas: ''\n};\n\nconst scoringMatch = output.match(/SCORING_JSON:(\\{[^{}]+\\})/);\nif (scoringMatch) {\n  try {\n    scoring = JSON.parse(scoringMatch[1]);\n  } catch(e) {\n    // mantém padrão se JSON inválido\n  }\n}\n\n// --- 2. Limpar texto da resposta (remover linha SCORING_JSON) ---\nconst textResponse = output\n  .replace(/\\nSCORING_JSON:\\{[^{}]+\\}/g, '')\n  .replace(/SCORING_JSON:\\{[^{}]+\\}/g, '')\n  .trim();\n\n// --- 3. Dados do trigger Chatwoot ---\nconst trigger = $('Chatwoot Trigger').first().json;\nconst conversation = trigger.conversation || {};\nconst meta = trigger.meta || {};\nconst sender = meta.sender || {};\nconst customAttrs = conversation.custom_attributes || {};\n\n// --- 4. Mapeamento estágio → step_id do Kanban ---\nconst estagioParaStepId = {\n  'Novo Lead': 1,\n  'Contato Iniciado': 1,\n  'Qualificando': 2,\n  'Engajado': 3,\n  'Proposta Enviada': 4,\n  'Negociação': 5,\n  'Oportunidade Ganha': 6,\n  'Oportunidade Perdida': 7\n};\n\nconst stepId = estagioParaStepId[scoring.estagio] ?? 1;\n\n// Mover kanban quando scoring foi extraído e estágio avançou\nconst deveMover = scoringMatch !== null && stepId > 1;\n\n// --- 5. Score numérico 0-100 ---\nconst score = [\n  scoring.orcamento === true,\n  scoring.prazo !== null,\n  scoring.decisor !== null,\n  scoring.necessidade !== null,\n  scoring.conhece === true\n].filter(Boolean).length * 20;\n\n// --- 6. ID da KanbanTask (salvo em custom_attributes pela criação) ---\nconst kanbanTaskId = customAttrs.kanban_task_id || null;\n\n// --- 7. Preparar email para HubSpot ---\n// WhatsApp leads geralmente não têm email — usar placeholder único\nconst rawEmail = sender.email || '';\nconst hasRealEmail = rawEmail.includes('@') && !rawEmail.includes('whatsapp');\nconst hubspotEmail = hasRealEmail\n  ? rawEmail\n  : 'wp-conv-' + (conversation.id || 'unknown') + '@lotus-lead.local';\n\nreturn {\n  textResponse,\n  conversationId: String(conversation.id || ''),\n  contactEmail: rawEmail,\n  hubspotEmail,\n  contactName: sender.name || 'Lead WhatsApp',\n  contactPhone: sender.phone_number || '',\n  deveMover,\n  stepId,\n  estagioFinal: scoring.estagio,\n  score,\n  notas: scoring.notas || '',\n  kanbanTaskId,\n  scoringOrcamento: scoring.orcamento,\n  scoringPrazo: scoring.prazo,\n  scoringDecisor: scoring.decisor,\n  scoringNecessidade: scoring.necessidade\n};"
+        "jsCode": "// ================================================================\n// PARSEAR E SCORING — LÓTUS BUSINESS v2\n// Extrai SCORING_JSON do AI Agent e prepara dados para próximas etapas\n// ================================================================\n\nconst output = $json.output || '';\n\n// 1. Extrair SCORING_JSON\nlet scoring = {\n  orcamento: false, prazo: null, decisor: null, necessidade: null,\n  conhece: false, estagio: 'Contato Iniciado', notas: ''\n};\n\nconst scoringMatch = output.match(/SCORING_JSON:(\\{[^{}]+\\})/);\nif (scoringMatch) {\n  try { scoring = JSON.parse(scoringMatch[1]); } catch(e) {}\n}\n\n// 2. Limpar texto da resposta\nconst textResponse = output\n  .replace(/\\nSCORING_JSON:\\{[^{}]+\\}/g, '')\n  .replace(/SCORING_JSON:\\{[^{}]+\\}/g, '')\n  .trim();\n\n// 3. Dados da conversa (nó anterior)\nconst info = $('Extrair Info da Conversa').first().json;\n\n// 4. Mapeamento estágio → step_id do Kanban\n// ATENÇÃO: Verifique os IDs reais em Chatwoot > Configurações > Kanban\n// e ajuste os valores abaixo conforme seus step IDs reais\nconst estagioParaStepId = {\n  'Novo Lead':            1,\n  'Contato Iniciado':     2,\n  'Qualificando':         3,\n  'Engajado':             4,\n  'Proposta Enviada':     5,\n  'Negociação':           6,\n  'Follow-up':            7,\n  'Oportunidade Ganha':   8,\n  'Oportunidade Perdida': 9\n};\n\nconst stepId = estagioParaStepId[scoring.estagio] ?? 2;\n\n// Mover kanban quando scoring foi extraído e estágio avançou\nconst deveMover = scoringMatch !== null && stepId > 1;\n\n// 5. Score numérico 0-100\nconst score = [\n  scoring.orcamento === true,\n  scoring.prazo !== null,\n  scoring.decisor !== null,\n  scoring.necessidade !== null,\n  scoring.conhece === true\n].filter(Boolean).length * 20;\n\nreturn [{\n  json: {\n    textResponse,\n    conversationId: info.conversationId,\n    contactEmail: info.contactEmail,\n    hubspotEmail: info.hubspotEmail,\n    contactName: info.contactName,\n    contactPhone: info.contactPhone,\n    deveMover,\n    stepId,\n    estagioFinal: scoring.estagio,\n    score,\n    notas: scoring.notas || '',\n    kanbanTaskId: info.kanbanTaskId,\n    scoringOrcamento: scoring.orcamento,\n    scoringPrazo: scoring.prazo,\n    scoringDecisor: scoring.decisor,\n    scoringNecessidade: scoring.necessidade\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [800, -80],
-      "id": "9b3d99eb-a520-43ec-b0e0-4dd1ba5f852b",
+      "position": [2880, 300],
+      "id": "a1000015-0001-0001-0001-000000000015",
       "name": "Parsear e Scoring"
     },
     {
       "parameters": {
         "resource": "message",
         "operation": "create",
-        "accountId": {
-          "__rl": true,
-          "value": "1",
-          "mode": "list",
-          "cachedResultName": "#1 - Chatwoot Lotus Projeto"
-        },
-        "conversationId": {
-          "__rl": true,
-          "value": "={{ $json.conversationId }}",
-          "mode": "id"
-        },
+        "accountId": {"__rl": true, "value": "1", "mode": "list", "cachedResultName": "#1 - Chatwoot Lotus Projeto"},
+        "conversationId": {"__rl": true, "value": "={{ $json.conversationId }}", "mode": "id"},
         "content": "={{ $json.textResponse }}"
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
       "typeVersion": 1,
-      "position": [1060, -80],
-      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "position": [3120, 300],
+      "id": "a1000016-0001-0001-0001-000000000016",
       "name": "Enviar Mensagem Chatwoot",
       "credentials": {
-        "fazerAiChatwootApi": {
-          "id": "KwRUoHTBmlc9WdaS",
-          "name": "Chatwoot fazer.ai account"
-        }
+        "fazerAiChatwootApi": {"id": "KwRUoHTBmlc9WdaS", "name": "Chatwoot fazer.ai account"}
       }
     },
     {
       "parameters": {
-        "conditions": {
-          "boolean": [
-            {
-              "value1": "={{ $('Parsear e Scoring').item.json.deveMover }}",
-              "value2": true
-            }
-          ]
-        }
+        "operation": "executeQuery",
+        "query": "={{ `UPDATE n8n_status_atendimento SET lock_conversa = false, atualizado_em = NOW() WHERE conversation_id = '${$('Extrair Info da Conversa').first().json.conversationId}'` }}"
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [1320, -180],
-      "id": "7bce9b02-44df-4266-bc65-b01304aa3631",
-      "name": "Deve Mover Kanban?"
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [3360, 300],
+      "id": "a1000017-0001-0001-0001-000000000017",
+      "name": "Liberar Lock",
+      "credentials": {
+        "postgres": {"id": "POSTGRES_CRED_ID", "name": "Postgres Coolify"}
+      }
     },
     {
       "parameters": {
@@ -165,268 +291,209 @@
       },
       "type": "n8n-nodes-base.hubspot",
       "typeVersion": 2.2,
-      "position": [1320, 60],
-      "id": "836388d2-9f92-4412-a10b-e49172905170",
+      "position": [3600, 460],
+      "id": "a1000018-0001-0001-0001-000000000018",
       "name": "HubSpot - Salvar Lead",
       "credentials": {
-        "hubspotAppToken": {
-          "id": "eKow701mG0MZiTiK",
-          "name": "HubSpot account 2"
-        }
+        "hubspotAppToken": {"id": "eKow701mG0MZiTiK", "name": "HubSpot account 2"}
       }
     },
     {
       "parameters": {
         "conditions": {
-          "string": [
+          "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+          "conditions": [
             {
-              "value1": "={{ String($('Parsear e Scoring').item.json.kanbanTaskId || '') }}",
-              "value2": ""
+              "id": "cond-has-task",
+              "leftValue": "={{ $('Parsear e Scoring').item.json.kanbanTaskId !== null && $('Parsear e Scoring').item.json.kanbanTaskId !== '' }}",
+              "rightValue": true,
+              "operator": {"type": "boolean", "operation": "equals"}
             }
-          ]
-        }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
       },
       "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [1580, -260],
-      "id": "cc112233-4455-6677-8899-aabbccddeeff",
+      "typeVersion": 2,
+      "position": [3600, 160],
+      "id": "a1000019-0001-0001-0001-000000000019",
       "name": "Tem KanbanTask?"
     },
     {
       "parameters": {
         "resource": "kanbanTask",
         "operation": "create",
-        "accountId": {
-          "__rl": true,
-          "value": "1",
-          "mode": "list",
-          "cachedResultName": "#1 - Chatwoot Lotus Projeto"
-        },
-        "kanbanBoardId": {
-          "__rl": true,
-          "value": "1",
-          "mode": "list",
-          "cachedResultName": "#1 - Pipeline de Vendas"
-        },
-        "kanbanStepId": {
-          "__rl": true,
-          "value": "={{ $('Parsear e Scoring').item.json.stepId }}",
-          "mode": "id"
-        },
-        "conversationId": {
-          "__rl": true,
-          "value": "={{ $('Parsear e Scoring').item.json.conversationId }}",
-          "mode": "id"
-        }
+        "accountId": {"__rl": true, "value": "1", "mode": "list", "cachedResultName": "#1 - Chatwoot Lotus Projeto"},
+        "kanbanBoardId": {"__rl": true, "value": "1", "mode": "list", "cachedResultName": "#1 - Pipeline de Vendas"},
+        "kanbanStepId": {"__rl": true, "value": "={{ $('Parsear e Scoring').item.json.stepId }}", "mode": "id"},
+        "conversationId": {"__rl": true, "value": "={{ $('Parsear e Scoring').item.json.conversationId }}", "mode": "id"}
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
       "typeVersion": 1,
-      "position": [1840, -340],
-      "id": "11223344-5566-7788-99aa-bbccddeeff00",
+      "position": [3840, 60],
+      "id": "a1000020-0001-0001-0001-000000000020",
       "name": "Criar KanbanTask",
       "credentials": {
-        "fazerAiChatwootApi": {
-          "id": "KwRUoHTBmlc9WdaS",
-          "name": "Chatwoot fazer.ai account"
-        }
+        "fazerAiChatwootApi": {"id": "KwRUoHTBmlc9WdaS", "name": "Chatwoot fazer.ai account"}
       }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+          "conditions": [
+            {
+              "id": "cond-move",
+              "leftValue": "={{ $('Parsear e Scoring').item.json.deveMover }}",
+              "rightValue": true,
+              "operator": {"type": "boolean", "operation": "equals"}
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [3840, 260],
+      "id": "a1000021-0001-0001-0001-000000000021",
+      "name": "Deve Mover Kanban?"
     },
     {
       "parameters": {
         "resource": "kanbanTask",
         "operation": "update",
-        "accountId": {
-          "__rl": true,
-          "value": "1",
-          "mode": "list",
-          "cachedResultName": "#1 - Chatwoot Lotus Projeto"
-        },
-        "kanbanBoardId": {
-          "__rl": true,
-          "value": "1",
-          "mode": "list",
-          "cachedResultName": "#1 - Pipeline de Vendas"
-        },
-        "kanbanTaskId": {
-          "__rl": true,
-          "value": "={{ $('Parsear e Scoring').item.json.kanbanTaskId }}",
-          "mode": "id"
-        },
+        "accountId": {"__rl": true, "value": "1", "mode": "list", "cachedResultName": "#1 - Chatwoot Lotus Projeto"},
+        "kanbanBoardId": {"__rl": true, "value": "1", "mode": "list", "cachedResultName": "#1 - Pipeline de Vendas"},
+        "kanbanTaskId": {"__rl": true, "value": "={{ $('Parsear e Scoring').item.json.kanbanTaskId }}", "mode": "id"},
         "updateFields": {
-          "board_step_id": {
-            "__rl": true,
-            "value": "={{ $('Parsear e Scoring').item.json.stepId }}",
-            "mode": "id"
-          }
+          "board_step_id": {"__rl": true, "value": "={{ $('Parsear e Scoring').item.json.stepId }}", "mode": "id"}
         }
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
       "typeVersion": 1,
-      "position": [1840, -180],
-      "id": "64a35f50-8bbc-45af-87fb-2b80ea6123d2",
+      "position": [4080, 260],
+      "id": "a1000022-0001-0001-0001-000000000022",
       "name": "Mover KanbanTask Step",
       "credentials": {
-        "fazerAiChatwootApi": {
-          "id": "KwRUoHTBmlc9WdaS",
-          "name": "Chatwoot fazer.ai account"
-        }
+        "fazerAiChatwootApi": {"id": "KwRUoHTBmlc9WdaS", "name": "Chatwoot fazer.ai account"}
       }
     },
     {
       "parameters": {
-        "rule": {
-          "interval": [
-            {
-              "field": "hours",
-              "hoursInterval": 24
-            }
-          ]
-        }
+        "rule": {"interval": [{"field": "hours", "hoursInterval": 24}]}
       },
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
-      "position": [200, 380],
-      "id": "581f29fa-1289-43d4-8898-a645fb642b05",
-      "name": "Schedule Follow-up (24h)"
+      "position": [0, 680],
+      "id": "a1000023-0001-0001-0001-000000000023",
+      "name": "Schedule Follow-up"
     },
     {
       "parameters": {
-        "jsCode": "// TODO: Buscar no HubSpot leads com status 'Qualificando'\n// que não responderam nas últimas 24h e enviar follow-up\n// por enquanto retorna vazio para não disparar mensagens\nreturn [];"
+        "jsCode": "// TODO: Buscar no HubSpot leads em 'Follow-up' que não responderam\n// nas últimas 24h e enviar mensagem de reativação via Chatwoot.\n// Retorna vazio para não disparar mensagens acidentalmente.\nreturn [];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [500, 380],
-      "id": "605662b1-18a9-49a5-aec8-f03486ce1c84",
-      "name": "Follow-up (Configurar)"
+      "position": [240, 680],
+      "id": "a1000024-0001-0001-0001-000000000024",
+      "name": "Placeholder Follow-up"
     }
   ],
   "connections": {
     "Chatwoot Trigger": {
-      "main": [
-        [
-          {
-            "node": "Apenas Mensagens Recebidas",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{"node": "Apenas Mensagens Recebidas", "type": "main", "index": 0}]]
     },
     "Apenas Mensagens Recebidas": {
       "main": [
-        [
-          {
-            "node": "AI Agent Lótus",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        [{"node": "Filtrar Contatos Pessoais", "type": "main", "index": 0}],
+        []
       ]
+    },
+    "Filtrar Contatos Pessoais": {
+      "main": [
+        [{"node": "Inserir na Fila", "type": "main", "index": 0}],
+        []
+      ]
+    },
+    "Inserir na Fila": {
+      "main": [[{"node": "Aguardar 16s", "type": "main", "index": 0}]]
+    },
+    "Aguardar 16s": {
+      "main": [[{"node": "Buscar Última Mensagem", "type": "main", "index": 0}]]
+    },
+    "Buscar Última Mensagem": {
+      "main": [[{"node": "Comparar IDs", "type": "main", "index": 0}]]
+    },
+    "Comparar IDs": {
+      "main": [[{"node": "É a Última Mensagem?", "type": "main", "index": 0}]]
+    },
+    "É a Última Mensagem?": {
+      "main": [
+        [{"node": "Verificar Lock", "type": "main", "index": 0}],
+        []
+      ]
+    },
+    "Verificar Lock": {
+      "main": [[{"node": "Está Travado?", "type": "main", "index": 0}]]
+    },
+    "Está Travado?": {
+      "main": [
+        [],
+        [{"node": "Setar Lock", "type": "main", "index": 0}]
+      ]
+    },
+    "Setar Lock": {
+      "main": [[{"node": "Extrair Info da Conversa", "type": "main", "index": 0}]]
+    },
+    "Extrair Info da Conversa": {
+      "main": [[{"node": "AI Agent Lótus", "type": "main", "index": 0}]]
     },
     "AI Agent Lótus": {
-      "main": [
-        [
-          {
-            "node": "Parsear e Scoring",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent Lótus",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Memória da Conversa": {
-      "ai_memory": [
-        [
-          {
-            "node": "AI Agent Lótus",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{"node": "Parsear e Scoring", "type": "main", "index": 0}]]
     },
     "Parsear e Scoring": {
-      "main": [
-        [
-          {
-            "node": "Enviar Mensagem Chatwoot",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{"node": "Enviar Mensagem Chatwoot", "type": "main", "index": 0}]]
     },
     "Enviar Mensagem Chatwoot": {
+      "main": [[{"node": "Liberar Lock", "type": "main", "index": 0}]]
+    },
+    "Liberar Lock": {
+      "main": [[
+        {"node": "HubSpot - Salvar Lead", "type": "main", "index": 0},
+        {"node": "Tem KanbanTask?", "type": "main", "index": 0}
+      ]]
+    },
+    "Tem KanbanTask?": {
       "main": [
-        [
-          {
-            "node": "Deve Mover Kanban?",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "HubSpot - Salvar Lead",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        [{"node": "Deve Mover Kanban?", "type": "main", "index": 0}],
+        [{"node": "Criar KanbanTask", "type": "main", "index": 0}]
       ]
     },
     "Deve Mover Kanban?": {
       "main": [
-        [
-          {
-            "node": "Tem KanbanTask?",
-            "type": "main",
-            "index": 0
-          }
-        ],
+        [{"node": "Mover KanbanTask Step", "type": "main", "index": 0}],
         []
       ]
     },
-    "Tem KanbanTask?": {
-      "main": [
-        [
-          {
-            "node": "Criar KanbanTask",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Mover KanbanTask Step",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+    "OpenAI Chat Model": {
+      "ai_languageModel": [[{"node": "AI Agent Lótus", "type": "ai_languageModel", "index": 0}]]
     },
-    "Schedule Follow-up (24h)": {
-      "main": [
-        [
-          {
-            "node": "Follow-up (Configurar)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+    "Memória Postgres": {
+      "ai_memory": [[{"node": "AI Agent Lótus", "type": "ai_memory", "index": 0}]]
+    },
+    "Schedule Follow-up": {
+      "main": [[{"node": "Placeholder Follow-up", "type": "main", "index": 0}]]
     }
   },
-  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
   "meta": {
-    "instanceId": "d291c5dc5950fbc6fc19c22c2f77cb497a56b8f784204af0de006eb12cc8fdf7"
-  }
+    "templateCredsSetupCompleted": false,
+    "instanceId": "lotus-business"
+  },
+  "pinData": {}
 }
