@@ -46,7 +46,7 @@
           "conditions": [
             {
               "id": "cond-not-personal",
-              "leftValue": "={{ !['pessoal','interno','equipe','parceiro'].some(l => ($json.conversation.labels || []).includes(l)) }}",
+              "leftValue": "={{ !['pessoal','interno','equipe','parceiro','agente-off','gestor'].some(l => ($json.conversation.labels || []).includes(l)) }}",
               "rightValue": true,
               "operator": {"type": "boolean", "operation": "equals"}
             }
