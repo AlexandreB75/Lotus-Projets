@@ -237,7 +237,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// ================================================================\n// PARSEAR E SCORING — LÓTUS BUSINESS v2\n// Extrai SCORING_JSON do AI Agent e prepara dados para próximas etapas\n// ================================================================\n\nconst output = $json.output || '';\n\n// 1. Extrair SCORING_JSON\nlet scoring = {\n  orcamento: false, prazo: null, decisor: null, necessidade: null,\n  conhece: false, estagio: 'Contato Iniciado', notas: ''\n};\n\nconst scoringMatch = output.match(/SCORING_JSON:(\\{[^{}]+\\})/);\nif (scoringMatch) {\n  try { scoring = JSON.parse(scoringMatch[1]); } catch(e) {}\n}\n\n// 2. Limpar texto da resposta (remove SCORING_JSON e = inicial que vaza do N8N)\nconst textResponse = output\n  .replace(/\\nSCORING_JSON:\\{[^{}]+\\}/g, '')\n  .replace(/SCORING_JSON:\\{[^{}]+\\}/g, '')\n  .replace(/^={1,3}\\s*/m, '')  // remove = inicial se vazou da expressão N8N\n  .trim();\n\n// 3. Dados da conversa (nó anterior)\nconst info = $('Extrair Info da Conversa').first().json;\n\n// 4. Mapeamento estágio → step_id do Kanban\n// ATENÇÃO: Verifique os IDs reais em Chatwoot > Configurações > Kanban\n// e ajuste os valores abaixo conforme seus step IDs reais\nconst estagioParaStepId = {\n  'Novo Lead':            1,\n  'Contato Iniciado':     2,\n  'Qualificando':         3,\n  'Engajado':             4,\n  'Proposta Enviada':     5,\n  'Negociação':           6,\n  'Follow-up':            7,\n  'Oportunidade Ganha':   8,\n  'Oportunidade Perdida': 9\n};\n\nconst stepId = estagioParaStepId[scoring.estagio] ?? 2;\n\n// Mover kanban quando scoring foi extraído e estágio avançou\nconst deveMover = scoringMatch !== null && stepId > 1;\n\n// 5. Score numérico 0-100\nconst score = [\n  scoring.orcamento === true,\n  scoring.prazo !== null,\n  scoring.decisor !== null,\n  scoring.necessidade !== null,\n  scoring.conhece === true\n].filter(Boolean).length * 20;\n\nreturn [{\n  json: {\n    textResponse,\n    conversationId: info.conversationId,\n    contactEmail: info.contactEmail,\n    hubspotEmail: info.hubspotEmail,\n    contactName: info.contactName,\n    contactPhone: info.contactPhone,\n    deveMover,\n    stepId,\n    estagioFinal: scoring.estagio,\n    score,\n    notas: scoring.notas || '',\n    kanbanTaskId: info.kanbanTaskId,\n    scoringOrcamento: scoring.orcamento,\n    scoringPrazo: scoring.prazo,\n    scoringDecisor: scoring.decisor,\n    scoringNecessidade: scoring.necessidade\n  }\n}];"
+        "jsCode": "// ================================================================\n// PARSEAR E SCORING — LÓTUS BUSINESS v2\n// Extrai SCORING_JSON do AI Agent e prepara dados para próximas etapas\n// ================================================================\n\nconst output = $json.output || '';\n\n// 1. Extrair SCORING_JSON\nlet scoring = {\n  orcamento: false, prazo: null, decisor: null, necessidade: null,\n  conhece: false, estagio: 'Contato Iniciado', notas: ''\n};\n\nconst scoringMatch = output.match(/SCORING_JSON:(\\{[^{}]+\\})/);\nif (scoringMatch) {\n  try { scoring = JSON.parse(scoringMatch[1]); } catch(e) {}\n}\n\n// 2. Limpar texto da resposta (remove SCORING_JSON e = inicial que vaza do N8N)\nconst textResponse = output\n  .replace(/\\nSCORING_JSON:\\{[^{}]+\\}/g, '')\n  .replace(/SCORING_JSON:\\{[^{}]+\\}/g, '')\n  .replace(/^={1,3}\\s*/m, '')  // remove = inicial se vazou da expressão N8N\n  .trim();\n\n// 3. Dados da conversa (nó anterior)\nconst info = $('Extrair Info da Conversa').first().json;\n\n// 4. Mapeamento estágio → step_id do Kanban\n// ATENÇÃO: Verifique os IDs reais em Chatwoot > Configurações > Kanban\n// e ajuste os valores abaixo conforme seus step IDs reais\nconst estagioParaStepId = {\n  'Novo Lead':            1,\n  'Contato Iniciado':     2,\n  'Qualificando':         3,\n  'Engajado':             4,\n  'Proposta Enviada':     5,\n  'Negociação':           6,\n  'Follow-up':            7,\n  'Oportunidade Ganha':   8,\n  'Oportunidade Perdida': 9\n};\n\nconst stepId = estagioParaStepId[scoring.estagio] ?? 2;\n\n// Mover kanban quando scoring foi extraído e estágio avançou\nconst deveMover = scoringMatch !== null && stepId > 1;\n\n// 5. Score numérico 0-100\nconst score = [\n  scoring.orcamento === true,\n  scoring.prazo !== null,\n  scoring.decisor !== null,\n  scoring.necessidade !== null,\n  scoring.conhece === true\n].filter(Boolean).length * 20;\n\nreturn [{\n  json: {\n    textResponse,\n    conversationId: info.conversationId,\n    contactEmail: info.contactEmail,\n    hubspotEmail: info.hubspotEmail,\n    contactName: info.contactName,\n    contactPhone: info.contactPhone,\n    deveMover,\n    stepId,\n    estagioFinal: scoring.estagio,\n    score,\n    notas: scoring.notas || '',\n    kanbanTaskId: info.kanbanTaskId,\n    scoringOrcamento: scoring.orcamento,\n    scoringPrazo: scoring.prazo,\n    scoringDecisor: scoring.decisor,\n    scoringNecessidade: scoring.necessidade,\n    contactFirstName: info.contactName.split(' ')[0],\n    contactLastName: info.contactName.split(' ').slice(1).join(' ')\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -284,8 +284,8 @@
         "operation": "upsert",
         "email": "={{ $('Parsear e Scoring').item.json.hubspotEmail }}",
         "additionalFields": {
-          "firstName": "={{ $('Parsear e Scoring').item.json.contactName.split(' ')[0] }}",
-          "lastName": "={{ $('Parsear e Scoring').item.json.contactName.split(' ').slice(1).join(' ') }}",
+          "firstName": "={{ $('Parsear e Scoring').item.json.contactFirstName }}",
+          "lastName": "={{ $('Parsear e Scoring').item.json.contactLastName }}",
           "phone": "={{ $('Parsear e Scoring').item.json.contactPhone }}"
         },
         "options": {}
@@ -400,6 +400,84 @@
       "position": [240, 680],
       "id": "a1000024-0001-0001-0001-000000000024",
       "name": "Placeholder Follow-up"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+          "conditions": [
+            {
+              "id": "cond-is-audio",
+              "leftValue": "={{ $('Chatwoot Trigger').first().json.content_type === 'audio' || ($('Chatwoot Trigger').first().json.attachments || []).some(a => a.file_type === 'audio') }}",
+              "rightValue": true,
+              "operator": {"type": "boolean", "operation": "equals"}
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2640, 120],
+      "id": "a1000026-0001-0001-0001-000000000026",
+      "name": "É Áudio?"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($('Chatwoot Trigger').first().json.attachments || [])[0]?.file_url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2880, 120],
+      "id": "a1000027-0001-0001-0001-000000000027",
+      "name": "Baixar Áudio"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/audio/transcriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {"name": "model", "value": "whisper-1"},
+            {"name": "language", "value": "pt"},
+            {"name": "prompt", "value": "Lótus Business, Hilton Garden Inn, Itapema, Porto Belo, metro quadrado, sala comercial, pool hoteleiro, corretor, investimento imobiliário, HK Nove, Alexandre Borges"},
+            {"name": "file", "parameterType": "formBinaryData", "inputDataFieldName": "data"}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3120, 120],
+      "id": "a1000028-0001-0001-0001-000000000028",
+      "name": "Transcrever com Whisper",
+      "credentials": {
+        "openAiApi": {"id": "FBaV86h496iktOtq", "name": "OpenAI account"}
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Mescla transcrição do Whisper com os dados da conversa\nconst info = $('Extrair Info da Conversa').first().json;\nconst transcription = $json.text || '[Áudio não pôde ser transcrito]';\nreturn [{\n  json: {\n    conversationId: info.conversationId,\n    messageContent: `[Mensagem de voz]: ${transcription}`,\n    contactName: info.contactName,\n    contactPhone: info.contactPhone,\n    contactEmail: info.contactEmail,\n    hubspotEmail: info.hubspotEmail,\n    kanbanTaskId: info.kanbanTaskId,\n    kanbanCurrentStep: info.kanbanCurrentStep,\n    isAudioTranscription: true\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3360, 120],
+      "id": "a1000029-0001-0001-0001-000000000029",
+      "name": "Preparar Texto com Áudio"
     }
   ],
   "connections": {
@@ -449,6 +527,21 @@
       "main": [[{"node": "Extrair Info da Conversa", "type": "main", "index": 0}]]
     },
     "Extrair Info da Conversa": {
+      "main": [[{"node": "É Áudio?", "type": "main", "index": 0}]]
+    },
+    "É Áudio?": {
+      "main": [
+        [{"node": "Baixar Áudio", "type": "main", "index": 0}],
+        [{"node": "AI Agent Lótus", "type": "main", "index": 0}]
+      ]
+    },
+    "Baixar Áudio": {
+      "main": [[{"node": "Transcrever com Whisper", "type": "main", "index": 0}]]
+    },
+    "Transcrever com Whisper": {
+      "main": [[{"node": "Preparar Texto com Áudio", "type": "main", "index": 0}]]
+    },
+    "Preparar Texto com Áudio": {
       "main": [[{"node": "AI Agent Lótus", "type": "main", "index": 0}]]
     },
     "AI Agent Lótus": {
