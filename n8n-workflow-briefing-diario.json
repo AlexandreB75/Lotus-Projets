@@ -25,23 +25,8 @@
         "operation": "getAll",
         "returnAll": false,
         "limit": 50,
-        "filterGroups": {
-          "filterGroupsValues": [
-            {
-              "filters": {
-                "filtersValues": [
-                  {
-                    "propertyName": "notes_last_updated",
-                    "operator": "LT",
-                    "value": "={{ new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] }}"
-                  }
-                ]
-              }
-            }
-          ]
-        },
         "additionalFields": {
-          "properties": "firstname,lastname,phone,email,hs_lead_status,notes_last_updated,createdate"
+          "properties": "firstname,lastname,email,phone,hs_lead_status,notes_last_updated,createdate"
         },
         "options": {}
       },
@@ -94,7 +79,7 @@
     },
     {
       "parameters": {
-        "mode": "multiplex"
+        "mode": "append"
       },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3,
@@ -104,11 +89,21 @@
     },
     {
       "parameters": {
-        "jsCode": "// =====================================================\n// BRIEFING DIÁRIO — Lótus Business\n// Consolida leads sem contato, deals ativos e reuniões\n// =====================================================\n\nconst hoje = new Date();\nconst diasSemana = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];\nconst meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];\nconst diaNome = diasSemana[hoje.getDay()];\nconst diaNum = hoje.getDate();\nconst mesNome = meses[hoje.getMonth()];\n\n// Coletar dados dos nós anteriores (com fallback seguro)\nlet leadsData = []; try { leadsData = $('HubSpot - Leads sem contato +3d').all() || []; } catch(e) {}\nlet dealsData = []; try { dealsData = $('HubSpot - Ofertas Ativas').all() || []; } catch(e) {}\nlet reunioesData = []; try { reunioesData = $('Google Agenda - Reuniões de Hoje').all() || []; } catch(e) {}\n\n// ---- REUNIÕES ----\nlet reunioesLinhas = '';\nif (reunioesData.length === 0) {\n  reunioesLinhas = '  Nenhuma reunião agendada';\n} else {\n  reunioesLinhas = reunioesData.map(r => {\n    const ev = r.json;\n    const inicio = ev.start?.dateTime\n      ? new Date(ev.start.dateTime).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'})\n      : 'dia todo';\n    const titulo = ev.summary || 'Sem título';\n    const local = ev.location ? ` | ${ev.location}` : '';\n    return `  ${inicio} — ${titulo}${local}`;\n  }).join('\\n');\n}\n\n// ---- LEADS SEM CONTATO ----\nlet leadsLinhas = '';\nif (leadsData.length === 0) {\n  leadsLinhas = '  Todos os leads contactados';\n} else {\n  const top10 = leadsData.slice(0, 10);\n  leadsLinhas = top10.map(l => {\n    const c = l.json.properties || l.json;\n    const nome = [c.firstname, c.lastname].filter(Boolean).join(' ') || 'Sem nome';\n    const status = c.hs_lead_status || 'N/D';\n    const ultimoContato = c.notes_last_updated\n      ? new Date(c.notes_last_updated).toLocaleDateString('pt-BR')\n      : 'nunca';\n    return `  • ${nome} | ${status} | último: ${ultimoContato}`;\n  }).join('\\n');\n  if (leadsData.length > 10) {\n    leadsLinhas += `\\n  ... e mais ${leadsData.length - 10} leads`;\n  }\n}\n\n// ---- OFERTAS ATIVAS ----\nlet dealsLinhas = '';\nlet totalPipeline = 0;\nif (dealsData.length === 0) {\n  dealsLinhas = '  Nenhuma oferta ativa no pipeline';\n} else {\n  const top10 = dealsData.slice(0, 10);\n  dealsLinhas = top10.map(d => {\n    const deal = d.json.properties || d.json;\n    const nome = deal.dealname || 'Sem nome';\n    const valor = deal.amount ? `R$ ${Number(deal.amount).toLocaleString('pt-BR')}` : 'Sem valor';\n    const stage = deal.dealstage || 'N/D';\n    totalPipeline += Number(deal.amount) || 0;\n    return `  • ${nome} | ${valor} | ${stage}`;\n  }).join('\\n');\n  if (dealsData.length > 10) {\n    dealsLinhas += `\\n  ... e mais ${dealsData.length - 10} ofertas`;\n  }\n}\n\nconst totalFormatado = totalPipeline > 0\n  ? `R$ ${totalPipeline.toLocaleString('pt-BR')}`\n  : 'N/D';\n\n// ---- MONTAR MENSAGEM ----\nconst mensagem = [\n  `📋 *BRIEFING ${diaNome.toUpperCase()}, ${diaNum} de ${mesNome}*`,\n  '',\n  `📅 *REUNIÕES HOJE (${reunioesData.length})*`,\n  reunioesLinhas,\n  '',\n  `🔴 *LEADS SEM CONTATO +3 DIAS (${leadsData.length})*`,\n  leadsLinhas,\n  '',\n  `💼 *OFERTAS ATIVAS (${dealsData.length}) | Pipeline: ${totalFormatado}*`,\n  dealsLinhas,\n  '',\n  `_Gerado automaticamente às 7h30 — Lótus Business_`\n].join('\\n');\n\nreturn [{ json: { mensagem, totalLeadsSemContato: leadsData.length, totalDeals: dealsData.length, totalReunioes: reunioesData.length } }];"
+        "jsCode": "// Colapsa todos os itens do Merge em 1 para que Formatar rode apenas uma vez\nreturn [{json: {ready: true}}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [112, 336],
+      "position": [32, 336],
+      "id": "c1000001-0001-0001-0001-000000000001",
+      "name": "Consolidar"
+    },
+    {
+      "parameters": {
+        "jsCode": "// =====================================================\n// BRIEFING DIÁRIO — Lótus Business\n// =====================================================\n\nconst hoje = new Date();\nconst diasSemana = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];\nconst meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];\nconst diaNome = diasSemana[hoje.getDay()];\nconst diaNum = hoje.getDate();\nconst mesNome = meses[hoje.getMonth()];\n\n// Coletar dados dos nós anteriores (com fallback seguro)\nlet leadsData = []; try { leadsData = $('HubSpot - Leads sem contato +3d').all() || []; } catch(e) {}\nlet dealsData = []; try { dealsData = $('HubSpot - Ofertas Ativas').all() || []; } catch(e) {}\nlet reunioesData = []; try { reunioesData = $('Google Agenda - Reuniões de Hoje').all() || []; } catch(e) {}\n\n// Helper: extrai string de campo HubSpot (suporta string direta ou objeto {value:...})\nconst getStr = (val) => {\n  if (!val) return '';\n  if (typeof val === 'string') return val;\n  if (typeof val === 'object' && val.value !== undefined) return String(val.value);\n  return '';\n};\n\n// ---- REUNIÕES ----\nlet reunioesLinhas = '';\nif (reunioesData.length === 0) {\n  reunioesLinhas = '  Nenhuma reunião agendada';\n} else {\n  reunioesLinhas = reunioesData.map(r => {\n    const ev = r.json;\n    const inicio = ev.start?.dateTime\n      ? new Date(ev.start.dateTime).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'})\n      : 'dia todo';\n    const titulo = ev.summary || 'Sem título';\n    const local = ev.location ? ` | ${ev.location}` : '';\n    return `  ${inicio} — ${titulo}${local}`;\n  }).join('\\n');\n}\n\n// ---- LEADS SEM CONTATO ----\nlet leadsLinhas = '';\nif (leadsData.length === 0) {\n  leadsLinhas = '  Todos os leads contactados';\n} else {\n  const top10 = leadsData.slice(0, 10);\n  leadsLinhas = top10.map(l => {\n    const props = l.json.properties || l.json || {};\n    const nome = [\n      getStr(props.firstname),\n      getStr(props.lastname)\n    ].filter(Boolean).join(' ') || getStr(props.email) || 'Sem nome';\n    const status = getStr(props.hs_lead_status) || 'N/D';\n    const ultimoContato = getStr(props.notes_last_updated)\n      ? new Date(getStr(props.notes_last_updated)).toLocaleDateString('pt-BR')\n      : 'nunca';\n    return `  • ${nome} | ${status} | último: ${ultimoContato}`;\n  }).join('\\n');\n  if (leadsData.length > 10) {\n    leadsLinhas += `\\n  ... e mais ${leadsData.length - 10} leads`;\n  }\n}\n\n// ---- OFERTAS ATIVAS ----\nlet dealsLinhas = '';\nlet totalPipeline = 0;\nif (dealsData.length === 0) {\n  dealsLinhas = '  Nenhuma oferta ativa no pipeline';\n} else {\n  const top10 = dealsData.slice(0, 10);\n  dealsLinhas = top10.map(d => {\n    const props = d.json.properties || d.json || {};\n    const nome = getStr(props.dealname) || 'Sem nome';\n    const valorRaw = Number(getStr(props.amount)) || 0;\n    const valor = valorRaw > 0 ? `R$ ${valorRaw.toLocaleString('pt-BR')}` : 'Sem valor';\n    const stage = getStr(props.dealstage) || 'N/D';\n    totalPipeline += valorRaw;\n    return `  • ${nome} | ${valor} | ${stage}`;\n  }).join('\\n');\n  if (dealsData.length > 10) {\n    dealsLinhas += `\\n  ... e mais ${dealsData.length - 10} ofertas`;\n  }\n}\n\nconst totalFormatado = totalPipeline > 0\n  ? `R$ ${totalPipeline.toLocaleString('pt-BR')}`\n  : 'N/D';\n\n// ---- MONTAR MENSAGEM ----\nconst mensagem = [\n  `📋 *BRIEFING ${diaNome.toUpperCase()}, ${diaNum} de ${mesNome}*`,\n  '',\n  `📅 *REUNIÕES HOJE (${reunioesData.length})*`,\n  reunioesLinhas,\n  '',\n  `🔴 *LEADS SEM CONTATO +3 DIAS (${leadsData.length})*`,\n  leadsLinhas,\n  '',\n  `💼 *OFERTAS ATIVAS (${dealsData.length}) | Pipeline: ${totalFormatado}*`,\n  dealsLinhas,\n  '',\n  `_Gerado automaticamente às 7h30 — Lótus Business_`\n].join('\\n');\n\nreturn [{ json: { mensagem, totalLeadsSemContato: leadsData.length, totalDeals: dealsData.length, totalReunioes: reunioesData.length } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [192, 336],
       "id": "242ac0cd-c607-4795-af04-50ec2b5dce9c",
       "name": "Formatar Briefing"
     },
@@ -122,7 +117,7 @@
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [352, 336],
+      "position": [432, 336],
       "id": "10b92649-463a-414d-b01f-1089c21332ea",
       "name": "Enviar Telegram",
       "webhookId": "9bf5208d-9d2f-4571-a5ae-7e19db00ddd3",
@@ -151,6 +146,9 @@
       "main": [[{"node": "Aguardar os 3", "type": "main", "index": 2}]]
     },
     "Aguardar os 3": {
+      "main": [[{"node": "Consolidar", "type": "main", "index": 0}]]
+    },
+    "Consolidar": {
       "main": [[{"node": "Formatar Briefing", "type": "main", "index": 0}]]
     },
     "Formatar Briefing": {
