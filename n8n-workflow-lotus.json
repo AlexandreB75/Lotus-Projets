@@ -426,7 +426,7 @@
     {
       "parameters": {
         "method": "GET",
-        "url": "={{ ($('Chatwoot Trigger').first().json.attachments || [])[0]?.file_url }}",
+        "url": "={{ ($('Chatwoot Trigger').first().json.attachments || [])[0]?.data_url || ($('Chatwoot Trigger').first().json.attachments || [])[0]?.file_url }}",
         "options": {
           "response": {
             "response": {
