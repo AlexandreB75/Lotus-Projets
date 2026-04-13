@@ -328,7 +328,8 @@
         "accountId": {"__rl": true, "value": "1", "mode": "list", "cachedResultName": "#1 - Chatwoot Lotus Projeto"},
         "kanbanBoardId": {"__rl": true, "value": "1", "mode": "list", "cachedResultName": "#1 - Pipeline de Vendas"},
         "kanbanStepId": {"__rl": true, "value": "={{ $('Parsear e Scoring').item.json.stepId }}", "mode": "id"},
-        "conversationId": {"__rl": true, "value": "={{ $('Parsear e Scoring').item.json.conversationId }}", "mode": "id"}
+        "conversationId": {"__rl": true, "value": "={{ $('Parsear e Scoring').item.json.conversationId }}", "mode": "id"},
+        "title": "={{ $('Parsear e Scoring').item.json.contactName || 'Lead #' + $('Parsear e Scoring').item.json.conversationId }}"
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
       "typeVersion": 1,
