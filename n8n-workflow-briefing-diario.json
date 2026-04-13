@@ -63,9 +63,13 @@
     },
     {
       "parameters": {
+        "resource": "event",
+        "operation": "getAll",
         "calendar": {"__rl": true, "mode": "list", "value": "primary"},
-        "start": "={{ new Date().toISOString().split('T')[0] }}T00:00:00",
-        "end": "={{ new Date().toISOString().split('T')[0] }}T23:59:59",
+        "returnAll": false,
+        "limit": 50,
+        "timeMin": "={{ new Date().toISOString().split('T')[0] }}T00:00:00",
+        "timeMax": "={{ new Date().toISOString().split('T')[0] }}T23:59:59",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.googleCalendar",
