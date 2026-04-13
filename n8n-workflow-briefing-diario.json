@@ -1,0 +1,197 @@
+{
+  "name": "Lótus Business - Briefing Diário 7h30",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "30 7 * * 1-6"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 300],
+      "id": "b1000001-0001-0001-0001-000000000001",
+      "name": "Gatilho 7h30 Seg-Sab"
+    },
+    {
+      "parameters": {
+        "authentication": "appToken",
+        "resource": "contact",
+        "operation": "getAll",
+        "returnAll": false,
+        "limit": 50,
+        "filterGroups": {
+          "filterGroupsValues": [
+            {
+              "filters": {
+                "filtersValues": [
+                  {
+                    "propertyName": "notes_last_updated",
+                    "operator": "LT",
+                    "value": "={{ new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] }}"
+                  },
+                  {
+                    "propertyName": "hs_lead_status",
+                    "operator": "NOT_IN",
+                    "value": "UNQUALIFIED;IN_PROGRESS;OPEN_DEAL;CONNECTED;CUSTOMER"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "properties": "firstname,lastname,phone,email,hs_lead_status,notes_last_updated,createdate",
+          "sorts": {
+            "sortsValues": [
+              {
+                "propertyName": "notes_last_updated",
+                "direction": "ASCENDING"
+              }
+            ]
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.2,
+      "position": [240, 160],
+      "id": "b1000002-0001-0001-0001-000000000002",
+      "name": "HubSpot - Leads sem contato +3d",
+      "credentials": {
+        "hubspotAppToken": {"id": "eKow701mG0MZiTiK", "name": "HubSpot account 2"}
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "appToken",
+        "resource": "deal",
+        "operation": "getAll",
+        "returnAll": false,
+        "limit": 50,
+        "filters": {
+          "filters": [
+            {
+              "name": "pipeline",
+              "value": "default"
+            }
+          ]
+        },
+        "additionalFields": {
+          "properties": "dealname,amount,dealstage,closedate,hubspot_owner_id,hs_lastmodifieddate",
+          "associations": "",
+          "sorts": {
+            "sortsValues": [
+              {
+                "propertyName": "hs_lastmodifieddate",
+                "direction": "DESCENDING"
+              }
+            ]
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.2,
+      "position": [240, 300],
+      "id": "b1000003-0001-0001-0001-000000000003",
+      "name": "HubSpot - Ofertas Ativas",
+      "credentials": {
+        "hubspotAppToken": {"id": "eKow701mG0MZiTiK", "name": "HubSpot account 2"}
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {"__rl": true, "mode": "list", "value": "primary"},
+        "start": "={{ new Date().toISOString().split('T')[0] }}T00:00:00",
+        "end": "={{ new Date().toISOString().split('T')[0] }}T23:59:59",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [240, 440],
+      "id": "b1000004-0001-0001-0001-000000000004",
+      "name": "Google Agenda - Reuniões de Hoje",
+      "credentials": {
+        "googleCalendarOAuth2Api": {"id": "", "name": "Google Calendar account"}
+      }
+    },
+    {
+      "parameters": {
+        "mode": "multiplex"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [480, 300],
+      "id": "b1000005-0001-0001-0001-000000000005",
+      "name": "Aguardar os 3"
+    },
+    {
+      "parameters": {
+        "jsCode": "// =====================================================\n// BRIEFING DIÁRIO — Lótus Business\n// Consolida leads sem contato, deals ativos e reuniões\n// =====================================================\n\nconst hoje = new Date();\nconst diasSemana = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];\nconst meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];\nconst diaNome = diasSemana[hoje.getDay()];\nconst diaNum = hoje.getDate();\nconst mesNome = meses[hoje.getMonth()];\n\n// Coletar dados dos nós anteriores\nconst leadsData = $('HubSpot - Leads sem contato +3d').all() || [];\nconst dealsData = $('HubSpot - Ofertas Ativas').all() || [];\nconst reunioesData = $('Google Agenda - Reuniões de Hoje').all() || [];\n\n// ---- REUNIÕES ----\nlet reunioesLinhas = '';\nif (reunioesData.length === 0) {\n  reunioesLinhas = '  Nenhuma reunião agendada';\n} else {\n  reunioesLinhas = reunioesData.map(r => {\n    const ev = r.json;\n    const inicio = ev.start?.dateTime\n      ? new Date(ev.start.dateTime).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'})\n      : 'dia todo';\n    const titulo = ev.summary || 'Sem título';\n    const local = ev.location ? ` | ${ev.location}` : '';\n    return `  ${inicio} — ${titulo}${local}`;\n  }).join('\\n');\n}\n\n// ---- LEADS SEM CONTATO ----\nlet leadsLinhas = '';\nif (leadsData.length === 0) {\n  leadsLinhas = '  Todos os leads foram contactados';\n} else {\n  const top10 = leadsData.slice(0, 10);\n  leadsLinhas = top10.map(l => {\n    const c = l.json.properties || l.json;\n    const nome = [c.firstname, c.lastname].filter(Boolean).join(' ') || 'Sem nome';\n    const status = c.hs_lead_status || 'N/D';\n    const ultimoContato = c.notes_last_updated\n      ? new Date(c.notes_last_updated).toLocaleDateString('pt-BR')\n      : 'nunca';\n    return `  • ${nome} | ${status} | último: ${ultimoContato}`;\n  }).join('\\n');\n  if (leadsData.length > 10) {\n    leadsLinhas += `\\n  ... e mais ${leadsData.length - 10} leads`;\n  }\n}\n\n// ---- OFERTAS ATIVAS ----\nlet dealsLinhas = '';\nlet totalPipeline = 0;\nif (dealsData.length === 0) {\n  dealsLinhas = '  Nenhuma oferta ativa no pipeline';\n} else {\n  const top10 = dealsData.slice(0, 10);\n  dealsLinhas = top10.map(d => {\n    const deal = d.json.properties || d.json;\n    const nome = deal.dealname || 'Sem nome';\n    const valor = deal.amount ? `R$ ${Number(deal.amount).toLocaleString('pt-BR')}` : 'Sem valor';\n    const stage = deal.dealstage || 'N/D';\n    totalPipeline += Number(deal.amount) || 0;\n    return `  • ${nome} | ${valor} | ${stage}`;\n  }).join('\\n');\n  if (dealsData.length > 10) {\n    dealsLinhas += `\\n  ... e mais ${dealsData.length - 10} ofertas`;\n  }\n}\n\nconst totalFormatado = totalPipeline > 0\n  ? `R$ ${totalPipeline.toLocaleString('pt-BR')}`\n  : 'N/D';\n\n// ---- MONTAR MENSAGEM ----\nconst mensagem = [\n  `📋 *BRIEFING ${diaNome.toUpperCase()}, ${diaNum} de ${mesNome}*`,\n  '',\n  `📅 *REUNIÕES HOJE (${reunioesData.length})*`,\n  reunioesLinhas,\n  '',\n  `🔴 *LEADS SEM CONTATO +3 DIAS (${leadsData.length})*`,\n  leadsLinhas,\n  '',\n  `💼 *OFERTAS ATIVAS (${dealsData.length}) | Pipeline: ${totalFormatado}*`,\n  dealsLinhas,\n  '',\n  `_Gerado automaticamente às 7h30 — Lótus Business_`\n].join('\\n');\n\nreturn [{ json: { mensagem, totalLeadsSemContato: leadsData.length, totalDeals: dealsData.length, totalReunioes: reunioesData.length } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [720, 300],
+      "id": "b1000006-0001-0001-0001-000000000006",
+      "name": "Formatar Briefing"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $vars.TELEGRAM_CHAT_ID }}",
+        "text": "={{ $json.mensagem }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [960, 300],
+      "id": "b1000007-0001-0001-0001-000000000007",
+      "name": "Enviar Telegram",
+      "credentials": {
+        "telegramApi": {"id": "", "name": "Telegram account"}
+      }
+    }
+  ],
+  "connections": {
+    "Gatilho 7h30 Seg-Sab": {
+      "main": [
+        [
+          {"node": "HubSpot - Leads sem contato +3d", "type": "main", "index": 0},
+          {"node": "HubSpot - Ofertas Ativas", "type": "main", "index": 0},
+          {"node": "Google Agenda - Reuniões de Hoje", "type": "main", "index": 0}
+        ]
+      ]
+    },
+    "HubSpot - Leads sem contato +3d": {
+      "main": [[{"node": "Aguardar os 3", "type": "main", "index": 0}]]
+    },
+    "HubSpot - Ofertas Ativas": {
+      "main": [[{"node": "Aguardar os 3", "type": "main", "index": 1}]]
+    },
+    "Google Agenda - Reuniões de Hoje": {
+      "main": [[{"node": "Aguardar os 3", "type": "main", "index": 2}]]
+    },
+    "Aguardar os 3": {
+      "main": [[{"node": "Formatar Briefing", "type": "main", "index": 0}]]
+    },
+    "Formatar Briefing": {
+      "main": [[{"node": "Enviar Telegram", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "lotus-business"
+  },
+  "pinData": {}
+}
