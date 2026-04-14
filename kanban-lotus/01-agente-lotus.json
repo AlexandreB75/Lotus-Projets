@@ -1009,7 +1009,7 @@
           "value": {
             "telefone": "={{ $('Info').item.json.telefone }}",
             "mensagem": "={{ $('Extrair mensagem').item.json.mensagem }}",
-            "timestamp": "={{ $('Info').item.json.timestamp.toDateTime() }}",
+            "timestamp": "={{ $('Info').item.json.timestamp?.toDateTime() }}",
             "id_mensagem": "={{ $('Info').item.json.id_mensagem }}"
           },
           "matchingColumns": [

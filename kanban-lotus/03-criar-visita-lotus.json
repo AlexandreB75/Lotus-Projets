@@ -80,7 +80,7 @@
             {
               "id": "a94abf94-1a64-4995-b4f1-4644993b3ece",
               "name": "evento_fim",
-              "value": "={{ $('Gatilho').item.json.evento_inicio.toDateTime().plus($('Gatilho').item.json.duracao_minutos, 'minutes').toString() }}",
+              "value": "={{ $('Gatilho').item.json.evento_inicio?.toDateTime()?.plus($('Gatilho').item.json.duracao_minutos, 'minutes').toString() }}",
               "type": "string"
             }
           ]
@@ -368,7 +368,7 @@
           "attributes": [
             {
               "name": "=data_ultima_consulta",
-              "value": "={{ $('Gatilho').item.json.evento_inicio.toDateTime().format('yyyy-MM-dd') }}"
+              "value": "={{ $('Gatilho').item.json.evento_inicio?.toDateTime().format('yyyy-MM-dd') }}"
             }
           ]
         }

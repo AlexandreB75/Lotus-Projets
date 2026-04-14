@@ -476,7 +476,7 @@
           "mode": "id"
         },
         "updateFields": {
-          "due_date": "={{ $now.plus(1, 'day') }}"
+          "due_date": "={{ $now?.plus(1, 'day') }}"
         }
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
