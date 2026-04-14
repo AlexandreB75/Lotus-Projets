@@ -26,7 +26,7 @@
       "parameters": {
         "sessionIdType": "customKey",
         "sessionKey": "={{ $('Gatilho').item.json.conversations[0].contact.phone_number || $('Gatilho').item.json.conversations[0].contact.additional_attributes.social_profiles.instagram }}",
-        "tableName": "n8n_historico_mensagens",
+        "tableName": "n8n_kanban_historico",
         "contextWindowLength": 50
       },
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
@@ -563,7 +563,7 @@
       "parameters": {
         "sessionIdType": "customKey",
         "sessionKey": "={{ $('Gatilho').item.json.conversations[0].contact.phone_number || $('Gatilho').item.json.conversations[0].contact.additional_attributes.social_profiles.instagram }}",
-        "tableName": "n8n_historico_mensagens",
+        "tableName": "n8n_kanban_historico",
         "contextWindowLength": 50
       },
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
@@ -580,7 +580,7 @@
       "parameters": {
         "sessionIdType": "customKey",
         "sessionKey": "={{ $('Gatilho').item.json.conversations[0].contact.phone_number || $('Gatilho').item.json.conversations[0].contact.additional_attributes.social_profiles.instagram }}",
-        "tableName": "n8n_historico_mensagens",
+        "tableName": "n8n_kanban_historico",
         "contextWindowLength": 50
       },
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",

@@ -212,7 +212,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_historico_mensagens",
+          "value": "n8n_kanban_historico",
           "mode": "list"
         },
         "deleteCommand": "delete",
@@ -246,7 +246,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_status_atendimento",
+          "value": "n8n_kanban_status",
           "mode": "list"
         },
         "columns": {
@@ -445,7 +445,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_fila_mensagens",
+          "value": "n8n_kanban_fila",
           "mode": "list"
         },
         "deleteCommand": "delete",
@@ -948,7 +948,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_fila_mensagens",
+          "value": "n8n_kanban_fila",
           "mode": "list"
         },
         "returnAll": true,
@@ -1001,7 +1001,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_fila_mensagens",
+          "value": "n8n_kanban_fila",
           "mode": "list"
         },
         "columns": {
@@ -1142,7 +1142,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_status_atendimento",
+          "value": "n8n_kanban_status",
           "mode": "list"
         },
         "returnAll": true,
@@ -1178,7 +1178,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_status_atendimento",
+          "value": "n8n_kanban_status",
           "mode": "list"
         },
         "columns": {
@@ -1259,7 +1259,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_fila_mensagens",
+          "value": "n8n_kanban_fila",
           "mode": "list"
         },
         "deleteCommand": "delete",
@@ -1571,7 +1571,7 @@
       "parameters": {
         "sessionIdType": "customKey",
         "sessionKey": "={{ $('Info').item.json.telefone }}",
-        "tableName": "n8n_historico_mensagens",
+        "tableName": "n8n_kanban_historico",
         "contextWindowLength": 50
       },
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
@@ -1763,7 +1763,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_historico_mensagens",
+          "value": "n8n_kanban_historico",
           "mode": "list"
         },
         "columns": {
@@ -1917,7 +1917,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_status_atendimento",
+          "value": "n8n_kanban_status",
           "mode": "list"
         },
         "columns": {
@@ -2033,7 +2033,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_fila_mensagens",
+          "value": "n8n_kanban_fila",
           "mode": "list"
         },
         "limit": 1,
@@ -2110,7 +2110,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_historico_mensagens",
+          "value": "n8n_kanban_historico",
           "mode": "list"
         },
         "limit": 1,
@@ -2153,7 +2153,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_historico_mensagens",
+          "value": "n8n_kanban_historico",
           "mode": "list"
         },
         "deleteCommand": "delete",
@@ -2187,7 +2187,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_historico_mensagens",
+          "value": "n8n_kanban_historico",
           "mode": "list"
         },
         "columns": {
@@ -2266,7 +2266,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_status_atendimento",
+          "value": "n8n_kanban_status",
           "mode": "list"
         },
         "columns": {
@@ -2441,7 +2441,7 @@
         },
         "table": {
           "__rl": true,
-          "value": "n8n_status_atendimento",
+          "value": "n8n_kanban_status",
           "mode": "list"
         },
         "columns": {
