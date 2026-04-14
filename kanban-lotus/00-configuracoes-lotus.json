@@ -26,7 +26,12 @@
       ],
       "id": "417f506f-29d9-445f-bf29-58f0964013fe",
       "name": "Configurar tabelas",
-      "credentials": {}
+      "credentials": {
+        "postgres": {
+          "id": "vbpoeMHOdLvDXo74",
+          "name": "Postgres Coolify"
+        }
+      }
     },
     {
       "parameters": {
@@ -503,9 +508,10 @@
         "resource": "account",
         "accountId": {
           "__rl": true,
-          "value": "",
+          "value": "1",
           "mode": "list",
-          "cachedResultName": "<SELECIONE SUA CONTA>"
+          "cachedResultName": "#1 - Chatwoot Lotus Projeto",
+          "cachedResultUrl": "https://chatwoot.alexandreborges.site/app/accounts/1/dashboard"
         }
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
