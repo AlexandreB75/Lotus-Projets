@@ -1,0 +1,980 @@
+{
+  "name": "08. Follow-up — Lótus Business",
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        3600,
+        896
+      ],
+      "id": "5ec3ceec-f148-4d54-85f8-6f59964b527a",
+      "name": "OpenAI Chat Model",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].contact.phone_number || $('Gatilho').item.json.conversations[0].contact.additional_attributes.social_profiles.instagram {{ '}'+'}' }}",
+        "tableName": "n8n_historico_mensagens",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        3728,
+        1712
+      ],
+      "id": "b8edf84a-9915-46a4-b326-44aedf72653f",
+      "name": "Postgres Chat Memory",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "operation": "sendMessage",
+        "accountId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "<SELECIONE SUA CONTA>"
+        },
+        "inboxId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].inbox.id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "conversationId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].display_id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "content": "={{ '{'+'{' }} $('Agente follow-up').item.json.output {{ '}'+'}' }}",
+        "replyToMessageId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "additionalFields": {}
+      },
+      "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
+      "typeVersion": 1,
+      "position": [
+        3968,
+        688
+      ],
+      "id": "5234da64-7ec0-4220-8464-f7ab16d59c2b",
+      "name": "Enviar follow-up qualificado",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        3584,
+        1296
+      ],
+      "id": "0b22728a-f30a-41c6-bf2c-c8253663d8eb",
+      "name": "OpenAI Chat Model1",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "operation": "sendMessage",
+        "accountId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "<SELECIONE SUA CONTA>"
+        },
+        "inboxId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].inbox.id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "conversationId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].display_id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "content": "={{ '{'+'{' }} $('Agente lembrete agendamento').item.json.output {{ '}'+'}' }}",
+        "replyToMessageId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "additionalFields": {}
+      },
+      "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
+      "typeVersion": 1,
+      "position": [
+        3952,
+        1136
+      ],
+      "id": "0c253beb-f0ab-4fe8-823f-e7e70c39089f",
+      "name": "Enviar lembrete de agendamento",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "<lead qualificado aguardando follow-up>",
+        "options": {
+          "systemMessage": "=# PAPEL\n\n<papel>\n  Você é a Yasmin, consultora virtual da Lótus Business. Sua missão agora é enviar um lembrete ao cliente sobre uma visita já agendada ao empreendimento. O prazo de lembrete expirou, indicando que é hora de confirmar a presença.\n</papel>\n\n# PERSONALIDADE E TOM DE VOZ\n\n<personalidade>\n  * **Solícita**: Lembre o cliente de forma gentil e prestativa\n  * **Clara**: Inclua as informações essenciais da visita (data, horário, endereço)\n  * **Prática**: Facilite a confirmação ou reagendamento\n  * **Objetiva**: Mensagem curta — máximo 4 linhas\n</personalidade>\n\n# CONTEXTO\n\n<contexto>\n  ## Situação\n\n  O cliente tem uma **visita agendada** ao stand da Lótus Business e o prazo de lembrete expirou (véspera). O objetivo é lembrar o cliente e solicitar confirmação de presença.\n\n  ## O que você tem acesso\n\n  * **Memória da conversa anterior** — use o histórico para identificar data, horário e produto de interesse\n  * Nenhuma ferramenta disponível — apenas geração da mensagem\n\n  ## Informações da Lótus Business\n\n  * **Nome:** Lótus Business\n  * **Stand de Vendas:** Av. Nereu Ramos, 1.000 — Centro, Itapema/SC\n  * **Consultor:** Alexandre Borges\n  * **Horário:** Seg-Sex 09h às 18h · Sáb 09h às 13h\n</contexto>\n\n# SOP - PROCEDIMENTO OPERACIONAL\n\n<sop>\n  ### Geração do Lembrete\n\n  1. **Consulte o histórico** da conversa para identificar:\n    * Data e horário da visita\n    * Produto de interesse\n  2. **Gere UMA mensagem** que:\n    * Lembre a visita agendada (data + horário + endereço do stand)\n    * Peça confirmação de presença de forma simples e direta\n    * Mencione o consultor Alexandre Borges\n  3. **NÃO**: não inicie nova qualificação, não liste produtos, não faça perguntas extras\n</sop>"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        3600,
+        1136
+      ],
+      "id": "e57bac37-e7b5-4680-a4ce-df688450cdcf",
+      "name": "Agente lembrete agendamento"
+    },
+    {
+      "parameters": {
+        "resource": "kanbanBoard",
+        "operation": "get",
+        "accountId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $json.account_id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "kanbanBoardId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $json.board_id {{ '}'+'}' }}",
+          "mode": "id"
+        }
+      },
+      "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
+      "typeVersion": 1,
+      "position": [
+        2960,
+        1136
+      ],
+      "id": "f1956c8d-7a05-46c7-84fa-c36187756363",
+      "name": "Buscar informações funil",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "=Use essa ferramenta para atualizar o próximo follow-up (End_Date), ou marcar o lead como perdido.\n\nPara marcar como perdido, use o ID de etapa:\n\nPerdido={{ '{'+'{' }} $('Buscar informações funil').item.json.steps.find(s => s.cancelled).id {{ '}'+'}' }}",
+        "resource": "kanbanTask",
+        "operation": "update",
+        "accountId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho').item.json.account_id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "kanbanBoardId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho').item.json.board_id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "kanbanTaskId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho').item.json.id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "updateFields": {
+          "description": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') {{ '}'+'}' }}",
+          "board_step_id": {
+            "mode": "list",
+            "value": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('Kanban_Step', ``, 'string') {{ '}'+'}' }}"
+          },
+          "due_date": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('End_Date', ``, 'string') {{ '}'+'}' }}"
+        }
+      },
+      "type": "@fazer-ai/n8n-nodes-chatwoot.chatwootTool",
+      "typeVersion": 1,
+      "position": [
+        3888,
+        896
+      ],
+      "id": "5b06364b-458d-413a-89af-d1690f53649f",
+      "name": "Atualizar tarefa",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        3568,
+        1712
+      ],
+      "id": "ac488579-000c-494c-893d-e7be58867fb6",
+      "name": "OpenAI Chat Model3",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "<lead qualificado aguardando follow-up>",
+        "options": {
+          "systemMessage": "=# PAPEL\n\n<papel>\n  Você é a Yasmin, consultora virtual da Lótus Business. Sua missão agora é enviar uma mensagem de acompanhamento após a visita de um cliente que **compareceu** ao empreendimento. O objetivo é demonstrar cuidado, coletar impressões e manter o relacionamento aquecido.\n</papel>\n\n# PERSONALIDADE E TOM DE VOZ\n\n<personalidade>\n  * **Atenciosa**: Demonstre que a equipe se importa com a experiência do cliente\n  * **Calorosa**: Tom genuíno, como se estivesse continuando uma conversa\n  * **Discreta**: Não pressione por decisão — apenas mantenha o relacionamento\n  * **Objetiva**: Mensagem curta — máximo 4 linhas\n</personalidade>\n\n# CONTEXTO\n\n<contexto>\n  ## Situação\n\n  O cliente **visitou** o empreendimento e o card foi movido para \"Visita Realizada\". O objetivo é fazer o follow-up de satisfação e manter o lead aquecido para a próxima etapa (proposta).\n\n  ## O que você tem acesso\n\n  * **Memória da conversa anterior** — use o histórico para identificar o produto de interesse e a visita realizada\n  * Nenhuma ferramenta disponível — apenas geração da mensagem\n</contexto>\n\n# SOP\n\n<sop>\n  1. **Consulte o histórico** para identificar o produto visitado\n  2. **Gere UMA mensagem** que:\n    * Agradeça pela visita\n    * Pergunte sobre as impressões de forma leve (ex: \"O que achou?\")\n    * Coloque-se à disposição para enviar mais informações ou proposta\n  3. **NÃO**: não pressione por decisão imediata, não liste preços não solicitados\n</sop>"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        3584,
+        1552
+      ],
+      "id": "501c5e7b-5e16-4c17-a1a7-6c292c31148b",
+      "name": "Agente follow-up pós-consulta"
+    },
+    {
+      "parameters": {
+        "operation": "sendMessage",
+        "accountId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "<SELECIONE SUA CONTA>"
+        },
+        "inboxId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].inbox.id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "conversationId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].display_id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "content": "={{ '{'+'{' }} $('Agente follow-up pós-consulta').item.json.output {{ '}'+'}' }}",
+        "replyToMessageId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "additionalFields": {}
+      },
+      "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
+      "typeVersion": 1,
+      "position": [
+        3936,
+        1552
+      ],
+      "id": "5562008d-a688-4a69-a52b-aae648610a60",
+      "name": "Enviar follow-up pós-consulta",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "resource": "kanbanTask",
+        "operation": "move",
+        "accountId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho').item.json.account_id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "kanbanBoardId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho').item.json.board_id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "kanbanTaskId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho').item.json.id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "kanbanStepId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Buscar informações funil').item.json.steps.find(s => s.name === 'Pós-venda')?.id {{ '}'+'}' }}",
+          "mode": "id"
+        }
+      },
+      "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
+      "typeVersion": 1,
+      "position": [
+        4144,
+        1552
+      ],
+      "id": "ad5f6a0f-3c27-46c2-9147-d9cb6902dec1",
+      "name": "Mover para pós-venda",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "accountId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "<SELECIONE SUA CONTA>"
+        },
+        "events": [
+          "kanban_task_overdue"
+        ],
+        "inboxId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "all"
+        }
+      },
+      "type": "@fazer-ai/n8n-nodes-chatwoot.chatwootTrigger",
+      "typeVersion": 1,
+      "position": [
+        2752,
+        1136
+      ],
+      "id": "d14526ff-02d9-4b46-888b-b136a1009dbb",
+      "name": "Gatilho",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ '{'+'{' }} $('Gatilho').item.json.board_step.name === 'Qualificado' || $('Gatilho').item.json.board_step.name === 'No-show' {{ '}'+'}' }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "id": "cf7efd4e-2005-4b97-94ac-99a6eb75abd4"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Follow-up qualificado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "932f6685-cb9b-4dd7-9dd0-8e00f2c09107",
+                    "leftValue": "={{ '{'+'{' }} $('Gatilho').item.json.board_step.name {{ '}'+'}' }}",
+                    "rightValue": "Agendado",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Lembrete de agendamento"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ecf262ec-4ce5-467c-86ea-0c69d0d45c45",
+                    "leftValue": "={{ '{'+'{' }} $('Gatilho').item.json.board_step.name {{ '}'+'}' }}",
+                    "rightValue": "Compareceu",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Follow-up pós-consulta"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        3168,
+        1104
+      ],
+      "id": "4aa95f5d-ec0a-4577-b6e4-6efd4f033f06",
+      "name": "Tipo de follow-up"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3200,
+        1680
+      ],
+      "id": "636186c0-8d7e-4931-9532-d4b1448dd3cf",
+      "name": "Ignorar"
+    },
+    {
+      "parameters": {
+        "resource": "kanbanTask",
+        "operation": "update",
+        "accountId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho1').item.json.account_id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "kanbanBoardId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho1').item.json.board_id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "kanbanTaskId": {
+          "__rl": true,
+          "value": "={{ '{'+'{' }} $('Gatilho1').item.json.id {{ '}'+'}' }}",
+          "mode": "id"
+        },
+        "updateFields": {
+          "due_date": "={{ '{'+'{' }} $now.plus(1, 'day') {{ '}'+'}' }}"
+        }
+      },
+      "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
+      "typeVersion": 1,
+      "position": [
+        3200,
+        1488
+      ],
+      "id": "ebf12965-6c29-404a-af7f-e5b89a6825c9",
+      "name": "Atualizar data da tarefa",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "accountId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "<SELECIONE SUA CONTA>"
+        },
+        "events": [
+          "kanban_task_updated"
+        ],
+        "inboxId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "all"
+        }
+      },
+      "type": "@fazer-ai/n8n-nodes-chatwoot.chatwootTrigger",
+      "typeVersion": 1,
+      "position": [
+        2784,
+        1568
+      ],
+      "id": "d3be00e3-ad68-4402-ab0c-d8941d4b9c48",
+      "name": "Gatilho1",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "295bcf0e-d0ef-4530-aa58-04d1bf35e45a",
+              "leftValue": "={{ '{'+'{' }} $json.changed_attributes.board_step.current_value.name {{ '}'+'}' }}",
+              "rightValue": "Compareceu",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "e70d0c5e-488d-44dd-90b3-c9e43bcec629",
+              "leftValue": "={{ '{'+'{' }} $json.changed_attributes.board_step.current_value.name {{ '}'+'}' }}",
+              "rightValue": "No-show",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2976,
+        1568
+      ],
+      "id": "27502ce7-0edf-4a8f-a006-50bf77d536b4",
+      "name": "Compareceu ou no-show?"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].contact.phone_number || $('Gatilho').item.json.conversations[0].contact.additional_attributes.social_profiles.instagram {{ '}'+'}' }}",
+        "tableName": "n8n_historico_mensagens",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        3728,
+        1296
+      ],
+      "id": "59b8f87e-abd4-47c1-920b-8f53df83ad92",
+      "name": "Postgres Chat Memory2",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].contact.phone_number || $('Gatilho').item.json.conversations[0].contact.additional_attributes.social_profiles.instagram {{ '}'+'}' }}",
+        "tableName": "n8n_historico_mensagens",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        3744,
+        896
+      ],
+      "id": "2db3ef6e-6e77-4871-a274-047cd9a14bf9",
+      "name": "Postgres Chat Memory3",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ '{'+'{' }} $('Gatilho').item.json.board_step.name === 'Qualificado' ? '<lead qualificado aguardando follow-up>' : '<paciente com agendamento não compareceu>' {{ '}'+'}' }}",
+        "options": {
+          "systemMessage": "=# PAPEL\n\n<papel>\n  Você é a Yasmin, consultora virtual da Lótus Business. Sua missão agora é enviar uma mensagem de follow-up conforme a situação do lead.\n</papel>\n\n# PERSONALIDADE E TOM DE VOZ\n\n<personalidade>\n  * **Não invasiva**: Retome o contato de forma leve, sem pressão\n  * **Prestativa**: Mostre-se disponível para ajudar com dúvidas pendentes\n  * **Natural**: Como se estivesse retomando uma conversa pausada\n  * **Objetiva**: Máximo 3 linhas\n</personalidade>\n\n# SOP\n\n<sop>\n  ## 1) IDENTIFIQUE O NÚMERO DO FOLLOW-UP\n\n  Verifique na descrição da tarefa se já existe a linha `Follow-ups enviados: X`.\n  - Se **não existir**, este é o **1o follow-up** → contador = `1`\n  - Se existir com valor `1`, este é o **2o follow-up** → contador = `2`\n\n  ## 2) ESCOLHA A SITUAÇÃO CORRETA\n\n  - **Seção A: Follow-up de Qualificado** — cliente demonstrou interesse mas não agendou visita\n  - **Seção B: Follow-up de No-show** — cliente faltou à visita agendada\n\n  ## 3) SEÇÃO A — FOLLOW-UP DE QUALIFICADO\n\n  **1o follow-up**: Retome o assunto. Ofereça novos horários ou tire dúvidas.\n  Exemplo: \"Oi [nome], tudo bem? Você havia se interessado pelas unidades da Lótus Business. Ainda tem interesse em conhecer o empreendimento? Podemos agendar uma visita no horário que for melhor para você.\"\n\n  **2o follow-up**: Tom de encerramento amigável.\n  Exemplo: \"Olá [nome]! Passando rapidinho — caso queira conhecer o Lótus Business, é só me chamar. Estamos com ótimas condições e o Alexandre estará disponível para te receber. Um abraço!\"\n\n  ## 4) SEÇÃO B — FOLLOW-UP DE NO-SHOW\n\n  **1o follow-up**: Verifique o que aconteceu e ofereça reagendamento.\n  Exemplo: \"Oi [nome], tudo bem? Notei que não conseguiu comparecer à visita. Aconteceu algum imprevisto? Podemos reagendar para quando for melhor para você.\"\n\n  **2o follow-up**: Tom de encerramento amigável.\n  Exemplo: \"Olá [nome]! Estou aqui caso queira reagendar a visita à Lótus Business. Qualquer dúvida é só chamar. Abraço!\"\n\n  ## 5) ATUALIZAR DESCRIÇÃO DA TAREFA\n\n  Ao final, inclua na descrição da tarefa: `Follow-ups enviados: [contador]`\n  Preserve todo o conteúdo anterior da descrição.\n</sop>"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        3616,
+        688
+      ],
+      "id": "4f3161e1-1b70-4fb7-abe9-19b9f088b81f",
+      "name": "Agente follow-up"
+    },
+    {
+      "parameters": {
+        "content": "## Quer entender como funciona?\n\n\n### Assista o vídeo, deixe um like, e se inscreva no canal para ter acesso a mais workflows como esse!\n\n[![Vídeo YouTube Secretária v3](https://i1.ytimg.com/vi_webp/vYtaGw3vRII/maxresdefault.webp)](https://www.youtube.com/watch?v=vYtaGw3vRII)",
+        "height": 440,
+        "width": 500,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2560,
+        144
+      ],
+      "id": "88b03b41-87f0-4495-bb47-bbbd445308fd",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "content": "## [Clique aqui e entre agora para tirar suas dúvidas](https://lucasmoreira.fazer.ai)\n[![Banner comunidade](https://framerusercontent.com/images/KIXMxk9eKCoCsNeVm1oaz5HnaQ.png)](https://lucasmoreira.fazer.ai)",
+        "height": 440,
+        "width": 1380,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3072,
+        144
+      ],
+      "id": "065e330b-1ef7-48f2-a57f-e6f04539d26f",
+      "name": "Sticky Note36"
+    },
+    {
+      "parameters": {
+        "content": "## Usei Hostinger pra este workflow.\n## Replique aqui.\n\n\n\n\n\n\n\n\n\n## [Use o cupom `FAZERAI` pra ter 10% de desconto na sua primeira compra!](https://www.hostg.xyz/SHIwa)\n",
+        "height": 316,
+        "width": 552,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        592
+      ],
+      "id": "8bb31719-088d-4559-b28b-4a9c2403c1c7",
+      "name": "Sticky Note21"
+    },
+    {
+      "parameters": {
+        "content": "[![Hostinger](https://framerusercontent.com/images/ptGVDA4KqG8GLNlWRDzFxaM.png?width=600&height=119)](https://www.hostg.xyz/SHIwa)\n",
+        "height": 96,
+        "width": 324,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2112,
+        704
+      ],
+      "id": "20c16994-d2e5-4d72-91b8-5f1299c44f9c",
+      "name": "Sticky Note29"
+    },
+    {
+      "parameters": {
+        "content": "[![fazer.ai](https://framerusercontent.com/images/HqY9djLTzyutSKnuLLqBr92KbM.png?scale-down-to=256)](https://fazer.ai?utm_source=n8n&utm_campaign=sec-v3)\n\n## Esse é um template faça você mesmo do canal\n## Lucas Moreira\n\n### Inscreva-se no nosso canal no YouTube\n[![YouTube Lucas Moreira](https://img.shields.io/youtube/channel/subscribers/UCtmp6SxzLscu0GRTbgM8FTw?style=flat-square&logo=youtube&label=Inscreva-se&color=f00)](https://youtube.com/@eulucassmoreira?si=0lH7hwX9pukjhmPQ)\n[![Instagram](https://img.shields.io/badge/instagram-black?logo=instagram&style=for-the-badge)](https://instagram.com/eulucassmoreira)\n[![GitHub fazer.ai](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white&label)](https://github.com/fazer-ai)\n",
+        "height": 440,
+        "width": 550,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        144
+      ],
+      "id": "2272c7e3-db99-4356-8c51-1b2a8a275778",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "## Follow-up qualificado / No-show",
+        "height": 434,
+        "width": 684,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3488,
+        608
+      ],
+      "id": "87470e01-b23d-4f3d-a593-c58450141ac6",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Lembrete de agendamento",
+        "height": 380,
+        "width": 684
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3488,
+        1056
+      ],
+      "id": "1d280929-9761-43c9-b8d3-340e04a8c0a2",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Follow-up pós-consulta",
+        "height": 390,
+        "width": 840,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3488,
+        1456
+      ],
+      "id": "5185acce-9575-4d75-b119-14a4f0830bf5",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Atualizar follow-up",
+        "height": 392,
+        "width": 744,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2688,
+        1456
+      ],
+      "id": "c889f597-47af-418f-89bf-a55d4aeef031",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "# Checklist\n- [ ] Credenciais: OpenAI, Chatwoot, Postgres\n- [ ] Configurar triggers Chatwoot\n- [ ] Ajustar System Prompts dos agentes",
+        "height": 176,
+        "width": 432,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2656,
+        768
+      ],
+      "id": "ea83fa18-e0bc-4536-884f-ab958dd4e4a4",
+      "name": "Sticky Note8"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agente follow-up",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agente follow-up pós-consulta",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agente lembrete agendamento",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agente lembrete agendamento": {
+      "main": [
+        [
+          {
+            "node": "Enviar lembrete de agendamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar informações funil": {
+      "main": [
+        [
+          {
+            "node": "Tipo de follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualizar tarefa": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente follow-up",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agente follow-up pós-consulta",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agente follow-up pós-consulta": {
+      "main": [
+        [
+          {
+            "node": "Enviar follow-up pós-consulta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar follow-up pós-consulta": {
+      "main": [
+        [
+          {
+            "node": "Mover para pós-venda",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gatilho": {
+      "main": [
+        [
+          {
+            "node": "Buscar informações funil",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tipo de follow-up": {
+      "main": [
+        [
+          {
+            "node": "Agente follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Agente lembrete agendamento",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Agente follow-up pós-consulta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gatilho1": {
+      "main": [
+        [
+          {
+            "node": "Compareceu ou no-show?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compareceu ou no-show?": {
+      "main": [
+        [
+          {
+            "node": "Atualizar data da tarefa",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ignorar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agente lembrete agendamento",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory3": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agente follow-up",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agente follow-up": {
+      "main": [
+        [
+          {
+            "node": "Enviar follow-up qualificado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}
