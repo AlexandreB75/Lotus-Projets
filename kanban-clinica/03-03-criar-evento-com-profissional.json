@@ -100,8 +100,9 @@
       "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "{{ $('Criar workflow 02').item.json.id }}",
-          "mode": "list"
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "⚠️ SELECIONAR: 02. Buscar janelas profissional"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",

@@ -1360,8 +1360,9 @@
         "description": "Utilize essa ferramenta para criar um agendamento no horário especificado, com duração do evento conforme já especificado nas instruções gerais.\n\nSempre verifique se já não chamou essa ferramenta antes de chamá-la.\n\n**NUNCA CHAME ESSA FERRAMENTA MAIS DE UMA VEZ PARA O MESMO AGENDAMENTO.**\n",
         "workflowId": {
           "__rl": true,
-          "value": "{{ $('Criar workflow 03').item.json.id }}",
-          "mode": "list"
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "⚠️ SELECIONAR: 03. Criar visita — Lótus Business"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -1461,8 +1462,9 @@
         "description": "Utilize essa ferramenta para atualizar informações no título e descrição do evento.\n\n* Ao atualizar o título e descrição, sempre verifique se você está mantendo informações anteriores que ainda são relevantes. Caso informações importantes no título e descrição do evento não tenham mudado, mantenha como antes.\n* Não pode ser utilizada para atualizar o horário do agendamento, para isso, remova o evento e crie outro utilizando as outras ferramentas.",
         "workflowId": {
           "__rl": true,
-          "value": "{{ $('Criar workflow 05').item.json.id }}",
-          "mode": "list"
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "⚠️ SELECIONAR: 05. Atualizar agendamento — Lótus Business"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -1589,8 +1591,9 @@
         "description": "Utilize essa ferramenta para direcionar o atendimento para o gestor responsável.",
         "workflowId": {
           "__rl": true,
-          "value": "{{ $('Criar workflow 07').item.json.id }}",
-          "mode": "list"
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "⚠️ SELECIONAR: 07. Escalar humano — Lótus Business"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -2652,8 +2655,9 @@
         "description": "Utilize essa ferramenta para buscar as janelas disponíveis no um período especificado. Evite utilizar com janelas de tamanho muito grandes e muito pequenas. Por exemplo, considerando disponibilidade já informada das 08h às 19h:\n\n* Para janelas maiores, não busque com período fora do horário de disponibilidade já informado nas instruções.\n\n\"Quais janelas estão disponíveis amanhã?\"\n- Período início: 08h, período fim: 19h\n- (Ao invés de 00h às 00h do dia seguinte)\n\n* Para janelas menores, insira uma margem antes e depois do horário desejado.\n\n\"O horário das 12h está disponível?\"\n- Período início: 10h, período fim: 14h\n- (Ao invés de 12h às 12h30, para tamanho de janela de 30m)\n\n* Para janelas muito próximas do horário atual, certifique-se de não consultar com período início no passado.\n\n\"Tem algum horário agora de manhã?\" (Mensagem recebida às 09:40)\n- Período início: 10h, período fim: 12h\n- (Ao invés de 09h às 12h, pois 09h já passou) ",
         "workflowId": {
           "__rl": true,
-          "value": "{{ $('Criar workflow 02').item.json.id }}",
-          "mode": "list"
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "⚠️ SELECIONAR: 02. Buscar janelas — Lótus Business"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -2745,8 +2749,9 @@
         "description": "Utilize essa ferramenta para buscar os agendamentos já existentes para o contato atual. Utilize antes de criar novos agendamentos, para evitar agendamentos duplicados.",
         "workflowId": {
           "__rl": true,
-          "value": "{{ $('Criar workflow 04').item.json.id }}",
-          "mode": "list"
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "⚠️ SELECIONAR: 04. Buscar agendamentos — Lótus Business"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -2795,8 +2800,9 @@
         "description": "Utilize essa ferramenta para cancelar um agendamento.",
         "workflowId": {
           "__rl": true,
-          "value": "{{ $('Criar workflow 06').item.json.id }}",
-          "mode": "list"
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "⚠️ SELECIONAR: 06. Cancelar agendamento — Lótus Business"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
