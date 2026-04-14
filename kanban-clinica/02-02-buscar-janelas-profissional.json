@@ -191,7 +191,7 @@
           "conditions": [
             {
               "id": "ed84157f-b3d7-454c-88e9-099a28153c0a",
-              "leftValue": "={{ $('Gatilho').item.json.periodo_inicio.toDateTime() }}",
+              "leftValue": "={{ $('Gatilho').item.json.periodo_inicio?.toDateTime() }}",
               "rightValue": "= {{ $now }}",
               "operator": {
                 "type": "dateTime",
