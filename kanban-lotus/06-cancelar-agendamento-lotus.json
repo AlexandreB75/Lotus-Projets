@@ -87,13 +87,13 @@
             {
               "id": "d4e5a5c3-cecc-461a-90ad-34fe97d3cc0c",
               "name": "id_agenda",
-              "value": "={{ '{'+'{' }} $('ID agendas').item.json[$('Gatilho').item.json.id_profissional] {{ '}'+'}' }}",
+              "value": "={{ $('ID agendas').item.json[$('Gatilho').item.json.id_profissional] }}",
               "type": "string"
             },
             {
               "id": "97b938d9-8b1d-4a55-acb4-5e584136d75d",
               "name": "id_etapa_cancelada",
-              "value": "={{ '{'+'{' }} $('Gatilho').item.json.tarefa.board.steps.find(s => s.cancelled)?.id ?? '' {{ '}'+'}' }}",
+              "value": "={{ $('Gatilho').item.json.tarefa.board.steps.find(s => s.cancelled)?.id ?? '' }}",
               "type": "string"
             }
           ]
@@ -114,10 +114,10 @@
         "operation": "delete",
         "calendar": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $json.id_agenda {{ '}'+'}' }}",
+          "value": "={{ $json.id_agenda }}",
           "mode": "id"
         },
-        "eventId": "={{ '{'+'{' }} $('Gatilho').item.json.id_evento {{ '}'+'}' }}",
+        "eventId": "={{ $('Gatilho').item.json.id_evento }}",
         "options": {}
       },
       "type": "n8n-nodes-base.googleCalendar",

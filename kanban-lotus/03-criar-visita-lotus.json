@@ -13,7 +13,7 @@
           "conditions": [
             {
               "id": "0423c482-5749-4c92-ba44-a33b281918a6",
-              "leftValue": "={{ '{'+'{' }} $json {{ '}'+'}' }}",
+              "leftValue": "={{ $json }}",
               "rightValue": "",
               "operator": {
                 "type": "object",
@@ -80,7 +80,7 @@
             {
               "id": "a94abf94-1a64-4995-b4f1-4644993b3ece",
               "name": "evento_fim",
-              "value": "={{ '{'+'{' }} $('Gatilho').item.json.evento_inicio.toDateTime().plus($('Gatilho').item.json.duracao_minutos, 'minutes').toString() {{ '}'+'}' }}",
+              "value": "={{ $('Gatilho').item.json.evento_inicio.toDateTime().plus($('Gatilho').item.json.duracao_minutos, 'minutes').toString() }}",
               "type": "string"
             }
           ]
@@ -106,12 +106,12 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "periodo_inicio": "={{ '{'+'{' }} $('Gatilho').item.json.evento_inicio {{ '}'+'}' }}",
-            "periodo_fim": "={{ '{'+'{' }} $('Calcula fim do evento').item.json.evento_fim {{ '}'+'}' }}",
-            "id_profissional": "={{ '{'+'{' }} $('Gatilho').item.json.id_profissional {{ '}'+'}' }}",
-            "tamanho_janela_minutos": "={{ '{'+'{' }} $('Gatilho').item.json.duracao_minutos {{ '}'+'}' }}",
+            "periodo_inicio": "={{ $('Gatilho').item.json.evento_inicio }}",
+            "periodo_fim": "={{ $('Calcula fim do evento').item.json.evento_fim }}",
+            "id_profissional": "={{ $('Gatilho').item.json.id_profissional }}",
+            "tamanho_janela_minutos": "={{ $('Gatilho').item.json.duracao_minutos }}",
             "amostras": 1,
-            "granularidade": "={{ '{'+'{' }} $('Gatilho').item.json.duracao_minutos {{ '}'+'}' }}"
+            "granularidade": "={{ $('Gatilho').item.json.duracao_minutos }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -270,15 +270,15 @@
       "parameters": {
         "calendar": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Buscar janelas disponíveis').item.json.id_agenda {{ '}'+'}' }}",
+          "value": "={{ $('Buscar janelas disponíveis').item.json.id_agenda }}",
           "mode": "id"
         },
-        "start": "={{ '{'+'{' }} $('Gatilho').item.json.evento_inicio {{ '}'+'}' }}",
-        "end": "={{ '{'+'{' }} $('Calcula fim do evento').item.json.evento_fim {{ '}'+'}' }}",
+        "start": "={{ $('Gatilho').item.json.evento_inicio }}",
+        "end": "={{ $('Calcula fim do evento').item.json.evento_fim }}",
         "additionalFields": {
           "attendees": [],
-          "description": "={{ '{'+'{' }} $('Gatilho').item.json.descricao {{ '}'+'}' }}",
-          "summary": "={{ '{'+'{' }} $('Gatilho').item.json.titulo {{ '}'+'}' }}"
+          "description": "={{ $('Gatilho').item.json.descricao }}",
+          "summary": "={{ $('Gatilho').item.json.titulo }}"
         }
       },
       "type": "n8n-nodes-base.googleCalendar",
@@ -327,13 +327,13 @@
             {
               "id": "e6ee1079-a033-4240-be55-f2fbfdcc94b2",
               "name": "id_evento",
-              "value": "={{ '{'+'{' }} $('Criar evento').item.json.id {{ '}'+'}' }}",
+              "value": "={{ $('Criar evento').item.json.id }}",
               "type": "string"
             },
             {
               "id": "1d2d8eba-7e8b-4203-a9dc-16a72de08e4e",
               "name": "evento",
-              "value": "={{ '{'+'{' }} $('Criar evento').item.json {{ '}'+'}' }}",
+              "value": "={{ $('Criar evento').item.json }}",
               "type": "object"
             }
           ]
@@ -355,12 +355,12 @@
         "operation": "setCustomAttributes",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho').item.json.id_conta }}",
           "mode": "id"
         },
         "contactId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho').item.json.id_contato {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho').item.json.id_contato }}",
           "mode": "id"
         },
         "specifyCustomAttributes": "keypair",
@@ -368,7 +368,7 @@
           "attributes": [
             {
               "name": "=data_ultima_consulta",
-              "value": "={{ '{'+'{' }} $('Gatilho').item.json.evento_inicio.toDateTime().format('yyyy-MM-dd') {{ '}'+'}' }}"
+              "value": "={{ $('Gatilho').item.json.evento_inicio.toDateTime().format('yyyy-MM-dd') }}"
             }
           ]
         }

@@ -74,7 +74,7 @@
             {
               "id": "d4e5a5c3-cecc-461a-90ad-34fe97d3cc0c",
               "name": "id_agenda",
-              "value": "={{ '{'+'{' }} $('ID agendas').item.json[$('Gatilho').item.json.id_profissional] {{ '}'+'}' }}",
+              "value": "={{ $('ID agendas').item.json[$('Gatilho').item.json.id_profissional] }}",
               "type": "string"
             }
           ]
@@ -95,13 +95,13 @@
         "operation": "getAll",
         "calendar": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $json.id_agenda {{ '}'+'}' }}",
+          "value": "={{ $json.id_agenda }}",
           "mode": "id"
         },
         "returnAll": true,
         "timeMax": "=",
         "options": {
-          "query": "={{ '{'+'{' }} $('Gatilho').item.json.telefone {{ '}'+'}' }}"
+          "query": "={{ $('Gatilho').item.json.telefone }}"
         }
       },
       "type": "n8n-nodes-base.googleCalendar",

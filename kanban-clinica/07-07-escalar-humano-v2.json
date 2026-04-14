@@ -123,20 +123,20 @@
         "operation": "addLabels",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $json.id_conta }}",
           "mode": "id"
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $json.id_inbox {{ '}'+'}' }}",
+          "value": "={{ $json.id_inbox }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $json.id_conversa {{ '}'+'}' }}",
+          "value": "={{ $json.id_conversa }}",
           "mode": "id"
         },
-        "labels": "={{ '{'+'{' }} [\"agente-off\"] {{ '}'+'}' }}"
+        "labels": "={{ [\"agente-off\"] }}"
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
       "typeVersion": 1,
@@ -201,7 +201,7 @@
           "mode": "list",
           "cachedResultName": "<SELECIONE SUA CONVERSA>"
         },
-        "content": "=Assistente desabilitado para o usuário {{ '{'+'{' }} $('Gatilho').item.json.nome || '(usuário não cadastrado)' {{ '}'+'}' }} ({{ '{'+'{' }} $('Gatilho').item.json.telefone {{ '}'+'}' }}).\n\n*Última mensagem*:\n\n\"{{ '{'+'{' }} $('Gatilho').item.json.ultima_mensagem {{ '}'+'}' }}\"\n\n*Resumo da conversa*:\n\n\"{{ '{'+'{' }} $('Gatilho').item.json.resumo_conversa {{ '}'+'}' }}\"",
+        "content": "=Assistente desabilitado para o usuário {{ $('Gatilho').item.json.nome || '(usuário não cadastrado)' }} ({{ $('Gatilho').item.json.telefone }}).\n\n*Última mensagem*:\n\n\"{{ $('Gatilho').item.json.ultima_mensagem }}\"\n\n*Resumo da conversa*:\n\n\"{{ $('Gatilho').item.json.resumo_conversa }}\"",
         "replyToMessageId": {
           "__rl": true,
           "mode": "list",

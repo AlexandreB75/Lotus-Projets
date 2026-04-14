@@ -56,13 +56,13 @@
         "resource": "label",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Selecionar conta').item.json.id {{ '}'+'}' }}",
+          "value": "={{ $('Selecionar conta').item.json.id }}",
           "mode": "id"
         },
-        "title": "={{ '{'+'{' }} $json.etiqueta.etiqueta {{ '}'+'}' }}",
+        "title": "={{ $json.etiqueta.etiqueta }}",
         "additionalFields": {
-          "color": "={{ '{'+'{' }} $json.etiqueta.cor {{ '}'+'}' }}",
-          "description": "={{ '{'+'{' }} $json.etiqueta.descricao {{ '}'+'}' }}",
+          "color": "={{ $json.etiqueta.cor }}",
+          "description": "={{ $json.etiqueta.descricao }}",
           "show_on_sidebar": true
         }
       },
@@ -137,16 +137,16 @@
         "resource": "customAttribute",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Selecionar conta').item.json.id {{ '}'+'}' }}",
+          "value": "={{ $('Selecionar conta').item.json.id }}",
           "mode": "id"
         },
-        "attributeModel": "={{ '{'+'{' }} $json.atributo.modelo === 'conversa' ? 'conversation_attribute' : 'contact_attribute' {{ '}'+'}' }}",
-        "attributeDisplayName": "={{ '{'+'{' }} $json.atributo.nome_display {{ '}'+'}' }}",
-        "attributeType": "={{ '{'+'{' }} $json.atributo.tipo {{ '}'+'}' }}",
+        "attributeModel": "={{ $json.atributo.modelo === 'conversa' ? 'conversation_attribute' : 'contact_attribute' }}",
+        "attributeDisplayName": "={{ $json.atributo.nome_display }}",
+        "attributeType": "={{ $json.atributo.tipo }}",
         "additionalFields": {
-          "attributeDescription": "={{ '{'+'{' }} $json.atributo.descricao {{ '}'+'}' }}",
-          "attributeKey": "={{ '{'+'{' }} $json.atributo.chave {{ '}'+'}' }}",
-          "attributeValues": "={{ '{'+'{' }} $json.atributo.valores?.toJsonString() {{ '}'+'}' }}"
+          "attributeDescription": "={{ $json.atributo.descricao }}",
+          "attributeKey": "={{ $json.atributo.chave }}",
+          "attributeValues": "={{ $json.atributo.valores?.toJsonString() }}"
         }
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
@@ -165,7 +165,7 @@
         "resource": "kanbanBoard",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $json.id {{ '}'+'}' }}",
+          "value": "={{ $json.id }}",
           "mode": "id"
         },
         "name": "Lótus Business — Pipeline de Vendas",
@@ -203,18 +203,18 @@
         "resource": "kanbanStep",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Selecionar conta').item.json.id {{ '}'+'}' }}",
+          "value": "={{ $('Selecionar conta').item.json.id }}",
           "mode": "id"
         },
         "kanbanBoardId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Etapas').item.json.id_funil {{ '}'+'}' }}",
+          "value": "={{ $('Etapas').item.json.id_funil }}",
           "mode": "id"
         },
-        "name": "={{ '{'+'{' }} $json.etapa.etapa {{ '}'+'}' }}",
+        "name": "={{ $json.etapa.etapa }}",
         "additionalFields": {
-          "color": "={{ '{'+'{' }} $json.etapa.cor {{ '}'+'}' }}",
-          "description": "={{ '{'+'{' }} $json.etapa.descricao {{ '}'+'}' }}"
+          "color": "={{ $json.etapa.cor }}",
+          "description": "={{ $json.etapa.descricao }}"
         }
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
@@ -251,7 +251,7 @@
             {
               "id": "87e19aff-212f-4068-92d6-bd3d6d45de78",
               "name": "id_funil",
-              "value": "={{ '{'+'{' }} $('Criar funil').item.json.id {{ '}'+'}' }}",
+              "value": "={{ $('Criar funil').item.json.id }}",
               "type": "number"
             },
             {
@@ -300,7 +300,7 @@
           "conditions": [
             {
               "id": "99581fa6-0cfa-450c-a5e1-eb9eaa252055",
-              "leftValue": "={{ '{'+'{' }} $('Split2').item.json.etapa.perdida {{ '}'+'}' }}",
+              "leftValue": "={{ $('Split2').item.json.etapa.perdida }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -471,17 +471,17 @@
         "operation": "update",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Selecionar conta').item.json.id {{ '}'+'}' }}",
+          "value": "={{ $('Selecionar conta').item.json.id }}",
           "mode": "id"
         },
         "kanbanBoardId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Criar funil').item.json.id {{ '}'+'}' }}",
+          "value": "={{ $('Criar funil').item.json.id }}",
           "mode": "id"
         },
         "kanbanStepId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Criar etapa').item.json.id {{ '}'+'}' }}",
+          "value": "={{ $('Criar etapa').item.json.id }}",
           "mode": "id"
         },
         "updateStepFields": {

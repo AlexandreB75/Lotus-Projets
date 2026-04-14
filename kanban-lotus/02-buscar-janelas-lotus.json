@@ -120,8 +120,8 @@
           "conditions": [
             {
               "id": "9e63d847-edcd-4d79-9526-b9d42f1358c7",
-              "leftValue": "={{ '{'+'{' }} [10, 15, 20, 30, 45, 60, 90, 120] {{ '}'+'}' }}",
-              "rightValue": "={{ '{'+'{' }} $json.tamanho_janela_minutos || 60 {{ '}'+'}' }}",
+              "leftValue": "={{ [10, 15, 20, 30, 45, 60, 90, 120] }}",
+              "rightValue": "={{ $json.tamanho_janela_minutos || 60 }}",
               "operator": {
                 "type": "array",
                 "operation": "contains",
@@ -130,8 +130,8 @@
             },
             {
               "id": "e06a278f-6b16-4f1e-8e04-78002eb7f02d",
-              "leftValue": "={{ '{'+'{' }} [10, 15, 20, 30, 45, 60, 90, 120] {{ '}'+'}' }}",
-              "rightValue": "={{ '{'+'{' }} $json.granularidade || 30 {{ '}'+'}' }}",
+              "leftValue": "={{ [10, 15, 20, 30, 45, 60, 90, 120] }}",
+              "rightValue": "={{ $json.granularidade || 30 }}",
               "operator": {
                 "type": "array",
                 "operation": "contains",
@@ -157,12 +157,12 @@
         "operation": "getAll",
         "calendar": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Configurações').item.json.id_agenda {{ '}'+'}' }}",
+          "value": "={{ $('Configurações').item.json.id_agenda }}",
           "mode": "id"
         },
         "returnAll": true,
-        "timeMin": "={{ '{'+'{' }} $('Configurações').item.json.periodo_inicio_timestamp.toDateTime('s') {{ '}'+'}' }}",
-        "timeMax": "={{ '{'+'{' }} $('Configurações').item.json.periodo_fim_timestamp.toDateTime('s') {{ '}'+'}' }}",
+        "timeMin": "={{ $('Configurações').item.json.periodo_inicio_timestamp.toDateTime('s') }}",
+        "timeMax": "={{ $('Configurações').item.json.periodo_fim_timestamp.toDateTime('s') }}",
         "options": {
           "recurringEventHandling": "expand",
           "showHiddenInvitations": true
@@ -191,8 +191,8 @@
           "conditions": [
             {
               "id": "ed84157f-b3d7-454c-88e9-099a28153c0a",
-              "leftValue": "={{ '{'+'{' }} $('Gatilho').item.json.periodo_inicio.toDateTime() {{ '}'+'}' }}",
-              "rightValue": "= {{ '{'+'{' }} $now {{ '}'+'}' }}",
+              "leftValue": "={{ $('Gatilho').item.json.periodo_inicio.toDateTime() }}",
+              "rightValue": "= {{ $now }}",
               "operator": {
                 "type": "dateTime",
                 "operation": "afterOrEquals"
@@ -240,7 +240,7 @@
           "conditions": [
             {
               "id": "568f0822-bbc7-4e96-a32c-63953201e5b5",
-              "leftValue": "={{ '{'+'{' }} $json {{ '}'+'}' }}",
+              "leftValue": "={{ $json }}",
               "rightValue": "",
               "operator": {
                 "type": "object",
@@ -274,7 +274,7 @@
           "conditions": [
             {
               "id": "568f0822-bbc7-4e96-a32c-63953201e5b5",
-              "leftValue": "={{ '{'+'{' }} $json {{ '}'+'}' }}",
+              "leftValue": "={{ $json }}",
               "rightValue": "",
               "operator": {
                 "type": "object",
@@ -554,31 +554,31 @@
             {
               "id": "f5c5b28b-90e4-4cc4-a962-2ea27332245a",
               "name": "periodo_inicio_timestamp",
-              "value": "={{ '{'+'{' }} (new Date($('Gatilho').item.json.periodo_inicio) || $now.startOf('day')).format('X') {{ '}'+'}' }}",
+              "value": "={{ (new Date($('Gatilho').item.json.periodo_inicio) || $now.startOf('day')).format('X') }}",
               "type": "number"
             },
             {
               "id": "5ce5160d-3506-4cb8-b282-2bd5fcf0733a",
               "name": "periodo_fim_timestamp",
-              "value": "={{ '{'+'{' }} (new Date($('Gatilho').item.json.periodo_fim ) || $now.plus(1,'day').startOf('day')).format('X') {{ '}'+'}' }}",
+              "value": "={{ (new Date($('Gatilho').item.json.periodo_fim ) || $now.plus(1,'day').startOf('day')).format('X') }}",
               "type": "number"
             },
             {
               "id": "bc1d94bb-9a0a-4d0c-a760-642a07d96cbc",
               "name": "tamanho_janela_minutos",
-              "value": "={{ '{'+'{' }} $('Tamanho janela válido?').item.json.tamanho_janela_minutos || 60 {{ '}'+'}' }}",
+              "value": "={{ $('Tamanho janela válido?').item.json.tamanho_janela_minutos || 60 }}",
               "type": "number"
             },
             {
               "id": "8cfe23c6-6e54-474f-b792-91e1d5323cce",
               "name": "granularidade",
-              "value": "={{ '{'+'{' }} $('Tamanho janela válido?').item.json.granularidade || 30 {{ '}'+'}' }}",
+              "value": "={{ $('Tamanho janela válido?').item.json.granularidade || 30 }}",
               "type": "number"
             },
             {
               "id": "d4e5a5c3-cecc-461a-90ad-34fe97d3cc0c",
               "name": "id_agenda",
-              "value": "={{ '{'+'{' }} $('ID agendas').item.json[$('Gatilho').item.json.id_profissional] {{ '}'+'}' }}",
+              "value": "={{ $('ID agendas').item.json[$('Gatilho').item.json.id_profissional] }}",
               "type": "string"
             }
           ]

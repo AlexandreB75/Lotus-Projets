@@ -8,115 +8,115 @@
             {
               "id": "c8fd010d-6096-4a50-b3e2-e9fe26661840",
               "name": "id_mensagem",
-              "value": "={{ '{'+'{' }} $json.id {{ '}'+'}' }}",
+              "value": "={{ $json.id }}",
               "type": "string"
             },
             {
               "id": "9697ff13-894d-4926-a6fc-d1899c6e001e",
               "name": "id_mensagem_referenciada",
-              "value": "={{ '{'+'{' }} $json.content_attributes.in_reply_to {{ '}'+'}' }}",
+              "value": "={{ $json.content_attributes.in_reply_to }}",
               "type": "string"
             },
             {
               "id": "1b513343-9b6a-4f6e-a012-ed819bf34a31",
               "name": "id_conta",
-              "value": "={{ '{'+'{' }} $json.account.id {{ '}'+'}' }}",
+              "value": "={{ $json.account.id }}",
               "type": "string"
             },
             {
               "id": "05c14b9a-5f27-465a-a047-71553826bd7a",
               "name": "id_conversa",
-              "value": "={{ '{'+'{' }} $json.conversation.id {{ '}'+'}' }}",
+              "value": "={{ $json.conversation.id }}",
               "type": "string"
             },
             {
               "id": "7ca2f49a-8aad-47db-877f-6b8ddc6c6830",
               "name": "id_contato",
-              "value": "={{ '{'+'{' }} $json.conversation.contact_inbox.contact_id {{ '}'+'}' }}",
+              "value": "={{ $json.conversation.contact_inbox.contact_id }}",
               "type": "string"
             },
             {
               "id": "76042ef6-4eee-4d20-a265-cd39b2864e84",
               "name": "id_inbox",
-              "value": "={{ '{'+'{' }} $json.inbox.id {{ '}'+'}' }}",
+              "value": "={{ $json.inbox.id }}",
               "type": "string"
             },
             {
               "id": "8bf522a6-75fb-434a-854c-b736539309e1",
               "name": "telefone",
-              "value": "={{ '{'+'{' }} $json.sender.phone_number || $json.sender.additional_attributes.social_profiles.instagram {{ '}'+'}' }}",
+              "value": "={{ $json.sender.phone_number || $json.sender.additional_attributes.social_profiles.instagram }}",
               "type": "string"
             },
             {
               "id": "188fafa0-910a-456b-91d0-9c9188d66535",
               "name": "nome",
-              "value": "={{ '{'+'{' }} $json.sender.name {{ '}'+'}' }}",
+              "value": "={{ $json.sender.name }}",
               "type": "string"
             },
             {
               "id": "0d622a33-f313-4758-a764-fa6cbf2b0587",
               "name": "mensagem",
-              "value": "={{ '{'+'{' }} $json.content || '' {{ '}'+'}' }}",
+              "value": "={{ $json.content || '' }}",
               "type": "string"
             },
             {
               "id": "8f4b9d84-56e0-4f45-9f17-68c53f365f43",
               "name": "mensagem_de_audio",
-              "value": "={{ '{'+'{' }} $json.attachments?.[0]?.file_type === 'audio' || false {{ '}'+'}' }}",
+              "value": "={{ $json.attachments?.[0]?.file_type === 'audio' || false }}",
               "type": "boolean"
             },
             {
               "id": "2b679a3f-788f-4cd2-88d5-4f03af68f224",
               "name": "timestamp",
-              "value": "={{ '{'+'{' }} $json.created_at {{ '}'+'}' }}",
+              "value": "={{ $json.created_at }}",
               "type": "string"
             },
             {
               "id": "8ba2d299-7cad-4ed8-92d7-c33999bbe984",
               "name": "tipo_arquivo",
-              "value": "={{ '{'+'{' }} $json.attachments?.[0]?.file_type || '' {{ '}'+'}' }}",
+              "value": "={{ $json.attachments?.[0]?.file_type || '' }}",
               "type": "string"
             },
             {
               "id": "d8a3ee6e-78d7-4647-85c2-9ca465f8cc43",
               "name": "id_anexo",
-              "value": "={{ '{'+'{' }} $json.attachments[0].id {{ '}'+'}' }}",
+              "value": "={{ $json.attachments[0].id }}",
               "type": "string"
             },
             {
               "id": "e9bcf442-a584-4a44-b2e0-d5e99ec2a732",
               "name": "url_arquivo",
-              "value": "={{ '{'+'{' }} $json.attachments[0].data_url {{ '}'+'}' }}",
+              "value": "={{ $json.attachments[0].data_url }}",
               "type": "string"
             },
             {
               "id": "60688563-c69a-4c34-952d-60fe3178fbd1",
               "name": "etiquetas",
-              "value": "={{ '{'+'{' }} $json.conversation.labels {{ '}'+'}' }}",
+              "value": "={{ $json.conversation.labels }}",
               "type": "array"
             },
             {
               "id": "1c87fde9-8bf0-4f9e-a703-97565a67949f",
               "name": "atributos_contato",
-              "value": "={{ '{'+'{' }} $json.sender.custom_attributes {{ '}'+'}' }}",
+              "value": "={{ $json.sender.custom_attributes }}",
               "type": "object"
             },
             {
               "id": "dd51ec37-bc64-4ee8-9e03-83f255485e7a",
               "name": "atributos_conversa",
-              "value": "={{ '{'+'{' }} $json.conversation.custom_attributes {{ '}'+'}' }}",
+              "value": "={{ $json.conversation.custom_attributes }}",
               "type": "string"
             },
             {
               "id": "98e0ad4a-5005-4c21-9b8b-898adbd3ca8e",
               "name": "tarefa",
-              "value": "={{ '{'+'{' }} $json.conversation.kanban_task {{ '}'+'}' }}",
+              "value": "={{ $json.conversation.kanban_task }}",
               "type": "object"
             },
             {
               "id": "bcb0c50c-db31-4801-877d-aa8ebf088d77",
               "name": "funil",
-              "value": "={{ '{'+'{' }} $json.conversation.kanban_task.board {{ '}'+'}' }}",
+              "value": "={{ $json.conversation.kanban_task.board }}",
               "type": "object"
             }
           ]
@@ -146,7 +146,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ '{'+'{' }} $json.mensagem.toLowerCase() === '/reset' && $json.etiquetas.includes('testando-agente') {{ '}'+'}' }}",
+                    "leftValue": "={{ $json.mensagem.toLowerCase() === '/reset' && $json.etiquetas.includes('testando-agente') }}",
                     "rightValue": "/reset",
                     "operator": {
                       "type": "boolean",
@@ -172,7 +172,7 @@
                 "conditions": [
                   {
                     "id": "3dd2c5af-7ae0-4d65-98b2-66ab0fe22c45",
-                    "leftValue": "={{ '{'+'{' }} $json.mensagem.toLowerCase() {{ '}'+'}' }}",
+                    "leftValue": "={{ $json.mensagem.toLowerCase() }}",
                     "rightValue": "/teste",
                     "operator": {
                       "type": "string",
@@ -220,7 +220,7 @@
           "values": [
             {
               "column": "session_id",
-              "value": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}"
+              "value": "={{ $('Info').item.json.telefone }}"
             }
           ]
         },
@@ -252,7 +252,7 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "session_id": "={{ '{'+'{' }} $('Info').item.json.id_inbox {{ '}'+'}' }}_{{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}",
+            "session_id": "={{ $('Info').item.json.id_inbox }}_{{ $('Info').item.json.telefone }}",
             "lock_conversa": false
           },
           "matchingColumns": [
@@ -355,15 +355,15 @@
         "operation": "destroyCustomAttributes",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conta }}",
           "mode": "id"
         },
         "contactId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_contato {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_contato }}",
           "mode": "id"
         },
-        "customAttributesToDestroy": "={{ '{'+'{' }} [\"procedimento_interesse\",\"preferencia_horario\",\"data_ultima_consulta\",\"profissional_preferido\"] {{ '}'+'}' }}"
+        "customAttributesToDestroy": "={{ [\"procedimento_interesse\",\"preferencia_horario\",\"data_ultima_consulta\",\"profissional_preferido\"] }}"
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
       "typeVersion": 1,
@@ -380,20 +380,20 @@
         "operation": "removeCustomAttributes",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conta }}",
           "mode": "id"
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_inbox {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_inbox }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conversa }}",
           "mode": "id"
         },
-        "customAttributeKeysToRemove": "={{ '{'+'{' }} [\"motivo_cancelamento\"] {{ '}'+'}' }}"
+        "customAttributeKeysToRemove": "={{ [\"motivo_cancelamento\"] }}"
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
       "typeVersion": 1,
@@ -410,20 +410,20 @@
         "operation": "removeLabels",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conta }}",
           "mode": "id"
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_inbox {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_inbox }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conversa }}",
           "mode": "id"
         },
-        "labels": "={{ '{'+'{' }} [\"retorno\",\"agente-off\"] {{ '}'+'}' }}"
+        "labels": "={{ [\"retorno\",\"agente-off\"] }}"
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
       "typeVersion": 1,
@@ -453,7 +453,7 @@
           "values": [
             {
               "column": "telefone",
-              "value": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}"
+              "value": "={{ $('Info').item.json.telefone }}"
             }
           ]
         },
@@ -474,23 +474,23 @@
         "operation": "sendMessage",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conta }}",
           "mode": "id"
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_inbox {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_inbox }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conversa }}",
           "mode": "id"
         },
         "content": "Memória resetada.",
         "replyToMessageId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_mensagem {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_mensagem }}",
           "mode": "id"
         },
         "additionalFields": {}
@@ -510,20 +510,20 @@
         "operation": "addLabels",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conta }}",
           "mode": "id"
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_inbox {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_inbox }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conversa }}",
           "mode": "id"
         },
-        "labels": "={{ '{'+'{' }} [\"testando-agente\"] {{ '}'+'}' }}"
+        "labels": "={{ [\"testando-agente\"] }}"
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
       "typeVersion": 1,
@@ -540,23 +540,23 @@
         "operation": "sendMessage",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conta }}",
           "mode": "id"
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_inbox {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_inbox }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conversa }}",
           "mode": "id"
         },
         "content": "Modo de teste habilitado.",
         "replyToMessageId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_mensagem {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_mensagem }}",
           "mode": "id"
         },
         "additionalFields": {}
@@ -583,7 +583,7 @@
           "conditions": [
             {
               "id": "82912d66-ee4b-439c-9d55-96090bc6ba62",
-              "leftValue": "={{ '{'+'{' }} $json.etiquetas {{ '}'+'}' }}",
+              "leftValue": "={{ $json.etiquetas }}",
               "rightValue": "agente-off",
               "operator": {
                 "type": "array",
@@ -593,7 +593,7 @@
             },
             {
               "id": "ca330d86-a339-4930-a3f7-9d548921999f",
-              "leftValue": "={{ '{'+'{' }} $json.etiquetas {{ '}'+'}' }}",
+              "leftValue": "={{ $json.etiquetas }}",
               "rightValue": "testando-agente",
               "operator": {
                 "type": "array",
@@ -630,7 +630,7 @@
                 "conditions": [
                   {
                     "id": "b9a7e16f-b6e4-45d7-846d-92dcb3117593",
-                    "leftValue": "={{ '{'+'{' }} $('Info').item.json.mensagem_de_audio {{ '}'+'}' }}",
+                    "leftValue": "={{ $('Info').item.json.mensagem_de_audio }}",
                     "rightValue": "",
                     "operator": {
                       "type": "boolean",
@@ -655,7 +655,7 @@
                 "conditions": [
                   {
                     "id": "0fba5273-1b08-492b-8600-bd7b9088495c",
-                    "leftValue": "={{ '{'+'{' }} $('Info').item.json.tipo_arquivo {{ '}'+'}' }}",
+                    "leftValue": "={{ $('Info').item.json.tipo_arquivo }}",
                     "rightValue": "image",
                     "operator": {
                       "type": "string",
@@ -679,7 +679,7 @@
                 "conditions": [
                   {
                     "id": "7a82552b-a481-433c-bdac-6f45a8967375",
-                    "leftValue": "={{ '{'+'{' }} $('Info').item.json.tipo_arquivo {{ '}'+'}' }}",
+                    "leftValue": "={{ $('Info').item.json.tipo_arquivo }}",
                     "rightValue": "",
                     "operator": {
                       "type": "string",
@@ -703,7 +703,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ '{'+'{' }} $('Info').item.json.mensagem {{ '}'+'}' }}",
+                    "leftValue": "={{ $('Info').item.json.mensagem }}",
                     "rightValue": "",
                     "operator": {
                       "type": "string",
@@ -804,7 +804,7 @@
       "parameters": {
         "operation": "downloadAttachment",
         "downloadMode": "byUrl",
-        "attachmentUrl": "={{ '{'+'{' }} $('Info').item.json.url_arquivo {{ '}'+'}' }}",
+        "attachmentUrl": "={{ $('Info').item.json.url_arquivo }}",
         "allowExternalUrls": true
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
@@ -837,7 +837,7 @@
           "values": [
             {
               "key": "id_conversa",
-              "value": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}"
+              "value": "={{ $('Info').item.json.id_conversa }}"
             }
           ]
         }
@@ -863,7 +863,7 @@
           "conditions": [
             {
               "id": "2adc8ba5-e60b-45ef-8de5-495124dcc08d",
-              "leftValue": "={{ '{'+'{' }} $('Info').item.json.mensagem_de_audio || $('Info').item.json.tipo_arquivo === 'image' {{ '}'+'}' }}",
+              "leftValue": "={{ $('Info').item.json.mensagem_de_audio || $('Info').item.json.tipo_arquivo === 'image' }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -890,30 +890,30 @@
         "operation": "updateAttachmentMeta",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conta }}",
           "mode": "id"
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_inbox {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_inbox }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conversa }}",
           "mode": "id"
         },
         "messageId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_mensagem {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_mensagem }}",
           "mode": "id"
         },
         "attachmentId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_anexo {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_anexo }}",
           "mode": "id"
         },
-        "attachmentMeta": "={{ '{'+'{' }}\n  ($('Info').item.json.mensagem_de_audio ?\n    { \"transcribed_text\": $('Extrair mensagem').item.json.transcricao } :\n    { \"image_description\": $('Extrair mensagem').item.json.descricao_imagem }).toJsonString()\n{{ '}'+'}' }}"
+        "attachmentMeta": "={{\n  ($('Info').item.json.mensagem_de_audio ?\n    { \"transcribed_text\": $('Extrair mensagem').item.json.transcricao } :\n    { \"image_description\": $('Extrair mensagem').item.json.descricao_imagem }).toJsonString()\n}}"
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
       "typeVersion": 1,
@@ -956,7 +956,7 @@
           "values": [
             {
               "column": "telefone",
-              "value": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}"
+              "value": "={{ $('Info').item.json.telefone }}"
             }
           ]
         },
@@ -1007,10 +1007,10 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "telefone": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}",
-            "mensagem": "={{ '{'+'{' }} $('Extrair mensagem').item.json.mensagem {{ '}'+'}' }}",
-            "timestamp": "={{ '{'+'{' }} $('Info').item.json.timestamp.toDateTime() {{ '}'+'}' }}",
-            "id_mensagem": "={{ '{'+'{' }} $('Info').item.json.id_mensagem {{ '}'+'}' }}"
+            "telefone": "={{ $('Info').item.json.telefone }}",
+            "mensagem": "={{ $('Extrair mensagem').item.json.mensagem }}",
+            "timestamp": "={{ $('Info').item.json.timestamp.toDateTime() }}",
+            "id_mensagem": "={{ $('Info').item.json.id_mensagem }}"
           },
           "matchingColumns": [
             "id"
@@ -1091,7 +1091,7 @@
           "conditions": [
             {
               "id": "84e8cae9-28e3-4abd-869c-612fcff95948",
-              "leftValue": "={{ '{'+'{' }} $json.isEmpty() {{ '}'+'}' }}",
+              "leftValue": "={{ $json.isEmpty() }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -1101,7 +1101,7 @@
             },
             {
               "id": "ee8306ee-1d14-4732-9865-a21f52da6a2e",
-              "leftValue": "={{ '{'+'{' }} $json.lock_conversa {{ '}'+'}' }}",
+              "leftValue": "={{ $json.lock_conversa }}",
               "rightValue": "pending",
               "operator": {
                 "type": "boolean",
@@ -1111,7 +1111,7 @@
             },
             {
               "id": "bf08f3f7-aff7-47be-8f89-2d0e3ee19049",
-              "leftValue": "={{ '{'+'{' }} $runIndex {{ '}'+'}' }}",
+              "leftValue": "={{ $runIndex }}",
               "rightValue": 5,
               "operator": {
                 "type": "number",
@@ -1150,7 +1150,7 @@
           "values": [
             {
               "column": "session_id",
-              "value": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}"
+              "value": "={{ $('Info').item.json.telefone }}"
             }
           ]
         },
@@ -1184,9 +1184,9 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "session_id": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}",
+            "session_id": "={{ $('Info').item.json.telefone }}",
             "lock_conversa": true,
-            "updated_at": "={{ '{'+'{' }} $now {{ '}'+'}' }}"
+            "updated_at": "={{ $now }}"
           },
           "matchingColumns": [
             "session_id"
@@ -1267,7 +1267,7 @@
           "values": [
             {
               "column": "telefone",
-              "value": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}"
+              "value": "={{ $('Info').item.json.telefone }}"
             }
           ]
         },
@@ -1288,17 +1288,17 @@
         "operation": "updateLastSeen",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conta }}",
           "mode": "id"
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_inbox {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_inbox }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conversa }}",
           "mode": "id"
         }
       },
@@ -1319,13 +1319,13 @@
             {
               "id": "7eab8669-6929-4dc6-b3e2-943065bc306c",
               "name": "mensagem",
-              "value": "={{ '{'+'{' }} $('Mensagem encavalada?').all().map(info => info.json.mensagem).join('\\\\n') {{ '}'+'}' }}",
+              "value": "={{ $('Mensagem encavalada?').all().map(info => info.json.mensagem).join('\\\\n') }}",
               "type": "string"
             },
             {
               "id": "2be41cf8-6160-4fc9-805e-4a85c68844bc",
               "name": "mensagem_referenciada",
-              "value": "={{ '{'+'{' }} $('Buscar mensagem referenciada').isExecuted ? $('Buscar mensagem referenciada').item.json.payload.find(m => m.id == $('Info').item.json.id_mensagem_referenciada)?.content ?? '' : '' {{ '}'+'}' }}",
+              "value": "={{ $('Buscar mensagem referenciada').isExecuted ? $('Buscar mensagem referenciada').item.json.payload.find(m => m.id == $('Info').item.json.id_mensagem_referenciada)?.content ?? '' : '' }}",
               "type": "string"
             }
           ]
@@ -1366,13 +1366,13 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "evento_inicio": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('evento_inicio', \"Deve ser uma data e horário no futuro. Datas passadas são inválidas. A data deve ser no formato: `YYYY-MM-DDThh:mm:ssTZD`. Utilize o fuso horário conforme a data atual.\", 'string') {{ '}'+'}' }}",
-            "duracao_minutos": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('duracao_minutos', ``, 'number') {{ '}'+'}' }}",
-            "titulo": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('titulo', ``, 'string') {{ '}'+'}' }}",
-            "descricao": "={{ '{'+'{' }} $fromAI('descricao', ``, 'string') {{ '}'+'}' }}\n\nTelefone: {{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}",
-            "id_profissional": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('id_profissional', ``, 'string') {{ '}'+'}' }}",
-            "id_conta": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
-            "id_contato": "={{ '{'+'{' }} $('Info').item.json.id_contato {{ '}'+'}' }}"
+            "evento_inicio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('evento_inicio', \"Deve ser uma data e horário no futuro. Datas passadas são inválidas. A data deve ser no formato: `YYYY-MM-DDThh:mm:ssTZD`. Utilize o fuso horário conforme a data atual.\", 'string') }}",
+            "duracao_minutos": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('duracao_minutos', ``, 'number') }}",
+            "titulo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('titulo', ``, 'string') }}",
+            "descricao": "={{ $fromAI('descricao', ``, 'string') }}\n\nTelefone: {{ $('Info').item.json.telefone }}",
+            "id_profissional": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_profissional', ``, 'string') }}",
+            "id_conta": "={{ $('Info').item.json.id_conta }}",
+            "id_contato": "={{ $('Info').item.json.id_contato }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -1467,10 +1467,10 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "id_evento": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('id_evento', ``, 'string') {{ '}'+'}' }}",
-            "titulo": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('titulo', ``, 'string') {{ '}'+'}' }}",
-            "descricao": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('descricao', ``, 'string') {{ '}'+'}' }}",
-            "id_profissional": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('id_profissional', ``, 'string') {{ '}'+'}' }}"
+            "id_evento": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_evento', ``, 'string') }}",
+            "titulo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('titulo', ``, 'string') }}",
+            "descricao": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('descricao', ``, 'string') }}",
+            "id_profissional": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_profissional', ``, 'string') }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -1531,9 +1531,9 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "={{ '{'+'{' }} $json.mensagem_referenciada ? `<mensagem-referenciada>\\n${$json.mensagem_referenciada}\\n</mensagem-referenciada>\\n\\n` : '' {{ '}'+'}' }}{{ '{'+'{' }} $json.mensagem {{ '}'+'}' }}",
+        "text": "={{ $json.mensagem_referenciada ? `<mensagem-referenciada>\\n${$json.mensagem_referenciada}\\n</mensagem-referenciada>\\n\\n` : '' }}{{ $json.mensagem }}",
         "options": {
-          "systemMessage": "=# IDENTIDADE\n\nVocê é o Alexandre, consultor comercial da HKNove Empreendimentos — especialista em salas comerciais do Lótus Business em Itapema/SC.\n\nSeu único objetivo neste atendimento:\n- Qualificar o lead\n- Gerar interesse genuíno\n- Levar para visita presencial ou proposta\n\n---\n\n# REGRAS DE OURO\n\n1. **Fale como humano** — frases curtas, tom de conversa, sem estrutura robótica\n2. **Uma pergunta por vez** — nunca acumule\n3. **Não despeje informação** — responda o que foi perguntado + puxe o próximo passo\n4. **Conduza sempre** — você guia a conversa, não reage passivamente\n5. **Nunca negocie preço** — \"isso a gente vê pessoalmente\"\n6. **Meta sempre = visita** — tudo converge para isso\n7. **Sem textão** — se precisar de mais de 4 linhas, está errado\n\n---\n\n# ABERTURA\n\n**Na primeira mensagem, sempre comece assim:**\n\n\"Olá, tudo bem? Aqui é o Alexandre, da HKNove 👋\"\n\nDepois responda o que ele perguntou e puxe o próximo passo. Nunca despeje informações na abertura.\n\n---\n\n# QUALIFICAÇÃO (obrigatória, uma pergunta por vez)\n\nColete na sequência abaixo — **só avance quando tiver a resposta anterior**:\n\n1. \"Você está buscando para investimento ou uso próprio?\"\n2. \"Qual tipo de espaço te interessa mais — algo mais compacto ou uma laje maior?\"\n3. \"Qual seu nome completo?\"\n4. \"Você é de qual cidade?\"\n\n**Use \"Atualizar_tarefa\" a cada nova informação coletada** — atualize título e descrição conforme os dados chegam. Mova para \"Qualificado\" assim que ele demonstrar interesse.\n\n---\n\n# APRESENTAÇÃO (resumida, máximo 3 pontos)\n\nSó apresente quando o lead pedir ou quando for o momento certo. Use no máximo 3 pontos por mensagem:\n\n- Localização estratégica na entrada de Itapema — uma das cidades que mais cresce no litoral\n- Alto potencial de valorização — mercado comercial em expansão na região\n- Estrutura corporativa real — infraestrutura completa, não é sala improvisada\n\n**Nunca fale sobre Hilton Garden Inn no primeiro contato** — esse é um produto separado que entra só se o lead demonstrar interesse específico em renda passiva/investimento hoteleiro.\n\n---\n\n# CONVERSÃO — SEMPRE LEVE PARA VISITA\n\nQuando tiver qualificado:\n\n> \"Faz sentido pra você conhecer pessoalmente o projeto? Posso te mostrar as unidades disponíveis.\"\n\nSe travar ou hesitar:\n\n> \"Quer que eu te envie um vídeo rápido antes de agendar?\"\n\nSe aceitar a visita → use \"Buscar_janelas_disponiveis\" e \"Criar_agendamento\":\n- id_profissional: `alexandre-borges`\n- duracao_minutos: `60`\n- Horário: Seg-Sex 09h-18h, Sáb 09h-13h\n- Endereço do stand: Av. Nereu Ramos, 1.000 — Centro, Itapema/SC\n\nApós criar agendamento → **\"Atualizar_tarefa\"** imediatamente (antes de responder):\n- Mover para \"Visita Agendada\"\n- Título: `[Sala Comercial] - [Nome]`\n- Descrição: dados coletados + data/hora + link do evento\n- end_date: véspera da visita\n\n---\n\n# QUANDO O LEAD TRAVAR\n\nSe parar de responder depois de demonstrar interesse:\n- 1a tentativa: \"Ei [nome], ainda tem interesse em conhecer o Lótus?\" (curto, sem pressão)\n- 2a tentativa: \"Posso fechar um horário rapidinho ou prefere que eu te mande o material por aqui?\"\n\n---\n\n# CANCELAMENTO / REAGENDAMENTO\n\n1. Use \"Buscar_agendamentos_do_contato\" para localizar a visita\n2. Use \"Cancelar_agendamento\" ou \"Atualizar_agendamento\"\n3. Atualize o Kanban: mova para \"Perdido (reativar)\" se cancelou sem reagendar\n\n---\n\n# ESCALADA PARA HUMANO\n\nUse \"Escalar_humano\" imediatamente em:\n- Negociação de valores ou condições\n- Questões jurídicas/contratuais\n- Lead pediu para falar com alguém da equipe\n- Lead pediu para parar de receber mensagens\n- Situação fora do seu escopo\n\n---\n\n# FERRAMENTAS\n\n### Buscar_janelas_disponiveis\nParâmetros: `id_profissional: alexandre-borges`, `tamanho_janela_minutos: 60`, `periodo_inicio`, `periodo_fim`\n\n### Criar_agendamento\nParâmetros: `titulo` (nome do lead), `descricao` (dados coletados), `evento_inicio`, `duracao_minutos: 60`, `id_profissional: alexandre-borges`\nRetorna link do evento — guarde para colocar na descrição da tarefa.\n\n### Atualizar_tarefa\nUse após cada informação nova coletada. Nunca omita a descrição anterior — sempre preserve e acrescente.\nIDs das etapas: {{ '{'+'{' }} $('Info').item.json.tarefa.board.steps.map(s => `${s.name}: ${s.id}`) {{ '}'+'}' }}\nend_date padrão: agora + 1 dia. Para visitas: data da visita − 1 dia.\n\n### Reagir_mensagem\nEmojis: 😀 ❤️ 👍 👀 ✅ — máximo 3 por conversa\n\n### Escalar_humano, Refletir, Buscar_agendamentos_do_contato, Atualizar_agendamento, Cancelar_agendamento — use conforme situação\n\n---\n\n# ESTADO ATUAL DA TAREFA\n\n- **Etapa**: {{ '{'+'{' }} $('Info').item.json.tarefa.board_step.name {{ '}'+'}' }} (ID: {{ '{'+'{' }} $('Info').item.json.tarefa.board_step_id {{ '}'+'}' }})\n- **Título**: {{ '{'+'{' }} $('Info').item.json.tarefa.title {{ '}'+'}' }}\n- **Descrição**: {{ '{'+'{' }} $('Info').item.json.tarefa.description || '(vazia)' {{ '}'+'}' }}\n- **End Date**: {{ '{'+'{' }} $('Info').item.json.tarefa.due_date || '(não definida)' {{ '}'+'}' }}\n\n> O nome no título vem do WhatsApp — pode não ser o nome real. Só chame pelo nome quando ele informar.\n\n---\n\n# DATA E HORA ATUAL\n\n{{ '{'+'{' }} $now.format('ffff') {{ '}'+'}' }}",
+          "systemMessage": "=# IDENTIDADE\n\nVocê é o Alexandre, consultor comercial da HKNove Empreendimentos — especialista em salas comerciais do Lótus Business em Itapema/SC.\n\nSeu único objetivo neste atendimento:\n- Qualificar o lead\n- Gerar interesse genuíno\n- Levar para visita presencial ou proposta\n\n---\n\n# REGRAS DE OURO\n\n1. **Fale como humano** — frases curtas, tom de conversa, sem estrutura robótica\n2. **Uma pergunta por vez** — nunca acumule\n3. **Não despeje informação** — responda o que foi perguntado + puxe o próximo passo\n4. **Conduza sempre** — você guia a conversa, não reage passivamente\n5. **Nunca negocie preço** — \"isso a gente vê pessoalmente\"\n6. **Meta sempre = visita** — tudo converge para isso\n7. **Sem textão** — se precisar de mais de 4 linhas, está errado\n\n---\n\n# ABERTURA\n\n**Na primeira mensagem, sempre comece assim:**\n\n\"Olá, tudo bem? Aqui é o Alexandre, da HKNove 👋\"\n\nDepois responda o que ele perguntou e puxe o próximo passo. Nunca despeje informações na abertura.\n\n---\n\n# QUALIFICAÇÃO (obrigatória, uma pergunta por vez)\n\nColete na sequência abaixo — **só avance quando tiver a resposta anterior**:\n\n1. \"Você está buscando para investimento ou uso próprio?\"\n2. \"Qual tipo de espaço te interessa mais — algo mais compacto ou uma laje maior?\"\n3. \"Qual seu nome completo?\"\n4. \"Você é de qual cidade?\"\n\n**Use \"Atualizar_tarefa\" a cada nova informação coletada** — atualize título e descrição conforme os dados chegam. Mova para \"Qualificado\" assim que ele demonstrar interesse.\n\n---\n\n# APRESENTAÇÃO (resumida, máximo 3 pontos)\n\nSó apresente quando o lead pedir ou quando for o momento certo. Use no máximo 3 pontos por mensagem:\n\n- Localização estratégica na entrada de Itapema — uma das cidades que mais cresce no litoral\n- Alto potencial de valorização — mercado comercial em expansão na região\n- Estrutura corporativa real — infraestrutura completa, não é sala improvisada\n\n**Nunca fale sobre Hilton Garden Inn no primeiro contato** — esse é um produto separado que entra só se o lead demonstrar interesse específico em renda passiva/investimento hoteleiro.\n\n---\n\n# CONVERSÃO — SEMPRE LEVE PARA VISITA\n\nQuando tiver qualificado:\n\n> \"Faz sentido pra você conhecer pessoalmente o projeto? Posso te mostrar as unidades disponíveis.\"\n\nSe travar ou hesitar:\n\n> \"Quer que eu te envie um vídeo rápido antes de agendar?\"\n\nSe aceitar a visita → use \"Buscar_janelas_disponiveis\" e \"Criar_agendamento\":\n- id_profissional: `alexandre-borges`\n- duracao_minutos: `60`\n- Horário: Seg-Sex 09h-18h, Sáb 09h-13h\n- Endereço do stand: Av. Nereu Ramos, 1.000 — Centro, Itapema/SC\n\nApós criar agendamento → **\"Atualizar_tarefa\"** imediatamente (antes de responder):\n- Mover para \"Visita Agendada\"\n- Título: `[Sala Comercial] - [Nome]`\n- Descrição: dados coletados + data/hora + link do evento\n- end_date: véspera da visita\n\n---\n\n# QUANDO O LEAD TRAVAR\n\nSe parar de responder depois de demonstrar interesse:\n- 1a tentativa: \"Ei [nome], ainda tem interesse em conhecer o Lótus?\" (curto, sem pressão)\n- 2a tentativa: \"Posso fechar um horário rapidinho ou prefere que eu te mande o material por aqui?\"\n\n---\n\n# CANCELAMENTO / REAGENDAMENTO\n\n1. Use \"Buscar_agendamentos_do_contato\" para localizar a visita\n2. Use \"Cancelar_agendamento\" ou \"Atualizar_agendamento\"\n3. Atualize o Kanban: mova para \"Perdido (reativar)\" se cancelou sem reagendar\n\n---\n\n# ESCALADA PARA HUMANO\n\nUse \"Escalar_humano\" imediatamente em:\n- Negociação de valores ou condições\n- Questões jurídicas/contratuais\n- Lead pediu para falar com alguém da equipe\n- Lead pediu para parar de receber mensagens\n- Situação fora do seu escopo\n\n---\n\n# FERRAMENTAS\n\n### Buscar_janelas_disponiveis\nParâmetros: `id_profissional: alexandre-borges`, `tamanho_janela_minutos: 60`, `periodo_inicio`, `periodo_fim`\n\n### Criar_agendamento\nParâmetros: `titulo` (nome do lead), `descricao` (dados coletados), `evento_inicio`, `duracao_minutos: 60`, `id_profissional: alexandre-borges`\nRetorna link do evento — guarde para colocar na descrição da tarefa.\n\n### Atualizar_tarefa\nUse após cada informação nova coletada. Nunca omita a descrição anterior — sempre preserve e acrescente.\nIDs das etapas: {{ $('Info').item.json.tarefa.board.steps.map(s => `${s.name}: ${s.id}`) }}\nend_date padrão: agora + 1 dia. Para visitas: data da visita − 1 dia.\n\n### Reagir_mensagem\nEmojis: 😀 ❤️ 👍 👀 ✅ — máximo 3 por conversa\n\n### Escalar_humano, Refletir, Buscar_agendamentos_do_contato, Atualizar_agendamento, Cancelar_agendamento — use conforme situação\n\n---\n\n# ESTADO ATUAL DA TAREFA\n\n- **Etapa**: {{ $('Info').item.json.tarefa.board_step.name }} (ID: {{ $('Info').item.json.tarefa.board_step_id }})\n- **Título**: {{ $('Info').item.json.tarefa.title }}\n- **Descrição**: {{ $('Info').item.json.tarefa.description || '(vazia)' }}\n- **End Date**: {{ $('Info').item.json.tarefa.due_date || '(não definida)' }}\n\n> O nome no título vem do WhatsApp — pode não ser o nome real. Só chame pelo nome quando ele informar.\n\n---\n\n# DATA E HORA ATUAL\n\n{{ $now.format('ffff') }}",
           "returnIntermediateSteps": true
         }
       },
@@ -1570,7 +1570,7 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}",
+        "sessionKey": "={{ $('Info').item.json.telefone }}",
         "tableName": "n8n_historico_mensagens",
         "contextWindowLength": 50
       },
@@ -1595,13 +1595,13 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "telefone": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}",
-            "id_conversa": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}",
-            "id_conta": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
-            "resumo_conversa": "={{ '{'+'{' }} $fromAI('resumo_conversa', `Um breve resumo com pontos chave da conversa.`, 'string') {{ '}'+'}' }}",
-            "ultima_mensagem": "={{ '{'+'{' }} $('Coletar mensagens').item.json.mensagem {{ '}'+'}' }}",
-            "nome": "={{ '{'+'{' }} $('Info').item.json.nome {{ '}'+'}' }}",
-            "id_inbox": "={{ '{'+'{' }} $('Info').item.json.id_inbox {{ '}'+'}' }}"
+            "telefone": "={{ $('Info').item.json.telefone }}",
+            "id_conversa": "={{ $('Info').item.json.id_conversa }}",
+            "id_conta": "={{ $('Info').item.json.id_conta }}",
+            "resumo_conversa": "={{ $fromAI('resumo_conversa', `Um breve resumo com pontos chave da conversa.`, 'string') }}",
+            "ultima_mensagem": "={{ $('Coletar mensagens').item.json.mensagem }}",
+            "nome": "={{ $('Info').item.json.nome }}",
+            "id_inbox": "={{ $('Info').item.json.id_inbox }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -1701,7 +1701,7 @@
           "conditions": [
             {
               "id": "853c68fb-c9c6-4c09-8715-f8cf41edb77e",
-              "leftValue": "={{ '{'+'{' }} $('Info').item.json.id_mensagem_referenciada {{ '}'+'}' }}",
+              "leftValue": "={{ $('Info').item.json.id_mensagem_referenciada }}",
               "rightValue": "",
               "operator": {
                 "type": "string",
@@ -1728,17 +1728,17 @@
         "operation": "listMessages",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conta }}",
           "mode": "id"
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_inbox {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_inbox }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conversa }}",
           "mode": "id"
         },
         "fetchAtLeast": 50,
@@ -1769,8 +1769,8 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "session_id": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}",
-            "message": "={{ '{'+'{' }}\n  {\n    type: 'ai',\n    content: '<tool-calls>'\n      + $('Output válido?').item.json.intermediateSteps\n          .map(s => `<tool-call><action>${s.action.log}</action><result>${s.observation}</result></tool-call>`)\n          .join('')\n          .replaceAll('\"', \"'\")\n      + '</tool-calls>',\n    tool_calls: [],\n    additional_kwargs: {},\n    response_metadata: {},\n    invalid_tool_calls: []\n  }.toJsonString()\n{{ '}'+'}' }}"
+            "session_id": "={{ $('Info').item.json.telefone }}",
+            "message": "={{\n  {\n    type: 'ai',\n    content: '<tool-calls>'\n      + $('Output válido?').item.json.intermediateSteps\n          .map(s => `<tool-call><action>${s.action.log}</action><result>${s.observation}</result></tool-call>`)\n          .join('')\n          .replaceAll('\"', \"'\")\n      + '</tool-calls>',\n    tool_calls: [],\n    additional_kwargs: {},\n    response_metadata: {},\n    invalid_tool_calls: []\n  }.toJsonString()\n}}"
           },
           "matchingColumns": [
             "id"
@@ -1842,7 +1842,7 @@
           "conditions": [
             {
               "id": "063ab981-e52e-4779-9c1a-8d6dfa384643",
-              "leftValue": "={{ '{'+'{' }} $('Output válido?').item.json.intermediateSteps {{ '}'+'}' }}",
+              "leftValue": "={{ $('Output válido?').item.json.intermediateSteps }}",
               "rightValue": "",
               "operator": {
                 "type": "array",
@@ -1876,7 +1876,7 @@
           "conditions": [
             {
               "id": "93a1e408-265a-438d-b860-1ea7f6a79f93",
-              "leftValue": "={{ '{'+'{' }} $json.output {{ '}'+'}' }}",
+              "leftValue": "={{ $json.output }}",
               "rightValue": "",
               "operator": {
                 "type": "string",
@@ -1886,7 +1886,7 @@
             },
             {
               "id": "e5ed93cc-0025-4858-a0e5-b621594b01de",
-              "leftValue": "={{ '{'+'{' }} $json.output {{ '}'+'}' }}",
+              "leftValue": "={{ $json.output }}",
               "rightValue": "Agent stopped due to max iterations.",
               "operator": {
                 "type": "string",
@@ -1923,7 +1923,7 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "session_id": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}",
+            "session_id": "={{ $('Info').item.json.telefone }}",
             "lock_conversa": false
           },
           "matchingColumns": [
@@ -1999,7 +1999,7 @@
           "conditions": [
             {
               "id": "90e45739-ca71-412c-83e5-789796d3de20",
-              "leftValue": "={{ '{'+'{' }} $json {{ '}'+'}' }}",
+              "leftValue": "={{ $json }}",
               "rightValue": "",
               "operator": {
                 "type": "object",
@@ -2041,7 +2041,7 @@
           "values": [
             {
               "column": "telefone",
-              "value": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}"
+              "value": "={{ $('Info').item.json.telefone }}"
             }
           ]
         },
@@ -2078,7 +2078,7 @@
           "conditions": [
             {
               "id": "063ab981-e52e-4779-9c1a-8d6dfa384643",
-              "leftValue": "={{ '{'+'{' }} $('Output válido?').item.json.intermediateSteps {{ '}'+'}' }}",
+              "leftValue": "={{ $('Output válido?').item.json.intermediateSteps }}",
               "rightValue": "",
               "operator": {
                 "type": "array",
@@ -2118,7 +2118,7 @@
           "values": [
             {
               "column": "session_id",
-              "value": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}"
+              "value": "={{ $('Info').item.json.telefone }}"
             }
           ]
         },
@@ -2161,7 +2161,7 @@
           "values": [
             {
               "column": "id",
-              "value": "={{ '{'+'{' }} $('Buscar mensagens na memória').item.json.id {{ '}'+'}' }}"
+              "value": "={{ $('Buscar mensagens na memória').item.json.id }}"
             }
           ]
         },
@@ -2193,8 +2193,8 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "session_id": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}",
-            "message": "={{ '{'+'{' }}\n  {\n    type: 'ai',\n    content: '<tool-calls>'\n      + $('Output válido?').item.json.intermediateSteps\n          .map(s => `<tool-call><action>${s.action.log}</action><result>${s.observation}</result></tool-call>`)\n          .join('')\n          .replaceAll('\"', \"'\")\n      + '</tool-calls>',\n    tool_calls: [],\n    additional_kwargs: {},\n    response_metadata: {},\n    invalid_tool_calls: []\n  }.toJsonString()\n{{ '}'+'}' }}"
+            "session_id": "={{ $('Info').item.json.telefone }}",
+            "message": "={{\n  {\n    type: 'ai',\n    content: '<tool-calls>'\n      + $('Output válido?').item.json.intermediateSteps\n          .map(s => `<tool-call><action>${s.action.log}</action><result>${s.observation}</result></tool-call>`)\n          .join('')\n          .replaceAll('\"', \"'\")\n      + '</tool-calls>',\n    tool_calls: [],\n    additional_kwargs: {},\n    response_metadata: {},\n    invalid_tool_calls: []\n  }.toJsonString()\n}}"
           },
           "matchingColumns": [
             "id"
@@ -2272,7 +2272,7 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "session_id": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}",
+            "session_id": "={{ $('Info').item.json.telefone }}",
             "lock_conversa": false
           },
           "matchingColumns": [
@@ -2338,7 +2338,7 @@
     },
     {
       "parameters": {
-        "errorMessage": "=Problema no output do agente: {{ '{'+'{' }} $('Output válido?').item.json.output {{ '}'+'}' }}"
+        "errorMessage": "=Problema no output do agente: {{ $('Output válido?').item.json.output }}"
       },
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
@@ -2352,7 +2352,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "={{ '{'+'{' }} $('Output válido?').item.json.output {{ '}'+'}' }}",
+        "text": "={{ $('Output válido?').item.json.output }}",
         "messages": {
           "messageValues": [
             {
@@ -2374,7 +2374,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "={{ '{'+'{' }} $('Output válido?').item.json.output {{ '}'+'}' }}",
+        "text": "={{ $('Output válido?').item.json.output }}",
         "messages": {
           "messageValues": [
             {
@@ -2447,7 +2447,7 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "session_id": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}",
+            "session_id": "={{ $('Info').item.json.telefone }}",
             "lock_conversa": false
           },
           "matchingColumns": [
@@ -2517,17 +2517,17 @@
         "operation": "updatePresence",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conta }}",
           "mode": "id"
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_inbox {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_inbox }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conversa }}",
           "mode": "id"
         },
         "typingStatus": "recording"
@@ -2550,7 +2550,7 @@
           "value": "33B4UnXyTNbgLmdEDh5P",
           "mode": "list"
         },
-        "text": "={{ '{'+'{' }} $('Formatar SSML').item.json.text {{ '}'+'}' }}",
+        "text": "={{ $('Formatar SSML').item.json.text }}",
         "additionalOptions": {
           "model": {
             "__rl": true,
@@ -2580,22 +2580,22 @@
         "operation": "sendFile",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conta }}",
           "mode": "id"
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_inbox {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_inbox }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conversa }}",
           "mode": "id"
         },
         "isRecordedAudio": true,
         "sendFileOptions": {
-          "attachmentMetadata": "={{ '{'+'{' }}\n{\n  transcribed_text: $('Output válido?').item.json.output\n}.toJsonString()\n{{ '}'+'}' }}"
+          "attachmentMetadata": "={{\n{\n  transcribed_text: $('Output válido?').item.json.output\n}.toJsonString()\n}}"
         }
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
@@ -2613,20 +2613,20 @@
         "operation": "sendMessage",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conta }}",
           "mode": "id"
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_inbox {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_inbox }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conversa }}",
           "mode": "id"
         },
-        "content": "={{ '{'+'{' }} $('Formatar texto').item.json.text {{ '}'+'}' }}",
+        "content": "={{ $('Formatar texto').item.json.text }}",
         "replyToMessageId": {
           "__rl": true,
           "mode": "list",
@@ -2658,11 +2658,11 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "tamanho_janela_minutos": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('tamanho_janela_minutos', ``, 'number') {{ '}'+'}' }}",
+            "tamanho_janela_minutos": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tamanho_janela_minutos', ``, 'number') }}",
             "granularidade": 15,
-            "periodo_inicio": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('periodo_inicio', \"Deve ser uma data e horário no futuro. Datas passadas são inválidas. A data deve ser no formato: `YYYY-MM-DDThh:mm:ssTZD`. Utilize o fuso horário conforme a data atual.\", 'string') {{ '}'+'}' }}",
-            "periodo_fim": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('periodo_fim', \"Deve ser uma data e horário no futuro. Datas passadas são inválidas. A data deve ser no formato: `YYYY-MM-DDThh:mm:ssTZD`. Utilize o fuso horário conforme a data atual.\", 'string') {{ '}'+'}' }}",
-            "id_profissional": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('id_profissional', `ID do profissional conforme listado nas instruções.`, 'string') {{ '}'+'}' }}"
+            "periodo_inicio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('periodo_inicio', \"Deve ser uma data e horário no futuro. Datas passadas são inválidas. A data deve ser no formato: `YYYY-MM-DDThh:mm:ssTZD`. Utilize o fuso horário conforme a data atual.\", 'string') }}",
+            "periodo_fim": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('periodo_fim', \"Deve ser uma data e horário no futuro. Datas passadas são inválidas. A data deve ser no formato: `YYYY-MM-DDThh:mm:ssTZD`. Utilize o fuso horário conforme a data atual.\", 'string') }}",
+            "id_profissional": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_profissional', `ID do profissional conforme listado nas instruções.`, 'string') }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -2751,8 +2751,8 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "id_profissional": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('id_profissional', ``, 'string') {{ '}'+'}' }}",
-            "telefone": "={{ '{'+'{' }} $('Info').item.json.telefone {{ '}'+'}' }}"
+            "id_profissional": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_profissional', ``, 'string') }}",
+            "telefone": "={{ $('Info').item.json.telefone }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -2801,12 +2801,12 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "id_profissional": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('id_profissional', ``, 'string') {{ '}'+'}' }}",
-            "id_conversa": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}",
-            "id_evento": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('id_evento', ``, 'string') {{ '}'+'}' }}",
-            "motivo_cancelamento": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('motivo_cancelamento', ``, 'string') {{ '}'+'}' }}",
-            "id_conta": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
-            "tarefa": "={{ '{'+'{' }} $('Info').item.json.tarefa {{ '}'+'}' }}"
+            "id_profissional": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_profissional', ``, 'string') }}",
+            "id_conversa": "={{ $('Info').item.json.id_conversa }}",
+            "id_evento": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_evento', ``, 'string') }}",
+            "motivo_cancelamento": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('motivo_cancelamento', ``, 'string') }}",
+            "id_conta": "={{ $('Info').item.json.id_conta }}",
+            "tarefa": "={{ $('Info').item.json.tarefa }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -2896,7 +2896,7 @@
           "conditions": [
             {
               "id": "99afa8c2-1745-424a-80c6-7cd4ad852f62",
-              "leftValue": "={{ '{'+'{' }} $('Info').item.json.mensagem_de_audio {{ '}'+'}' }}",
+              "leftValue": "={{ $('Info').item.json.mensagem_de_audio }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -2925,23 +2925,23 @@
         "operation": "sendMessage",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conta }}",
           "mode": "id"
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_inbox {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_inbox }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conversa {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conversa }}",
           "mode": "id"
         },
-        "content": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('Content', ``, 'string') {{ '}'+'}' }}",
+        "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Content', ``, 'string') }}",
         "replyToMessageId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_mensagem {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_mensagem }}",
           "mode": "id"
         },
         "additionalFields": {
@@ -2961,32 +2961,32 @@
     {
       "parameters": {
         "descriptionType": "manual",
-        "toolDescription": "=Use essa ferramenta para atualizar a tarefa.\n\n### IDs etapas\n\n{{ '{'+'{' }} $('Info').item.json.tarefa.board.steps.map(s => `${s.name}: ${s.id}`) {{ '}'+'}' }}\n\n**USAR ID DA ETAPA ATUAL CASO NÃO HAJA ATUALIZAÇÃO NA ETAPA**\n\n### Descrição\n\nAo adicionar informações na descrição, sempre inclua a descrição original. NUNCA omita a descrição original, a não ser que o objetivo seja remover a informação.",
+        "toolDescription": "=Use essa ferramenta para atualizar a tarefa.\n\n### IDs etapas\n\n{{ $('Info').item.json.tarefa.board.steps.map(s => `${s.name}: ${s.id}`) }}\n\n**USAR ID DA ETAPA ATUAL CASO NÃO HAJA ATUALIZAÇÃO NA ETAPA**\n\n### Descrição\n\nAo adicionar informações na descrição, sempre inclua a descrição original. NUNCA omita a descrição original, a não ser que o objetivo seja remover a informação.",
         "resource": "kanbanTask",
         "operation": "update",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.id_conta {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.id_conta }}",
           "mode": "id"
         },
         "kanbanBoardId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.tarefa.board.id {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.tarefa.board.id }}",
           "mode": "id"
         },
         "kanbanTaskId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Info').item.json.tarefa.id {{ '}'+'}' }}",
+          "value": "={{ $('Info').item.json.tarefa.id }}",
           "mode": "id"
         },
         "updateFields": {
-          "title": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') {{ '}'+'}' }}",
-          "description": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') {{ '}'+'}' }}",
+          "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}",
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
           "board_step_id": {
             "mode": "list",
-            "value": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('Kanban_Step', ``, 'string') {{ '}'+'}' }}"
+            "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Kanban_Step', ``, 'string') }}"
           },
-          "due_date": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('End_Date', `Data limite da tarefa no formato ISO 8601 com fuso horário (ex: 2026-02-10T18:00:00-03:00). Para agendamentos, use a véspera da consulta (data do agendamento − 1 dia). Nos demais casos, use a data atual + 1 dia para indicar quando deverá ser feito o follow-up caso o lead pare de responder.`, 'string') {{ '}'+'}' }}"
+          "due_date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End_Date', `Data limite da tarefa no formato ISO 8601 com fuso horário (ex: 2026-02-10T18:00:00-03:00). Para agendamentos, use a véspera da consulta (data do agendamento − 1 dia). Nos demais casos, use a data atual + 1 dia para indicar quando deverá ser feito o follow-up caso o lead pare de responder.`, 'string') }}"
         }
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwootTool",

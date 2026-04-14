@@ -25,7 +25,7 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].contact.phone_number || $('Gatilho').item.json.conversations[0].contact.additional_attributes.social_profiles.instagram {{ '}'+'}' }}",
+        "sessionKey": "={{ $('Gatilho').item.json.conversations[0].contact.phone_number || $('Gatilho').item.json.conversations[0].contact.additional_attributes.social_profiles.instagram }}",
         "tableName": "n8n_historico_mensagens",
         "contextWindowLength": 50
       },
@@ -50,15 +50,15 @@
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].inbox.id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho').item.json.conversations[0].inbox.id }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].display_id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho').item.json.conversations[0].display_id }}",
           "mode": "id"
         },
-        "content": "={{ '{'+'{' }} $('Agente follow-up').item.json.output {{ '}'+'}' }}",
+        "content": "={{ $('Agente follow-up').item.json.output }}",
         "replyToMessageId": {
           "__rl": true,
           "mode": "list",
@@ -108,15 +108,15 @@
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].inbox.id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho').item.json.conversations[0].inbox.id }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].display_id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho').item.json.conversations[0].display_id }}",
           "mode": "id"
         },
-        "content": "={{ '{'+'{' }} $('Agente lembrete agendamento').item.json.output {{ '}'+'}' }}",
+        "content": "={{ $('Agente lembrete agendamento').item.json.output }}",
         "replyToMessageId": {
           "__rl": true,
           "mode": "list",
@@ -157,12 +157,12 @@
         "operation": "get",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $json.account_id {{ '}'+'}' }}",
+          "value": "={{ $json.account_id }}",
           "mode": "id"
         },
         "kanbanBoardId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $json.board_id {{ '}'+'}' }}",
+          "value": "={{ $json.board_id }}",
           "mode": "id"
         }
       },
@@ -179,31 +179,31 @@
     {
       "parameters": {
         "descriptionType": "manual",
-        "toolDescription": "=Use essa ferramenta para atualizar o próximo follow-up (End_Date), ou marcar o lead como perdido.\n\nPara marcar como perdido, use o ID de etapa:\n\nPerdido={{ '{'+'{' }} $('Buscar informações funil').item.json.steps.find(s => s.cancelled).id {{ '}'+'}' }}",
+        "toolDescription": "=Use essa ferramenta para atualizar o próximo follow-up (End_Date), ou marcar o lead como perdido.\n\nPara marcar como perdido, use o ID de etapa:\n\nPerdido={{ $('Buscar informações funil').item.json.steps.find(s => s.cancelled).id }}",
         "resource": "kanbanTask",
         "operation": "update",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho').item.json.account_id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho').item.json.account_id }}",
           "mode": "id"
         },
         "kanbanBoardId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho').item.json.board_id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho').item.json.board_id }}",
           "mode": "id"
         },
         "kanbanTaskId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho').item.json.id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho').item.json.id }}",
           "mode": "id"
         },
         "updateFields": {
-          "description": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') {{ '}'+'}' }}",
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
           "board_step_id": {
             "mode": "list",
-            "value": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('Kanban_Step', ``, 'string') {{ '}'+'}' }}"
+            "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Kanban_Step', ``, 'string') }}"
           },
-          "due_date": "={{ '{'+'{' }} /*n8n-auto-generated-fromAI-override*/ $fromAI('End_Date', ``, 'string') {{ '}'+'}' }}"
+          "due_date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End_Date', ``, 'string') }}"
         }
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwootTool",
@@ -265,15 +265,15 @@
         },
         "inboxId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].inbox.id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho').item.json.conversations[0].inbox.id }}",
           "mode": "id"
         },
         "conversationId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].display_id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho').item.json.conversations[0].display_id }}",
           "mode": "id"
         },
-        "content": "={{ '{'+'{' }} $('Agente follow-up pós-consulta').item.json.output {{ '}'+'}' }}",
+        "content": "={{ $('Agente follow-up pós-consulta').item.json.output }}",
         "replyToMessageId": {
           "__rl": true,
           "mode": "list",
@@ -297,22 +297,22 @@
         "operation": "move",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho').item.json.account_id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho').item.json.account_id }}",
           "mode": "id"
         },
         "kanbanBoardId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho').item.json.board_id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho').item.json.board_id }}",
           "mode": "id"
         },
         "kanbanTaskId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho').item.json.id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho').item.json.id }}",
           "mode": "id"
         },
         "kanbanStepId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Buscar informações funil').item.json.steps.find(s => s.name === 'Pós-venda')?.id {{ '}'+'}' }}",
+          "value": "={{ $('Buscar informações funil').item.json.steps.find(s => s.name === 'Pós-venda')?.id }}",
           "mode": "id"
         }
       },
@@ -367,7 +367,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ '{'+'{' }} $('Gatilho').item.json.board_step.name === 'Qualificado' || $('Gatilho').item.json.board_step.name === 'No-show' {{ '}'+'}' }}",
+                    "leftValue": "={{ $('Gatilho').item.json.board_step.name === 'Qualificado' || $('Gatilho').item.json.board_step.name === 'No-show' }}",
                     "rightValue": "",
                     "operator": {
                       "type": "boolean",
@@ -393,7 +393,7 @@
                 "conditions": [
                   {
                     "id": "932f6685-cb9b-4dd7-9dd0-8e00f2c09107",
-                    "leftValue": "={{ '{'+'{' }} $('Gatilho').item.json.board_step.name {{ '}'+'}' }}",
+                    "leftValue": "={{ $('Gatilho').item.json.board_step.name }}",
                     "rightValue": "Agendado",
                     "operator": {
                       "type": "string",
@@ -418,7 +418,7 @@
                 "conditions": [
                   {
                     "id": "ecf262ec-4ce5-467c-86ea-0c69d0d45c45",
-                    "leftValue": "={{ '{'+'{' }} $('Gatilho').item.json.board_step.name {{ '}'+'}' }}",
+                    "leftValue": "={{ $('Gatilho').item.json.board_step.name }}",
                     "rightValue": "Compareceu",
                     "operator": {
                       "type": "string",
@@ -462,21 +462,21 @@
         "operation": "update",
         "accountId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho1').item.json.account_id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho1').item.json.account_id }}",
           "mode": "id"
         },
         "kanbanBoardId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho1').item.json.board_id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho1').item.json.board_id }}",
           "mode": "id"
         },
         "kanbanTaskId": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Gatilho1').item.json.id {{ '}'+'}' }}",
+          "value": "={{ $('Gatilho1').item.json.id }}",
           "mode": "id"
         },
         "updateFields": {
-          "due_date": "={{ '{'+'{' }} $now.plus(1, 'day') {{ '}'+'}' }}"
+          "due_date": "={{ $now.plus(1, 'day') }}"
         }
       },
       "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
@@ -528,7 +528,7 @@
           "conditions": [
             {
               "id": "295bcf0e-d0ef-4530-aa58-04d1bf35e45a",
-              "leftValue": "={{ '{'+'{' }} $json.changed_attributes.board_step.current_value.name {{ '}'+'}' }}",
+              "leftValue": "={{ $json.changed_attributes.board_step.current_value.name }}",
               "rightValue": "Compareceu",
               "operator": {
                 "type": "string",
@@ -537,7 +537,7 @@
             },
             {
               "id": "e70d0c5e-488d-44dd-90b3-c9e43bcec629",
-              "leftValue": "={{ '{'+'{' }} $json.changed_attributes.board_step.current_value.name {{ '}'+'}' }}",
+              "leftValue": "={{ $json.changed_attributes.board_step.current_value.name }}",
               "rightValue": "No-show",
               "operator": {
                 "type": "string",
@@ -562,7 +562,7 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].contact.phone_number || $('Gatilho').item.json.conversations[0].contact.additional_attributes.social_profiles.instagram {{ '}'+'}' }}",
+        "sessionKey": "={{ $('Gatilho').item.json.conversations[0].contact.phone_number || $('Gatilho').item.json.conversations[0].contact.additional_attributes.social_profiles.instagram }}",
         "tableName": "n8n_historico_mensagens",
         "contextWindowLength": 50
       },
@@ -579,7 +579,7 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "={{ '{'+'{' }} $('Gatilho').item.json.conversations[0].contact.phone_number || $('Gatilho').item.json.conversations[0].contact.additional_attributes.social_profiles.instagram {{ '}'+'}' }}",
+        "sessionKey": "={{ $('Gatilho').item.json.conversations[0].contact.phone_number || $('Gatilho').item.json.conversations[0].contact.additional_attributes.social_profiles.instagram }}",
         "tableName": "n8n_historico_mensagens",
         "contextWindowLength": 50
       },
@@ -596,7 +596,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "={{ '{'+'{' }} $('Gatilho').item.json.board_step.name === 'Qualificado' ? '<lead qualificado aguardando follow-up>' : '<paciente com agendamento não compareceu>' {{ '}'+'}' }}",
+        "text": "={{ $('Gatilho').item.json.board_step.name === 'Qualificado' ? '<lead qualificado aguardando follow-up>' : '<paciente com agendamento não compareceu>' }}",
         "options": {
           "systemMessage": "=Você é o Alexandre, consultor da HKNove. Precisa fazer follow-up com um lead que parou de responder.\n\n## 1. Verifique o contador de follow-ups na descrição da tarefa\n- Se não tem \"Follow-ups enviados: X\" → é o 1º (contador = 1)\n- Se tem \"Follow-ups enviados: 1\" → é o 2º (contador = 2)\n\n## 2. Identifique a situação (use a etapa do Kanban)\n\n### Situação A — Qualificado (demonstrou interesse mas não agendou visita)\n- **1º follow-up**: retome de forma leve. Ex: \"Ei [nome], ainda tem interesse em conhecer o Lótus? Posso reservar um horário pra você.\"\n- **2º follow-up**: tom de encerramento amigável. Ex: \"Oi [nome]! Caso queira conhecer o projeto é só me chamar. Estou à disposição 👊\"\n\n### Situação B — No-show (faltou à visita)\n- **1º follow-up**: verifique o que aconteceu. Ex: \"Oi [nome], tudo bem? Vi que não conseguiu vir hoje — aconteceu algum imprevisto? Podemos remarcar facilmente.\"\n- **2º follow-up**: oferta final. Ex: \"Ei [nome]! Ainda consigo te encaixar numa visita rápida. Quer remarcar?\"\n\n## 3. Atualize a descrição da tarefa\nAdicione ao final: `Follow-ups enviados: [contador]`\nPreserve todo o conteúdo anterior."
         }

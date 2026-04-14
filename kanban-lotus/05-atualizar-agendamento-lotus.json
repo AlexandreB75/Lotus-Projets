@@ -80,7 +80,7 @@
             {
               "id": "d4e5a5c3-cecc-461a-90ad-34fe97d3cc0c",
               "name": "id_agenda",
-              "value": "={{ '{'+'{' }} $('ID agendas').item.json[$('Gatilho').item.json.id_profissional] {{ '}'+'}' }}",
+              "value": "={{ $('ID agendas').item.json[$('Gatilho').item.json.id_profissional] }}",
               "type": "string"
             }
           ]
@@ -101,13 +101,13 @@
         "operation": "update",
         "calendar": {
           "__rl": true,
-          "value": "={{ '{'+'{' }} $('Configurações').item.json.id_agenda {{ '}'+'}' }}",
+          "value": "={{ $('Configurações').item.json.id_agenda }}",
           "mode": "id"
         },
-        "eventId": "={{ '{'+'{' }} $('Gatilho').item.json.id_evento {{ '}'+'}' }}",
+        "eventId": "={{ $('Gatilho').item.json.id_evento }}",
         "updateFields": {
-          "description": "={{ '{'+'{' }} $('Gatilho').item.json.descricao {{ '}'+'}' }}",
-          "summary": "={{ '{'+'{' }} $('Gatilho').item.json.titulo {{ '}'+'}' }}"
+          "description": "={{ $('Gatilho').item.json.descricao }}",
+          "summary": "={{ $('Gatilho').item.json.titulo }}"
         }
       },
       "type": "n8n-nodes-base.googleCalendar",
