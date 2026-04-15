@@ -185,21 +185,31 @@
           "options": {
             "caseSensitive": true,
             "leftValue": "",
-            "typeValidation": "strict",
+            "typeValidation": "loose",
             "version": 2
           },
           "conditions": [
             {
+              "id": "allow-null-periodo",
+              "leftValue": "={{ $('Gatilho').item.json.periodo_inicio }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
               "id": "ed84157f-b3d7-454c-88e9-099a28153c0a",
               "leftValue": "={{ $('Gatilho').item.json.periodo_inicio?.toDateTime() }}",
-              "rightValue": "= {{ $now }}",
+              "rightValue": "={{ $now }}",
               "operator": {
                 "type": "dateTime",
                 "operation": "afterOrEquals"
               }
             }
           ],
-          "combinator": "and"
+          "combinator": "or"
         },
         "options": {}
       },
@@ -466,27 +476,9 @@
         "assignments": {
           "assignments": [
             {
-              "id": "b6888d0b-b4bc-44fb-b5e3-4d2d91f8d7a3",
-              "name": "dra-ana-costa",
-              "value": "={\n  \"segunda\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"terça\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"quarta\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"quinta\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"sexta\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"sabado\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"11:00\"\n    }\n  ], \n  \"domingo\": []\n}",
-              "type": "object"
-            },
-            {
-              "id": "64e5a38a-7045-4a54-80b8-e54715c0b7e5",
-              "name": "dr-ricardo-lima",
-              "value": "={\n  \"segunda\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"terça\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"quarta\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"quinta\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"sexta\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"sabado\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"11:00\"\n    }\n  ], \n  \"domingo\": []\n}",
-              "type": "object"
-            },
-            {
-              "id": "85f4ac2d-69d5-454a-95c1-dd40916c4af2",
-              "name": "dra-beatriz-souza",
-              "value": "={\n  \"segunda\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"terça\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"quarta\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"quinta\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"sexta\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"sabado\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"11:00\"\n    }\n  ], \n  \"domingo\": []\n}",
-              "type": "object"
-            },
-            {
-              "id": "ef406009-2ae0-4c45-962f-42f69632f46f",
-              "name": "dr-felipe-torres",
-              "value": "={\n  \"segunda\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"terça\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"quarta\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"quinta\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"sexta\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"12:00\"\n    }, \n    {\n      \"inicio\": \"14:00\", \n      \"fim\": \"18:00\"\n    }\n  ],\n  \"sabado\": [\n    {\n      \"inicio\": \"08:00\", \n      \"fim\": \"11:00\"\n    }\n  ], \n  \"domingo\": []\n}",
+              "id": "alexandre-borges-disp",
+              "name": "alexandre-borges",
+              "value": "={\n  \"segunda\": [\n    {\"inicio\": \"09:00\", \"fim\": \"18:00\"}\n  ],\n  \"terça\": [\n    {\"inicio\": \"09:00\", \"fim\": \"18:00\"}\n  ],\n  \"quarta\": [\n    {\"inicio\": \"09:00\", \"fim\": \"18:00\"}\n  ],\n  \"quinta\": [\n    {\"inicio\": \"09:00\", \"fim\": \"18:00\"}\n  ],\n  \"sexta\": [\n    {\"inicio\": \"09:00\", \"fim\": \"18:00\"}\n  ],\n  \"sabado\": [\n    {\"inicio\": \"09:00\", \"fim\": \"13:00\"}\n  ],\n  \"domingo\": []\n}",
               "type": "object"
             }
           ]
@@ -509,27 +501,9 @@
         "assignments": {
           "assignments": [
             {
-              "id": "b6888d0b-b4bc-44fb-b5e3-4d2d91f8d7a3",
-              "name": "dra-ana-costa",
-              "value": "<selecionar ID da agenda no Google Calendar>",
-              "type": "string"
-            },
-            {
-              "id": "64e5a38a-7045-4a54-80b8-e54715c0b7e5",
-              "name": "dr-ricardo-lima",
-              "value": "<selecionar ID da agenda no Google Calendar>",
-              "type": "string"
-            },
-            {
-              "id": "85f4ac2d-69d5-454a-95c1-dd40916c4af2",
-              "name": "dra-beatriz-souza",
-              "value": "<selecionar ID da agenda no Google Calendar>",
-              "type": "string"
-            },
-            {
-              "id": "ef406009-2ae0-4c45-962f-42f69632f46f",
-              "name": "dr-felipe-torres",
-              "value": "<selecionar ID da agenda no Google Calendar>",
+              "id": "alexandre-borges-agenda",
+              "name": "alexandre-borges",
+              "value": "<ID_GOOGLE_CALENDAR_ALEXANDRE_BORGES>",
               "type": "string"
             }
           ]
@@ -554,13 +528,13 @@
             {
               "id": "f5c5b28b-90e4-4cc4-a962-2ea27332245a",
               "name": "periodo_inicio_timestamp",
-              "value": "={{ (new Date($('Gatilho').item.json.periodo_inicio) || $now.startOf('day')).format('X') }}",
+              "value": "={{ $('Gatilho').item.json.periodo_inicio ? $('Gatilho').item.json.periodo_inicio.toDateTime().format('X') : $now.format('X') }}",
               "type": "number"
             },
             {
               "id": "5ce5160d-3506-4cb8-b282-2bd5fcf0733a",
               "name": "periodo_fim_timestamp",
-              "value": "={{ (new Date($('Gatilho').item.json.periodo_fim ) || $now.plus(1,'day').startOf('day')).format('X') }}",
+              "value": "={{ $('Gatilho').item.json.periodo_fim ? $('Gatilho').item.json.periodo_fim.toDateTime().format('X') : $now.plus(7, 'days').endOf('day').format('X') }}",
               "type": "number"
             },
             {
