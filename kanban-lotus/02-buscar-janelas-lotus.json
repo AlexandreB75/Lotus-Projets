@@ -552,7 +552,7 @@
             {
               "id": "d4e5a5c3-cecc-461a-90ad-34fe97d3cc0c",
               "name": "id_agenda",
-              "value": "={{ $('ID agendas').item.json[$('Gatilho').item.json.id_profissional] }}",
+              "value": "={{ $('ID agendas').item.json[$('Gatilho').item.json.id_profissional || 'alexandre-borges'] }}",
               "type": "string"
             }
           ]

@@ -41,32 +41,13 @@
         "assignments": {
           "assignments": [
             {
-              "id": "b6888d0b-b4bc-44fb-b5e3-4d2d91f8d7a3",
-              "name": "dra-ana-costa",
-              "value": "<selecionar ID da agenda no Google Calendar>",
-              "type": "string"
-            },
-            {
-              "id": "64e5a38a-7045-4a54-80b8-e54715c0b7e5",
-              "name": "dr-ricardo-lima",
-              "value": "<selecionar ID da agenda no Google Calendar>",
-              "type": "string"
-            },
-            {
-              "id": "85f4ac2d-69d5-454a-95c1-dd40916c4af2",
-              "name": "dra-beatriz-souza",
-              "value": "<selecionar ID da agenda no Google Calendar>",
-              "type": "string"
-            },
-            {
-              "id": "ef406009-2ae0-4c45-962f-42f69632f46f",
-              "name": "dr-felipe-torres",
-              "value": "<selecionar ID da agenda no Google Calendar>",
+              "id": "alexandre-borges-agenda",
+              "name": "alexandre-borges",
+              "value": "<GOOGLE_CALENDAR_ID_ALEXANDRE_BORGES>",
               "type": "string"
             }
           ]
         },
-        "includeOtherFields": true,
         "options": {
           "dotNotation": false
         }
@@ -87,7 +68,7 @@
             {
               "id": "d4e5a5c3-cecc-461a-90ad-34fe97d3cc0c",
               "name": "id_agenda",
-              "value": "={{ $('ID agendas').item.json[$('Gatilho').item.json.id_profissional] }}",
+              "value": "={{ $('ID agendas').item.json[$('Gatilho').item.json.id_profissional || 'alexandre-borges'] }}",
               "type": "string"
             },
             {
