@@ -212,6 +212,63 @@
       ],
       "id": "93c252c0-53f4-48b0-aebc-29b7467f9add",
       "name": "Sticky Note8"
+    },
+    {
+      "id": "wf05-validate-id-evento",
+      "name": "ID evento válido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        900,
+        380
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "check-id-evento",
+              "leftValue": "={{ $('Gatilho').item.json.id_evento }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "wf05-erro-sem-id",
+      "name": "Retornar erro — sem id_evento",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1140,
+        560
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "err-msg",
+              "name": "erro",
+              "value": "ERRO: id_evento é obrigatório para atualizar. Use Buscar_agendamentos_do_contato primeiro para obter o id_evento.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      }
     }
   ],
   "pinData": {},
@@ -242,7 +299,25 @@
       "main": [
         [
           {
+            "node": "ID evento válido?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ID evento válido?": {
+      "main": [
+        [
+          {
             "node": "Atualizar agendamento",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Retornar erro — sem id_evento",
             "type": "main",
             "index": 0
           }
