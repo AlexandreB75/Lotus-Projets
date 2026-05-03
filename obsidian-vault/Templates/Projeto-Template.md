@@ -1,19 +1,32 @@
 ---
 tags: [projeto]
-criado: {{date}}
+data-inicio: 
 status: em-andamento
+responsavel: 
 ---
 
-# Projeto: {{title}}
+# Projeto — 
 
 ## Objetivo
 
-## Status Atual
+## Escopo
+- O que está incluído:
+- O que não está incluído:
 
-## Próximos Passos
+## Entregas Principais
 - [ ] 
+- [ ] 
+
+## Cronograma
+
+| Etapa | Prazo | Status |
+|---|---|---|
+| | | |
+
+## Riscos
+- 
 
 ## Histórico
 
-### {{date}}
+### 
 - 
