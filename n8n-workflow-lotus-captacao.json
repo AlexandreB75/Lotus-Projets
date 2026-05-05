@@ -61,7 +61,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 300,\n  \"messages\": [{\n    \"role\": \"user\",\n    \"content\": \"Você é o assistente de vendas do Lótus Business — o maior centro empresarial premium do litoral catarinense, em Itapema SC. Salas comerciais de 61m² a 904m², entrega 2028, financiamento direto pela construtora.\\n\\nUm lead acabou de preencher o formulário da landing page.\\n\\nDados:\\n- Nome: {{ $json.nome }}\\n- Perfil de interesse: {{ $json.perfil }}\\n\\nGere APENAS a mensagem de WhatsApp de primeiro contato. Máximo 4 linhas. Tom consultivo e sofisticado, nunca genérico ou agressivo. Use o nome da pessoa. Não use emojis em excesso. Deve soar como alguém que entende o perfil dela.\"\n  }]\n}",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 300,\n  \"messages\": [{\n    \"role\": \"user\",\n    \"content\": \"Você é o assistente de vendas do Lótus Business — centro empresarial premium em Itapema SC. Salas 61m² a 904m², entrega 2028, financiamento direto pela construtora.\\n\\nUm lead preencheu o formulário:\\n- Nome: {{ $json.nome }}\\n- Perfil de interesse: {{ $json.perfil }}\\n\\nGere APENAS a mensagem de WhatsApp de primeiro contato. Máximo 4 linhas. Tom consultivo e sofisticado, nunca genérico. Use o nome da pessoa. Não exagere nos emojis.\"\n  }]\n}",
         "options": {}
       },
       "id": "3c4d5e6f-7a8b-9012-cdef-123456789012",
@@ -110,25 +110,29 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://chatwoot.alexandreborges.site/api/v1/accounts/1/contacts",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            { "name": "api_access_token", "value": "SEU_CHATWOOT_API_TOKEN" },
-            { "name": "Content-Type", "value": "application/json" }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"name\": \"{{ $json.nome }}\",\n  \"phone_number\": \"+55{{ $json.whatsapp.replace(/\\D/g, '') }}\",\n  \"additional_attributes\": {\n    \"perfil_interesse\": \"{{ $json.perfil }}\",\n    \"origem\": \"Landing Page Lótus Business\"\n  }\n}",
-        "options": {}
+        "resource": "contact",
+        "operation": "create",
+        "accountId": "1",
+        "name": "={{ $json.nome }}",
+        "phoneNumber": "=+55{{ $json.whatsapp.replace(/\\D/g, '') }}",
+        "additionalFields": {
+          "additional_attributes": {
+            "perfil_interesse": "={{ $json.perfil }}",
+            "origem": "Landing Page Lótus Business"
+          }
+        }
       },
       "id": "5e6f7a8b-9c0d-1234-ef01-345678901234",
       "name": "Chatwoot — Criar Contato",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [1080, 300]
+      "type": "n8n-nodes-chatwoot.chatwoot",
+      "typeVersion": 1,
+      "position": [1080, 300],
+      "credentials": {
+        "chatwootApi": {
+          "id": "SEU_CREDENTIAL_ID_CHATWOOT",
+          "name": "Chatwoot — alexandreborges.site"
+        }
+      }
     },
     {
       "parameters": {
@@ -176,25 +180,28 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://chatwoot.alexandreborges.site/api/v1/accounts/1/conversations",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            { "name": "api_access_token", "value": "SEU_CHATWOOT_API_TOKEN" },
-            { "name": "Content-Type", "value": "application/json" }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"contact_id\": {{ $json.contact_id }},\n  \"inbox_id\": SEU_INBOX_ID_WHATSAPP,\n  \"additional_attributes\": {\n    \"perfil_interesse\": \"{{ $json.perfil }}\",\n    \"origem\": \"Landing Page Lótus Business\"\n  }\n}",
-        "options": {}
+        "resource": "conversation",
+        "operation": "create",
+        "accountId": "1",
+        "contactId": "={{ $json.contact_id }}",
+        "inboxId": "SEU_INBOX_ID_WHATSAPP",
+        "additionalFields": {
+          "additional_attributes": {
+            "perfil_interesse": "={{ $json.perfil }}"
+          }
+        }
       },
       "id": "7a8b9c0d-1e2f-3456-0123-567890123456",
       "name": "Chatwoot — Criar Conversa",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [1520, 300]
+      "type": "n8n-nodes-chatwoot.chatwoot",
+      "typeVersion": 1,
+      "position": [1520, 300],
+      "credentials": {
+        "chatwootApi": {
+          "id": "SEU_CREDENTIAL_ID_CHATWOOT",
+          "name": "Chatwoot — alexandreborges.site"
+        }
+      }
     },
     {
       "parameters": {
@@ -236,25 +243,27 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/conversations/{{ $json.conversation_id }}/messages",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            { "name": "api_access_token", "value": "SEU_CHATWOOT_API_TOKEN" },
-            { "name": "Content-Type", "value": "application/json" }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"content\": \"{{ $json.mensagem_ia }}\",\n  \"message_type\": \"outgoing\",\n  \"private\": false\n}",
-        "options": {}
+        "resource": "message",
+        "operation": "create",
+        "accountId": "1",
+        "conversationId": "={{ $json.conversation_id }}",
+        "content": "={{ $json.mensagem_ia }}",
+        "messageType": "outgoing",
+        "additionalFields": {
+          "private": false
+        }
       },
       "id": "9c0d1e2f-3a4b-5678-2345-789012345678",
-      "name": "Enviar Mensagem WhatsApp",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [1960, 300]
+      "name": "Chatwoot — Enviar Mensagem",
+      "type": "n8n-nodes-chatwoot.chatwoot",
+      "typeVersion": 1,
+      "position": [1960, 300],
+      "credentials": {
+        "chatwootApi": {
+          "id": "SEU_CREDENTIAL_ID_CHATWOOT",
+          "name": "Chatwoot — alexandreborges.site"
+        }
+      }
     },
     {
       "parameters": {
@@ -318,9 +327,9 @@
       "main": [[{ "node": "Salvar ID Conversa", "type": "main", "index": 0 }]]
     },
     "Salvar ID Conversa": {
-      "main": [[{ "node": "Enviar Mensagem WhatsApp", "type": "main", "index": 0 }]]
+      "main": [[{ "node": "Chatwoot — Enviar Mensagem", "type": "main", "index": 0 }]]
     },
-    "Enviar Mensagem WhatsApp": {
+    "Chatwoot — Enviar Mensagem": {
       "main": [[
         { "node": "Telegram — Alertar Alexandre", "type": "main", "index": 0 },
         { "node": "Responder Formulário", "type": "main", "index": 0 }
