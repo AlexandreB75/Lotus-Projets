@@ -1,0 +1,333 @@
+{
+  "name": "Lótus Business — Captação e Primeiro Atendimento",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lotus-lead",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "1a2b3c4d-5e6f-7890-abcd-ef1234567890",
+      "name": "Webhook — Receber Lead",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 300],
+      "webhookId": "lotus-lead-webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "nome",
+              "value": "={{ $json.body?.nome ?? $json.nome ?? 'Não informado' }}",
+              "type": "string"
+            },
+            {
+              "id": "a2",
+              "name": "whatsapp",
+              "value": "={{ $json.body?.whatsapp ?? $json.whatsapp ?? '' }}",
+              "type": "string"
+            },
+            {
+              "id": "a3",
+              "name": "perfil",
+              "value": "={{ $json.body?.perfil ?? $json.perfil ?? 'Ainda estou avaliando' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2b3c4d5e-6f7a-8901-bcde-f12345678901",
+      "name": "Organizar Dados",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [420, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "x-api-key", "value": "SUA_ANTHROPIC_API_KEY" },
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 300,\n  \"messages\": [{\n    \"role\": \"user\",\n    \"content\": \"Você é o assistente de vendas do Lótus Business — o maior centro empresarial premium do litoral catarinense, em Itapema SC. Salas comerciais de 61m² a 904m², entrega 2028, financiamento direto pela construtora.\\n\\nUm lead acabou de preencher o formulário da landing page.\\n\\nDados:\\n- Nome: {{ $json.nome }}\\n- Perfil de interesse: {{ $json.perfil }}\\n\\nGere APENAS a mensagem de WhatsApp de primeiro contato. Máximo 4 linhas. Tom consultivo e sofisticado, nunca genérico ou agressivo. Use o nome da pessoa. Não use emojis em excesso. Deve soar como alguém que entende o perfil dela.\"\n  }]\n}",
+        "options": {}
+      },
+      "id": "3c4d5e6f-7a8b-9012-cdef-123456789012",
+      "name": "Claude — Gerar Mensagem",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [640, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b1",
+              "name": "mensagem_ia",
+              "value": "={{ $json.content[0].text }}",
+              "type": "string"
+            },
+            {
+              "id": "b2",
+              "name": "nome",
+              "value": "={{ $('Organizar Dados').item.json.nome }}",
+              "type": "string"
+            },
+            {
+              "id": "b3",
+              "name": "whatsapp",
+              "value": "={{ $('Organizar Dados').item.json.whatsapp }}",
+              "type": "string"
+            },
+            {
+              "id": "b4",
+              "name": "perfil",
+              "value": "={{ $('Organizar Dados').item.json.perfil }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4d5e6f7a-8b9c-0123-def0-234567890123",
+      "name": "Processar Resposta Claude",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [860, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://chatwoot.alexandreborges.site/api/v1/accounts/1/contacts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "api_access_token", "value": "SEU_CHATWOOT_API_TOKEN" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"{{ $json.nome }}\",\n  \"phone_number\": \"+55{{ $json.whatsapp.replace(/\\D/g, '') }}\",\n  \"additional_attributes\": {\n    \"perfil_interesse\": \"{{ $json.perfil }}\",\n    \"origem\": \"Landing Page Lótus Business\"\n  }\n}",
+        "options": {}
+      },
+      "id": "5e6f7a8b-9c0d-1234-ef01-345678901234",
+      "name": "Chatwoot — Criar Contato",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1080, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c1",
+              "name": "contact_id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "c2",
+              "name": "mensagem_ia",
+              "value": "={{ $('Processar Resposta Claude').item.json.mensagem_ia }}",
+              "type": "string"
+            },
+            {
+              "id": "c3",
+              "name": "nome",
+              "value": "={{ $('Processar Resposta Claude').item.json.nome }}",
+              "type": "string"
+            },
+            {
+              "id": "c4",
+              "name": "whatsapp",
+              "value": "={{ $('Processar Resposta Claude').item.json.whatsapp }}",
+              "type": "string"
+            },
+            {
+              "id": "c5",
+              "name": "perfil",
+              "value": "={{ $('Processar Resposta Claude').item.json.perfil }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6f7a8b9c-0d1e-2345-f012-456789012345",
+      "name": "Salvar ID Contato",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1300, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://chatwoot.alexandreborges.site/api/v1/accounts/1/conversations",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "api_access_token", "value": "SEU_CHATWOOT_API_TOKEN" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contact_id\": {{ $json.contact_id }},\n  \"inbox_id\": SEU_INBOX_ID_WHATSAPP,\n  \"additional_attributes\": {\n    \"perfil_interesse\": \"{{ $json.perfil }}\",\n    \"origem\": \"Landing Page Lótus Business\"\n  }\n}",
+        "options": {}
+      },
+      "id": "7a8b9c0d-1e2f-3456-0123-567890123456",
+      "name": "Chatwoot — Criar Conversa",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1520, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d1",
+              "name": "conversation_id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "d2",
+              "name": "mensagem_ia",
+              "value": "={{ $('Salvar ID Contato').item.json.mensagem_ia }}",
+              "type": "string"
+            },
+            {
+              "id": "d3",
+              "name": "nome",
+              "value": "={{ $('Salvar ID Contato').item.json.nome }}",
+              "type": "string"
+            },
+            {
+              "id": "d4",
+              "name": "perfil",
+              "value": "={{ $('Salvar ID Contato').item.json.perfil }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8b9c0d1e-2f3a-4567-1234-678901234567",
+      "name": "Salvar ID Conversa",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1740, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/conversations/{{ $json.conversation_id }}/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "api_access_token", "value": "SEU_CHATWOOT_API_TOKEN" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"{{ $json.mensagem_ia }}\",\n  \"message_type\": \"outgoing\",\n  \"private\": false\n}",
+        "options": {}
+      },
+      "id": "9c0d1e2f-3a4b-5678-2345-789012345678",
+      "name": "Enviar Mensagem WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1960, 300]
+    },
+    {
+      "parameters": {
+        "chatId": "SEU_TELEGRAM_CHAT_ID",
+        "text": "=🏢 *NOVO LEAD — LÓTUS BUSINESS*\n\n👤 *Nome:* {{ $('Salvar ID Conversa').item.json.nome }}\n📱 *WhatsApp:* {{ $('Salvar ID Conversa').item.json.whatsapp }}\n🎯 *Perfil:* {{ $('Salvar ID Conversa').item.json.perfil }}\n\n✅ Contato criado no Chatwoot\n📩 Mensagem enviada no WhatsApp\n\n🔗 https://chatwoot.alexandreborges.site",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "0d1e2f3a-4b5c-6789-3456-890123456789",
+      "name": "Telegram — Alertar Alexandre",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [2180, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "SEU_CREDENTIAL_ID_TELEGRAM",
+          "name": "Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"success\": true, \"message\": \"Obrigado! Entraremos em contato em breve.\" }",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              { "name": "Access-Control-Allow-Origin", "value": "*" }
+            ]
+          }
+        }
+      },
+      "id": "1e2f3a4b-5c6d-7890-4567-901234567890",
+      "name": "Responder Formulário",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [2180, 400]
+    }
+  ],
+  "connections": {
+    "Webhook — Receber Lead": {
+      "main": [[{ "node": "Organizar Dados", "type": "main", "index": 0 }]]
+    },
+    "Organizar Dados": {
+      "main": [[{ "node": "Claude — Gerar Mensagem", "type": "main", "index": 0 }]]
+    },
+    "Claude — Gerar Mensagem": {
+      "main": [[{ "node": "Processar Resposta Claude", "type": "main", "index": 0 }]]
+    },
+    "Processar Resposta Claude": {
+      "main": [[{ "node": "Chatwoot — Criar Contato", "type": "main", "index": 0 }]]
+    },
+    "Chatwoot — Criar Contato": {
+      "main": [[{ "node": "Salvar ID Contato", "type": "main", "index": 0 }]]
+    },
+    "Salvar ID Contato": {
+      "main": [[{ "node": "Chatwoot — Criar Conversa", "type": "main", "index": 0 }]]
+    },
+    "Chatwoot — Criar Conversa": {
+      "main": [[{ "node": "Salvar ID Conversa", "type": "main", "index": 0 }]]
+    },
+    "Salvar ID Conversa": {
+      "main": [[{ "node": "Enviar Mensagem WhatsApp", "type": "main", "index": 0 }]]
+    },
+    "Enviar Mensagem WhatsApp": {
+      "main": [[
+        { "node": "Telegram — Alertar Alexandre", "type": "main", "index": 0 },
+        { "node": "Responder Formulário", "type": "main", "index": 0 }
+      ]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "tags": [{ "name": "Lótus Business" }]
+}
