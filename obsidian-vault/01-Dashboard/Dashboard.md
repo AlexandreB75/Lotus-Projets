@@ -1,3 +1,8 @@
+---
+tags: [dashboard]
+atualizado: 2025-05-10
+---
+
 # Dashboard — CLAUDE CODE
 
 ## Hoje
@@ -13,9 +18,8 @@
 
 | Projeto | Status | Próximo Passo |
 |---|---|---|
-| Lotus-Projets | 🟡 Em andamento | |
-| Lotus Business (Hubspot) | 🟡 Em andamento | |
-| Lotus Landing (Hubspot) | 🟡 Em andamento | |
+| [[02-Projetos/Lotus-Business\|Lotus Business]] | 🟡 Em andamento | |
+| [[02-Projetos/Lotus-Landing\|Lotus Landing]] | 🟡 Em andamento | |
 
 ---
 
@@ -23,31 +27,27 @@
 
 | Squad | Status | Foco Atual |
 |---|---|---|
-| Instagram Imóveis | 🟢 Ativo | |
-| Brand Squad | 🟢 Ativo | |
-| Copy Squad | 🟢 Ativo | |
-| Design Squad | 🟢 Ativo | |
-| Traffic Masters | 🟢 Ativo | |
-| C-Level Squad | 🔵 Standby | |
-| Data Squad | 🔵 Standby | |
-| Hormozi Squad | 🔵 Standby | |
-| Storytelling | 🔵 Standby | |
-| Cybersecurity | 🔵 Standby | |
-| Movement | 🔵 Standby | |
-| Advisory Board | 🔵 Standby | |
-| Claude Code Mastery | 🔵 Standby | |
+| [[03-Squads/Instagram-Imoveis/Index\|Instagram Imóveis]] | 🟢 Ativo | Treinamento Kaká |
+| [[03-Squads/Brand-Squad/Index\|Brand Squad]] | 🟢 Ativo | |
+| [[03-Squads/Copy-Squad/Index\|Copy Squad]] | 🟢 Ativo | |
+| [[03-Squads/Design-Squad/Index\|Design Squad]] | 🟢 Ativo | |
+| [[03-Squads/Traffic-Masters/Index\|Traffic Masters]] | 🟢 Ativo | |
 
 ---
 
-## Skills Disponíveis
+## Skills
 
-- Instagram Publisher
-- Image Creator / Generator / Fetcher
-- Canva
-- Apify
-- Blotato
-- OpenSquad Agent Creator
-- OpenSquad Skill Creator
+- [[04-Skills/N8N\|N8N]] — Automação de workflows
+- [[04-Skills/HubSpot\|HubSpot]] — CRM e marketing
+- [[04-Skills/Meta-Ads\|Meta Ads]] — Tráfego pago
+- [[04-Skills/Instagram\|Instagram]] — Conteúdo e engajamento
+
+---
+
+## Treinamentos
+
+- [[03-Squads/Instagram-Imoveis/Treinamento-Kaka-HKnove/Notas-Completas\|Treinamento Kaká — Notas Completas]]
+- [[03-Squads/Instagram-Imoveis/Treinamento-Kaka-HKnove/Mapa-Mental\|Treinamento Kaká — Mapa Mental]]
 
 ---
 
@@ -61,6 +61,6 @@
 
 ---
 
-## Notas Rápidas
+## Contexto
 
->
+[[05-Contexto/CONTEXTO-ALEXANDRE\|Meu Contexto Completo]]
