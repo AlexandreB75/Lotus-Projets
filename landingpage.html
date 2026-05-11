@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lótus Business — Centro Empresarial Premium | Itapema SC</title>
+  <meta name="description" content="Lótus Business — 31 andares de alto padrão na entrada de Itapema SC. Salas de 61m² a 904m². Financiamento direto. Entrega 2028." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:       #c9a84c;
+      --gold-light: #e8c96d;
+      --gold-dim:   #8a6f30;
+      --dark:       #080808;
+      --dark-2:     #111111;
+      --dark-3:     #1a1a1a;
+      --dark-4:     #242424;
+      --text:       #e8e4dc;
+      --text-muted: #8a8478;
+      --serif:      'Cormorant Garamond', Georgia, serif;
+      --sans:       'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAVBAR ───────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+      backdrop-filter: blur(2px);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .nav-cta {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 0.55rem 1.4rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--dark); }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 2.5rem 6rem;
+      background:
+        linear-gradient(to top, rgba(8,8,8,1) 0%, rgba(8,8,8,0.55) 55%, rgba(8,8,8,0.15) 100%),
+        linear-gradient(135deg, #0d0d12 0%, #1a1506 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorative lotus geometry */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(700px, 90vw);
+      height: min(700px, 90vw);
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.07);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      width: min(500px, 70vw);
+      height: min(500px, 70vw);
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.05);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      font-family: var(--serif);
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: 0.4rem 1rem;
+      border-radius: 2px;
+    }
+
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 1rem 2.25rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .hero-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .hero-btn svg { width: 16px; height: 16px; }
+
+    /* ── DIVIDER ──────────────────────────────── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 2.5rem;
+      margin: 5rem 0 4rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .divider-line { flex: 1; height: 1px; background: var(--dark-4); }
+    .divider-symbol {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      color: var(--gold-dim);
+      font-style: italic;
+    }
+
+    /* ── NUMBERS ──────────────────────────────── */
+    .numbers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1px;
+      background: var(--dark-4);
+      border: 1px solid var(--dark-4);
+      max-width: 1200px;
+      margin: 0 auto 6rem;
+    }
+
+    .number-item {
+      background: var(--dark-2);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .number-value {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .number-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ── FEATURES ─────────────────────────────── */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2.5rem 6rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 3.5rem;
+      color: #fff;
+    }
+
+    .section-title em { font-style: italic; color: var(--gold-light); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--dark-4);
+      border: 1px solid var(--dark-4);
+    }
+
+    .feature {
+      background: var(--dark-2);
+      padding: 2.5rem;
+      transition: background 0.25s;
+    }
+    .feature:hover { background: var(--dark-3); }
+
+    .feature-icon {
+      font-size: 1.75rem;
+      margin-bottom: 1.25rem;
+      display: block;
+    }
+
+    .feature h3 {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.02em;
+    }
+
+    .feature p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── FLOORS ───────────────────────────────── */
+    .floors {
+      max-width: 1200px;
+      margin: 0 auto 6rem;
+      padding: 0 2.5rem;
+    }
+
+    .floor-list {
+      border: 1px solid var(--dark-4);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .floor-item {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--dark-4);
+      background: var(--dark-2);
+      transition: background 0.2s;
+    }
+    .floor-item:last-child { border-bottom: none; }
+    .floor-item:hover { background: var(--dark-3); }
+
+    .floor-range {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--gold);
+      min-width: 100px;
+      font-weight: 500;
+    }
+
+    .floor-desc {
+      font-size: 0.875rem;
+      color: var(--text);
+    }
+
+    .floor-badge {
+      margin-left: auto;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      border: 1px solid var(--dark-4);
+      padding: 0.3rem 0.8rem;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    /* ── FORM ─────────────────────────────────── */
+    .form-section {
+      background: var(--dark-2);
+      border-top: 1px solid var(--dark-4);
+      border-bottom: 1px solid var(--dark-4);
+      padding: 6rem 2.5rem;
+    }
+
+    .form-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .form-header .section-label { justify-content: center; display: flex; }
+
+    .form-header .section-title { margin-bottom: 0.75rem; }
+
+    .form-header p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .form-group { margin-bottom: 1.25rem; }
+
+    .form-group label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.55rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      background: var(--dark-3);
+      border: 1px solid var(--dark-4);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      padding: 0.9rem 1.1rem;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--gold-dim);
+    }
+
+    .form-group input::placeholder { color: var(--text-muted); }
+
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '▾';
+      position: absolute;
+      right: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold-dim);
+      pointer-events: none;
+      font-size: 0.85rem;
+    }
+
+    .form-group select option {
+      background: var(--dark-3);
+      color: var(--text);
+    }
+
+    .form-submit {
+      width: 100%;
+      margin-top: 0.5rem;
+      background: var(--gold);
+      color: var(--dark);
+      border: none;
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 1.1rem 2rem;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .form-submit:hover:not(:disabled) { background: var(--gold-light); transform: translateY(-1px); }
+    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .form-privacy {
+      text-align: center;
+      margin-top: 1.25rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Success state */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 3rem 0;
+    }
+
+    .success-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .form-success h3 {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 0.75rem;
+    }
+
+    .form-success p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
+    /* Error message */
+    .form-error {
+      display: none;
+      background: rgba(200,50,50,0.1);
+      border: 1px solid rgba(200,50,50,0.3);
+      color: #e88;
+      font-size: 0.82rem;
+      padding: 0.85rem 1.1rem;
+      border-radius: 2px;
+      margin-bottom: 1rem;
+    }
+
+    /* ── LOCATION ─────────────────────────────── */
+    .location-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .location-map {
+      background: var(--dark-3);
+      border: 1px solid var(--dark-4);
+      border-radius: 2px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .location-map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      filter: grayscale(0.85) invert(0.9) hue-rotate(180deg) brightness(0.7);
+    }
+
+    .location-info p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .location-address {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1.25rem;
+      background: var(--dark-3);
+      border: 1px solid var(--dark-4);
+      border-radius: 2px;
+    }
+
+    .location-address span:first-child { color: var(--gold); font-size: 1.1rem; }
+    .location-address-text { font-size: 0.85rem; color: var(--text); line-height: 1.6; }
+
+    /* ── FOOTER ───────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--dark-4);
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-text {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .hero { padding: 0 1.25rem 4rem; }
+      .divider, .section, .floors, .form-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .numbers { margin-left: 1.25rem; margin-right: 1.25rem; }
+
+      .location-section {
+        grid-template-columns: 1fr;
+        padding: 4rem 1.25rem;
+        gap: 2.5rem;
+      }
+
+      .floor-item { flex-wrap: wrap; gap: 0.5rem; }
+      .floor-badge { margin-left: 0; }
+
+      footer { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .number-item { padding: 1.75rem 1rem; }
+      .feature { padding: 1.75rem; }
+    }
+
+    /* Fade-in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="#" class="nav-logo">Lótus Business</a>
+    <a href="#contato" class="nav-cta">Quero saber mais</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">HKNove Empreendimentos &nbsp;·&nbsp; Itapema SC</p>
+    <h1>Centro<br><em>empresarial</em><br>premium</h1>
+    <p class="hero-sub">31 andares de prestígio na entrada de Itapema.</p>
+    <div class="hero-tags">
+      <span class="tag">61m² a 904m²</span>
+      <span class="tag">Entrega 2028</span>
+      <span class="tag">Financiamento direto</span>
+      <span class="tag">Rooftop exclusivo</span>
+    </div>
+    <a href="#contato" class="hero-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Conhecer o empreendimento
+    </a>
+  </section>
+
+  <!-- NUMBERS -->
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-symbol">✦</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="numbers fade-in">
+    <div class="number-item">
+      <div class="number-value">31</div>
+      <div class="number-label">Pavimentos</div>
+    </div>
+    <div class="number-item">
+      <div class="number-value">904m²</div>
+      <div class="number-label">Maior laje corporativa</div>
+    </div>
+    <div class="number-item">
+      <div class="number-value">61m²</div>
+      <div class="number-label">A partir de</div>
+    </div>
+    <div class="number-item">
+      <div class="number-value">2028</div>
+      <div class="number-label">Previsão de entrega</div>
+    </div>
+    <div class="number-item">
+      <div class="number-value">14ª</div>
+      <div class="number-label">Laje em andamento</div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="section fade-in">
+    <p class="section-label">Diferenciais</p>
+    <h2 class="section-title">Projetado para quem<br><em>pensa grande</em></h2>
+
+    <div class="features-grid">
+      <div class="feature">
+        <span class="feature-icon">🏢</span>
+        <h3>Salas comerciais</h3>
+        <p>Do 8º ao 20º andar, 8 salas por pavimento com metragens de 61m² a 172m². Ideal para escritórios, consultórios e espaços corporativos.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🏛️</span>
+        <h3>Lajes corporativas</h3>
+        <p>Do 21º ao 30º andar, lajes inteiras de 904m² para empresas que precisam de espaço integrado e identidade própria.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🌅</span>
+        <h3>Rooftop exclusivo</h3>
+        <p>Restaurante panorâmico no último andar, aberto ao público. Vista privilegiada do litoral e da cidade.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🅿️</span>
+        <h3>Estacionamento rotativo</h3>
+        <p>5 andares dedicados exclusivamente a estacionamento, garantindo comodidade para clientes e colaboradores.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📈</span>
+        <h3>Financiamento direto</h3>
+        <p>Sem burocracia bancária. A HKNove oferece financiamento direto pela construtora, com condições acessíveis.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📍</span>
+        <h3>Localização estratégica</h3>
+        <p>Ao lado do Angeloni, na entrada de Itapema — um dos pontos mais movimentados e valorizados do litoral catarinense.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLOORS -->
+  <section class="floors fade-in">
+    <p class="section-label">Pavimentos</p>
+    <h2 class="section-title" style="margin-bottom:2rem">O que há em<br><em>cada andar</em></h2>
+
+    <div class="floor-list">
+      <div class="floor-item">
+        <span class="floor-range">Térreo</span>
+        <span class="floor-desc">Recepção principal, hall de entrada e acesso aos elevadores</span>
+        <span class="floor-badge">Entrada nobre</span>
+      </div>
+      <div class="floor-item">
+        <span class="floor-range">1º ao 5º</span>
+        <span class="floor-desc">Estacionamento rotativo coberto</span>
+        <span class="floor-badge">5 andares</span>
+      </div>
+      <div class="floor-item">
+        <span class="floor-range">8º ao 20º</span>
+        <span class="floor-desc">Salas comerciais de 61m² a 172m² — 8 unidades por pavimento</span>
+        <span class="floor-badge">Sala própria</span>
+      </div>
+      <div class="floor-item">
+        <span class="floor-range">21º ao 30º</span>
+        <span class="floor-desc">Lajes corporativas de 904m² — piso inteiro para sua empresa</span>
+        <span class="floor-badge">Alta corporação</span>
+      </div>
+      <div class="floor-item">
+        <span class="floor-range">31º — Topo</span>
+        <span class="floor-desc">Rooftop com restaurante panorâmico aberto ao público</span>
+        <span class="floor-badge">Rooftop</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section class="form-section" id="contato">
+    <div class="form-inner">
+      <div class="form-header fade-in">
+        <p class="section-label">Primeiro atendimento</p>
+        <h2 class="section-title">Fale com nosso<br><em>consultor</em></h2>
+        <p>Preencha abaixo e entraremos em contato pelo WhatsApp em instantes.</p>
+      </div>
+
+      <div id="formError" class="form-error">
+        Não foi possível enviar. Tente novamente em instantes.
+      </div>
+
+      <form id="leadForm" class="fade-in">
+        <div class="form-group">
+          <label for="nome">Seu nome</label>
+          <input type="text" id="nome" name="nome" placeholder="Como podemos te chamar?" required autocomplete="given-name" />
+        </div>
+
+        <div class="form-group">
+          <label for="whatsapp">WhatsApp</label>
+          <input type="tel" id="whatsapp" name="whatsapp" placeholder="(47) 9 0000-0000" required autocomplete="tel" />
+        </div>
+
+        <div class="form-group">
+          <label for="perfil">Meu interesse é</label>
+          <div class="select-wrap">
+            <select id="perfil" name="perfil" required>
+              <option value="" disabled selected>Selecione seu perfil</option>
+              <option value="Sala comercial para uso próprio">Sala comercial para uso próprio</option>
+              <option value="Investimento para renda">Investimento para renda</option>
+              <option value="Laje corporativa">Laje corporativa (andar inteiro)</option>
+              <option value="Ainda estou avaliando">Ainda estou avaliando</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="form-submit" id="submitBtn">
+          Quero ser atendido agora
+        </button>
+
+        <p class="form-privacy">
+          Seus dados são tratados com sigilo. Nenhum envio de spam.
+        </p>
+      </form>
+
+      <div id="formSuccess" class="form-success">
+        <span class="success-icon">✦</span>
+        <h3>Recebemos seu contato</h3>
+        <p>Nosso consultor entrará em contato pelo WhatsApp em instantes. Fique atento ao seu celular.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <div class="location-section fade-in">
+    <div class="location-map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3555.3!2d-48.615!3d-27.087!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDA1JzEzLjIiUyA0OMKwMzYnNTQuMCJX!5e0!3m2!1spt-BR!2sbr!4v1"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Localização Lótus Business">
+      </iframe>
+    </div>
+
+    <div class="location-info">
+      <p class="section-label">Onde nos encontrar</p>
+      <h2 class="section-title">Ao lado do<br><em>Angeloni</em></h2>
+      <p>
+        Na entrada de Itapema, um dos pontos de maior fluxo e valorização do litoral sul. Fácil acesso pela BR-101 e alta visibilidade comercial.
+      </p>
+      <div class="location-address">
+        <span>📍</span>
+        <div class="location-address-text">
+          <strong>Lótus Business</strong><br>
+          Ao lado do Angeloni — entrada de Itapema<br>
+          Porto Belo · SC
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">Lótus Business</span>
+    <span class="footer-text">HKNove Empreendimentos &nbsp;·&nbsp; Itapema SC &nbsp;·&nbsp; Entrega 2028</span>
+    <span class="footer-text">© 2025 Todos os direitos reservados</span>
+  </footer>
+
+  <script>
+    // ── Webhook N8N ──────────────────────────────────────────────────────────
+    const WEBHOOK_URL = 'https://n8n.alexandreborges.site/webhook/lotus-lead';
+
+    // ── Form submit ──────────────────────────────────────────────────────────
+    document.getElementById('leadForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const btn     = document.getElementById('submitBtn');
+      const error   = document.getElementById('formError');
+      const success = document.getElementById('formSuccess');
+      const form    = document.getElementById('leadForm');
+
+      const nome     = document.getElementById('nome').value.trim();
+      const whatsapp = document.getElementById('whatsapp').value.trim();
+      const perfil   = document.getElementById('perfil').value;
+
+      btn.disabled    = true;
+      btn.textContent = 'Enviando…';
+      error.style.display = 'none';
+
+      try {
+        const res = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nome, whatsapp, perfil }),
+        });
+
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+
+        form.style.display    = 'none';
+        success.style.display = 'block';
+      } catch (err) {
+        console.error(err);
+        error.style.display = 'block';
+        btn.disabled    = false;
+        btn.textContent = 'Quero ser atendido agora';
+      }
+    });
+
+    // ── Phone mask ───────────────────────────────────────────────────────────
+    document.getElementById('whatsapp').addEventListener('input', function(e) {
+      let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+      if (v.length > 6) {
+        v = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+      } else if (v.length > 2) {
+        v = `(${v.slice(0,2)}) ${v.slice(2)}`;
+      }
+      e.target.value = v;
+    });
+
+    // ── Fade-in on scroll ────────────────────────────────────────────────────
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
