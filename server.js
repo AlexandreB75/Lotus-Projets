@@ -39,6 +39,11 @@ app.post("/api/analyze", async (req, res) => {
   }
 });
 
+// ── Landing page Lótus Business ─────────────────────────────────────────────
+app.get("/landing", (_req, res) => {
+  res.sendFile(join(__dirname, "landingpage.html"));
+});
+
 // ── Servir o frontend em produção ───────────────────────────────────────────
 const distPath = join(__dirname, "frontend", "dist");
 app.use(express.static(distPath));
