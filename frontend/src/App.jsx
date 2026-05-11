@@ -504,17 +504,14 @@ DADOS DO PROSPECT:
 Responda APENAS com o JSON, sem texto adicional, sem markdown, sem backticks.`;
 
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          messages: [{ role: "user", content: prompt }],
-        }),
+        body: JSON.stringify({ prompt }),
       });
       const data = await res.json();
-      const text = data.content?.map((b) => b.text || "").join("");
+      if (!res.ok) throw new Error(data.error || "Erro desconhecido");
+      const text = data.text;
       const parsed = JSON.parse(text.trim());
       setResult(parsed);
     } catch (err) {

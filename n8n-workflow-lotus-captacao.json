@@ -1,0 +1,272 @@
+{
+  "name": "Lótus Business — Captação e Primeiro Atendimento",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lotus-lead",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "7912a093-959e-41cb-80bf-1cbd8847780f",
+      "name": "Webhook — Receber Lead",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-4784, -1936],
+      "webhookId": "lotus-lead-webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "a1", "name": "nome",     "value": "={{ $json.body?.nome     ?? $json.nome     ?? 'Não informado' }}", "type": "string" },
+            { "id": "a2", "name": "whatsapp", "value": "={{ $json.body?.whatsapp ?? $json.whatsapp ?? '' }}",              "type": "string" },
+            { "id": "a3", "name": "perfil",   "value": "={{ $json.body?.perfil   ?? $json.perfil   ?? 'Ainda estou avaliando' }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "eff74bbb-352c-4737-bed0-cd996bfef292",
+      "name": "Organizar Dados",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-4496, -2048]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "x-api-key",          "value": "SUA_ANTHROPIC_API_KEY" },
+            { "name": "anthropic-version",  "value": "2023-06-01" },
+            { "name": "content-type",       "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 300,\n  \"messages\": [{\n    \"role\": \"user\",\n    \"content\": \"Você é o assistente de vendas do Lótus Business — centro empresarial premium em Itapema SC. Salas 61m² a 904m², entrega 2028, financiamento direto pela construtora.\\n\\nUm lead preencheu o formulário:\\n- Nome: {{ $json.nome }}\\n- Perfil de interesse: {{ $json.perfil }}\\n\\nGere APENAS a mensagem de WhatsApp de primeiro contato. Máximo 4 linhas. Tom consultivo e sofisticado, nunca genérico. Use o nome da pessoa. Não exagere nos emojis.\"\n  }]\n}",
+        "options": {}
+      },
+      "id": "485f6ebc-42be-4ad2-82a8-5d7297cb19c0",
+      "name": "Claude — Gerar Mensagem",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-4256, -2128]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "b1", "name": "mensagem_ia", "value": "={{ $json.content[0].text }}", "type": "string" },
+            { "id": "b2", "name": "nome",        "value": "={{ $('Organizar Dados').item.json.nome }}", "type": "string" },
+            { "id": "b3", "name": "whatsapp",    "value": "={{ $('Organizar Dados').item.json.whatsapp }}", "type": "string" },
+            { "id": "b4", "name": "perfil",      "value": "={{ $('Organizar Dados').item.json.perfil }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "93684acd-8618-4569-912f-666575dee3f0",
+      "name": "Processar Resposta Claude",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-4048, -2128]
+    },
+    {
+      "parameters": {
+        "resource": "contact",
+        "accountId": {
+          "__rl": true,
+          "value": "1",
+          "mode": "list",
+          "cachedResultName": "#1 - Chatwoot Lotus Projeto",
+          "cachedResultUrl": "https://chatwoot.alexandreborges.site/app/accounts/1/dashboard"
+        },
+        "name": "={{ $('Processar Resposta Claude').item.json.nome }}",
+        "phoneNumber": "=+55{{ $('Processar Resposta Claude').item.json.whatsapp.replace(/\\D/g, '') }}",
+        "additionalFields": {
+          "additional_attributes": {
+            "perfil_interesse": "={{ $('Processar Resposta Claude').item.json.perfil }}",
+            "origem": "Landing Page Lótus Business"
+          }
+        }
+      },
+      "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
+      "typeVersion": 1,
+      "position": [-3808, -2032],
+      "id": "83ed17a2-1891-4b05-abfa-b1cdb6a53a34",
+      "name": "Create a contact",
+      "credentials": {
+        "fazerAiChatwootApi": {
+          "id": "KwRUoHTBmlc9WdaS",
+          "name": "Chatwoot fazer.ai account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "c1", "name": "contact_id",  "value": "={{ $json.id }}", "type": "number" },
+            { "id": "c2", "name": "mensagem_ia", "value": "={{ $('Processar Resposta Claude').item.json.mensagem_ia }}", "type": "string" },
+            { "id": "c3", "name": "nome",        "value": "={{ $('Processar Resposta Claude').item.json.nome }}", "type": "string" },
+            { "id": "c4", "name": "whatsapp",    "value": "={{ $('Processar Resposta Claude').item.json.whatsapp }}", "type": "string" },
+            { "id": "c5", "name": "perfil",      "value": "={{ $('Processar Resposta Claude').item.json.perfil }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "49f89022-8fd8-48c8-bf61-e359f886a813",
+      "name": "Salvar ID Contato",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-3584, -2048]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "accountId": {
+          "__rl": true,
+          "value": "1",
+          "mode": "list",
+          "cachedResultName": "#1 - Chatwoot Lotus Projeto"
+        },
+        "inboxId": {
+          "__rl": true,
+          "value": "SEU_INBOX_ID_WHATSAPP",
+          "mode": "list"
+        },
+        "contactId": {
+          "__rl": true,
+          "value": "={{ $json.contact_id }}",
+          "mode": "id"
+        }
+      },
+      "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
+      "typeVersion": 1,
+      "position": [-3376, -2032],
+      "id": "309277ad-35a5-45ec-a9f8-a50e90012b43",
+      "name": "Create conversation",
+      "credentials": {
+        "fazerAiChatwootApi": {
+          "id": "KwRUoHTBmlc9WdaS",
+          "name": "Chatwoot fazer.ai account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "d1", "name": "conversation_id", "value": "={{ $json.id }}", "type": "number" },
+            { "id": "d2", "name": "mensagem_ia",      "value": "={{ $('Salvar ID Contato').item.json.mensagem_ia }}", "type": "string" },
+            { "id": "d3", "name": "nome",             "value": "={{ $('Salvar ID Contato').item.json.nome }}", "type": "string" },
+            { "id": "d4", "name": "perfil",           "value": "={{ $('Salvar ID Contato').item.json.perfil }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c0fe8059-ac09-4d26-9666-6aee976eed71",
+      "name": "Salvar ID Conversa",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-3200, -2192]
+    },
+    {
+      "parameters": {
+        "operation": "sendTemplate",
+        "accountId": {
+          "__rl": true,
+          "value": "1",
+          "mode": "list"
+        },
+        "inboxId": {
+          "__rl": true,
+          "value": "SEU_INBOX_ID_WHATSAPP",
+          "mode": "list"
+        },
+        "conversationId": {
+          "__rl": true,
+          "value": "={{ $json.conversation_id }}",
+          "mode": "id"
+        },
+        "templateName": {
+          "__rl": true,
+          "value": "SEU_TEMPLATE_APROVADO",
+          "mode": "list"
+        },
+        "templatePreview": {
+          "__rl": true,
+          "value": "",
+          "mode": "list"
+        }
+      },
+      "type": "@fazer-ai/n8n-nodes-chatwoot.chatwoot",
+      "typeVersion": 1,
+      "position": [-2944, -2112],
+      "id": "ba8fc9ff-f6e6-4ee5-b031-fac21ccf3e0b",
+      "name": "Send template message",
+      "credentials": {
+        "fazerAiChatwootApi": {
+          "id": "KwRUoHTBmlc9WdaS",
+          "name": "Chatwoot fazer.ai account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "SEU_TELEGRAM_CHAT_ID",
+        "text": "=🏢 *NOVO LEAD — LÓTUS BUSINESS*\n\n👤 *Nome:* {{ $('Salvar ID Conversa').item.json.nome }}\n🎯 *Perfil:* {{ $('Salvar ID Conversa').item.json.perfil }}\n\n✅ Contato criado no Chatwoot\n📩 Mensagem enviada no WhatsApp\n\n🔗 https://chatwoot.alexandreborges.site",
+        "additionalFields": { "parse_mode": "Markdown" }
+      },
+      "id": "4d5360ae-7221-4eda-a4da-67a2261ac110",
+      "name": "Telegram — Alertar Alexandre",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [-2720, -2224],
+      "webhookId": "6016fd3d-8744-4b0f-9cb5-414d390ddd45",
+      "credentials": {
+        "telegramApi": {
+          "id": "svwqcAU832Z0ryEm",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"success\": true, \"message\": \"Obrigado! Entraremos em contato em breve.\" }",
+        "options": {
+          "responseHeaders": {
+            "entries": [{ "name": "Access-Control-Allow-Origin", "value": "*" }]
+          }
+        }
+      },
+      "id": "b817d381-2069-4978-9650-0f8c11b65303",
+      "name": "Responder Formulário",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [-2704, -1936]
+    }
+  ],
+  "connections": {
+    "Webhook — Receber Lead":      { "main": [[{ "node": "Organizar Dados",            "type": "main", "index": 0 }]] },
+    "Organizar Dados":             { "main": [[{ "node": "Claude — Gerar Mensagem",    "type": "main", "index": 0 }]] },
+    "Claude — Gerar Mensagem":     { "main": [[{ "node": "Processar Resposta Claude",  "type": "main", "index": 0 }]] },
+    "Processar Resposta Claude":   { "main": [[{ "node": "Create a contact",           "type": "main", "index": 0 }]] },
+    "Create a contact":            { "main": [[{ "node": "Salvar ID Contato",          "type": "main", "index": 0 }]] },
+    "Salvar ID Contato":           { "main": [[{ "node": "Create conversation",        "type": "main", "index": 0 }]] },
+    "Create conversation":         { "main": [[{ "node": "Salvar ID Conversa",         "type": "main", "index": 0 }]] },
+    "Salvar ID Conversa":          { "main": [[{ "node": "Send template message",      "type": "main", "index": 0 }]] },
+    "Send template message":       { "main": [[
+      { "node": "Telegram — Alertar Alexandre", "type": "main", "index": 0 },
+      { "node": "Responder Formulário",         "type": "main", "index": 0 }
+    ]]}
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d291c5dc5950fbc6fc19c22c2f77cb497a56b8f784204af0de006eb12cc8fdf7"
+  }
+}

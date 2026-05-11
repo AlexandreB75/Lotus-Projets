@@ -1,0 +1,16 @@
+# Dependências
+node_modules/
+frontend/node_modules/
+
+# Build do frontend
+frontend/dist/
+
+# Variáveis de ambiente (NUNCA commitar)
+.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema
+.DS_Store
