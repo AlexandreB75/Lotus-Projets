@@ -1,34 +1,52 @@
 ---
-tags: [projeto, lotus, landing-page, leads]
-status: ativo
-data: 2025-05-10
+tags: [projeto, lotus, lótus, landing-page, leads, backlog]
+status: backlog
+data: 2026-06-07
 ---
 
-# Projeto — Lotus Landing
+# Projeto — Lótus Landing
 
-> [[01-Dashboard/Dashboard|← Dashboard]]
+> Backlog de landing page para o Lótus Business.
 
-## O que é
+Projeto relacionado:
 
-Funis de captação de leads para os produtos Lotus.
-- Landing pages de conversão
-- Formulários integrados ao [[04-Skills/HubSpot|HubSpot]]
-- Automações via [[04-Skills/N8N|N8N]]
+[[02-Projetos/Lótus Business/MASTER - Lótus Business|MASTER — Lótus Business]]
 
-## Projetos Relacionados
+---
 
-- [[02-Projetos/Lotus-Business|Lotus Business]] — produto principal
+## Decisão operacional
 
-## Squads Envolvidos
+Não priorizar landing page antes de validar:
 
-- [[03-Squads/Copy-Squad/Index|Copy Squad]] — textos e headlines
-- [[03-Squads/Design-Squad/Index|Design Squad]] — layout e visual
-- [[03-Squads/Traffic-Masters/Index|Traffic Masters]] — tráfego para a landing
+1. público-alvo real;
+2. objeções reais;
+3. scripts de WhatsApp;
+4. follow-up;
+5. tese comercial por perfil.
 
-## Skills Necessárias
+---
 
-- [[04-Skills/HubSpot|HubSpot]] — captura de leads
-- [[04-Skills/N8N|N8N]] — automação de follow-up
-- [[04-Skills/Meta-Ads|Meta Ads]] — tráfego pago
+## Direção futura
 
-## Notas
+A landing deve ser construída com base nos públicos:
+
+- médicos;
+- advogados;
+- empresários;
+- investidores corporativos;
+- clínicas/consultórios;
+- profissionais liberais.
+
+---
+
+## Mensagem central futura
+
+O Lótus Business deve ser posicionado como:
+
+> endereço profissional, patrimônio empresarial e oportunidade corporativa em Itapema.
+
+---
+
+## Status
+
+Aguardando validação comercial real antes de produção.

@@ -1,46 +1,35 @@
 ---
-tags: [projeto, lotus, imoveis, comercial]
-status: ativo
-data: 2025-05-10
+tags: [projeto, lotus, lótus, business, itapema, comercial, legado]
+status: redirecionado
+data: 2026-06-07
 ---
 
-# Projeto — Lotus Business
+# Projeto — Lótus Business
 
-> [[01-Dashboard/Dashboard|← Dashboard]]
+> Arquivo antigo redirecionado.
 
-## O que é
+A versão operacional correta do projeto está em:
 
-Empreendimento imobiliário comercial em Porto Velho/RO.
+[[02-Projetos/Lótus Business/MASTER - Lótus Business|MASTER — Lótus Business]]
 
-- **112 salas** comerciais disponíveis
-- **Salas** a partir de 60m²
-- **Renda estimada:** R$ 100/m²/mês
-- **Salas vendidas:** 30 de 112
-- **Exclusividade:** 2-3 imobiliárias parceiras
+---
 
-## Argumentos de Venda
+## Correção importante
 
-Ver completo em [[03-Squads/Instagram-Imoveis/Treinamento-Kaka-HKnove/Notas-Completas|Treinamento Kaká HKnove]]
+Este arquivo antigo continha informação inconsistente sobre Porto Velho/RO.
 
-| Argumento | Resumo |
-|---|---|
-| Venda de marca | Não vende m² — vende lifestyle e network |
-| Imóvel ativo | Gera renda, não gera despesa |
-| Renda real | 60m² × R$100 = R$6.000/mês |
-| Network | Samsung e grandes empresas no prédio |
+O projeto correto para a operação atual é:
 
-## Squads Envolvidos
+**Lótus Business — torre comercial em Itapema/SC.**
 
-- [[03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]] — captação e conversão
-- [[03-Squads/Brand-Squad/Index|Brand Squad]] — identidade e posicionamento
-- [[03-Squads/Copy-Squad/Index|Copy Squad]] — scripts e argumentação
-- [[03-Squads/Traffic-Masters/Index|Traffic Masters]] — tráfego pago
+---
 
-## Skills Necessárias
+## Links operacionais
 
-- [[04-Skills/HubSpot|HubSpot]] — CRM e pipeline de vendas
-- [[04-Skills/N8N|N8N]] — automações de follow-up
-- [[04-Skills/Instagram|Instagram]] — captação orgânica
-- [[04-Skills/Meta-Ads|Meta Ads]] — tráfego pago
-
-## Notas
+- [[02-Projetos/Lótus Business/MASTER - Lótus Business|Master]]
+- [[02-Projetos/Lótus Business/Argumentario-Comercial|Argumentário Comercial]]
+- [[02-Projetos/Lótus Business/Publico-Alvo|Público-Alvo]]
+- [[02-Projetos/Lótus Business/Objeções-e-Respostas|Objeções e Respostas]]
+- [[02-Projetos/Lótus Business/Scripts-WhatsApp|Scripts WhatsApp]]
+- [[02-Projetos/Lótus Business/Pitch-de-Vendas|Pitch de Vendas]]
+- [[02-Projetos/Lótus Business/Follow-up-CRM|Follow-up CRM]]
