@@ -45,6 +45,15 @@ Ele compra:
 
 ---
 
+## Hubs por público
+
+- [[Medicos-e-Saude/00-INDEX-Medicos-e-Saude|Médicos e Saúde]] — abordagem para médicos, clínicas e consultórios.
+- [[Advogados/00-INDEX-Advogados|Advogados]] — abordagem para advocacia e escritórios jurídicos.
+- [[Investidor-Corporativo/00-INDEX-Investidor-Corporativo|Investidor Corporativo]] — abordagem para renda, patrimônio e locação.
+- [[Empresarios/00-INDEX-Empresarios|Empresários]] — abordagem para empresas e expansão corporativa.
+
+---
+
 ## Arquivos principais
 
 - [[Argumentario-Comercial]] — tese e argumentos centrais.

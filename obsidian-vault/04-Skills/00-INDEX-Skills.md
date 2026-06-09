@@ -12,17 +12,57 @@ data: 2026-06-09
 
 ## Automação e CRM
 
-- [[N8N]] — automação de workflows, WhatsApp, CRM e notificações.
-- [[HubSpot]] — CRM, marketing e organização de oportunidades.
-- [[Claude-WhatsApp-Leads]] — apoio em leads e conversas via WhatsApp.
+| Skill | Uso principal | Agente/Projeto conectado |
+|---|---|---|
+| [[N8N]] | Automação de workflows, WhatsApp, CRM e notificações | [[../03-Squads/Agentes-Operacionais/Gestor-Operacional|Gestor Operacional]] |
+| [[HubSpot]] | CRM, funil, oportunidades e histórico comercial | [[../03-Squads/Agentes-Operacionais/Follow-Up-Inteligente|Follow-Up Inteligente]] |
+| [[Claude-WhatsApp-Leads]] | Apoio em leads e conversas via WhatsApp | [[../03-Squads/Agentes-Operacionais/SDR-Hilton|SDR-Hilton]] / [[../03-Squads/Agentes-Operacionais/SDR-Lotus-Business|SDR-Lotus Business]] |
 
 ---
 
 ## Marketing e aquisição
 
-- [[Instagram]] — conteúdo, autoridade e engajamento.
-- [[Meta-Ads]] — tráfego pago, campanhas e segmentação.
-- [[SEO-AEO-GEO]] — busca, autoridade e presença em mecanismos/IA.
+| Skill | Uso principal | Agente/Projeto conectado |
+|---|---|---|
+| [[Instagram]] | Conteúdo, autoridade e engajamento | [[../03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]] |
+| [[Meta-Ads]] | Tráfego pago, campanhas e segmentação | [[../03-Squads/Traffic-Masters/Index|Traffic Masters]] |
+| [[SEO-AEO-GEO]] | Busca, autoridade e presença em mecanismos/IA | [[../03-Squads/Brand-Squad/Index|Brand Squad]] |
+
+---
+
+## Aplicação por projeto
+
+### Hilton Garden Inn Itapema
+
+- [[Instagram]] — autoridade e materiais de conteúdo.
+- [[Meta-Ads]] — campanhas para investidores, compradores e público premium.
+- [[Claude-WhatsApp-Leads]] — scripts e atendimento comercial.
+- [[HubSpot]] — organização de leads e follow-up.
+- [[N8N]] — automações futuras de notificação e CRM.
+
+Projeto: [[../02-Projetos/Hilton Garden Inn Itapema/MASTER - Hilton Garden Inn Itapema|Hilton Garden Inn Itapema]]
+
+---
+
+### Centro Médico Hilton
+
+- [[Instagram]] — autoridade para médicos, clínicas e investidores.
+- [[Meta-Ads]] — campanhas segmentadas de alto ticket.
+- [[Claude-WhatsApp-Leads]] — follow-up consultivo.
+- [[HubSpot]] — controle de decisores, operadores e investidores.
+
+Produto: [[../02-Projetos/Hilton Garden Inn Itapema/Centro-Medico-Hilton/00-INDEX-Centro-Medico-Hilton|Centro Médico Hilton]]
+
+---
+
+### Lótus Business
+
+- [[Instagram]] — captação de profissionais liberais e investidores.
+- [[Meta-Ads]] — campanhas para médicos, advogados, empresários e investidores.
+- [[Claude-WhatsApp-Leads]] — atendimento e qualificação.
+- [[HubSpot]] — CRM e follow-up.
+
+Projeto: [[../02-Projetos/Lótus Business/MASTER - Lótus Business|Lótus Business]]
 
 ---
 
@@ -36,3 +76,17 @@ Toda skill nova precisa ter:
 4. Responsável ou agente que usa.
 
 Se não tiver isso, não criar.
+
+---
+
+## Regra anti-ruído
+
+Skill solta sem aplicação vira ruído no gráfico.
+
+Antes de criar ou manter uma skill, ela deve estar conectada a pelo menos um destes pontos:
+
+- projeto comercial;
+- agente operacional;
+- rotina de execução;
+- automação real;
+- canal de aquisição.
