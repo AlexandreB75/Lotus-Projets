@@ -11,11 +11,13 @@ projeto: Lótus Business
 
 ---
 
-## Site
+## Site e contas
 
 - Domínio: `alexandreborgescorretor.com.br`
 - Landing pública base: `lotus-landing-public.jsx`
 - WhatsApp comercial conectado ao Chatwoot/n8n: `+55 74 98869-5350`
+- HubSpot portal/developer ID: `51028942`
+- HubSpot Developer Overview: `https://app.hubspot.com/developer-overview/51028942`
 
 ---
 
@@ -94,7 +96,9 @@ Criar ou mapear propriedades:
 
 ---
 
-## Observação sobre HubSpot CLI
+## Observação sobre HubSpot Developer / CLI
+
+A tela Developer Overview do portal `51028942` é útil para integrações avançadas.
 
 Para o fluxo atual — WordPress + formulário + CRM — a HubSpot CLI não é prioridade.
 
@@ -107,6 +111,8 @@ Para começar rápido, priorizar:
 3. integração com n8n;
 4. pipeline/funil comercial;
 5. automações simples de notificação e follow-up.
+
+Se depois precisarmos de app customizado, usar o portal developer `51028942` como referência.
 
 ---
 
