@@ -1,0 +1,906 @@
+<style>
+  @font-face {
+    font-family: 'LotusSerifFallback';
+    src: local('Georgia');
+  }
+
+  .lotus-public-page,
+  .lotus-public-page * {
+    box-sizing: border-box;
+  }
+
+  .lotus-public-page {
+    --gold: #d4b978;
+    --gold-2: #b99044;
+    --bg: #080806;
+    --surface: rgba(255, 255, 255, 0.045);
+    --surface-2: rgba(255, 255, 255, 0.07);
+    --border: rgba(201, 169, 110, 0.18);
+    --text: #f4efe6;
+    --muted: #b8aa92;
+    --muted-2: #8f8371;
+    --danger: #f87171;
+    --success: #4ade80;
+    min-height: 100vh;
+    color: var(--text);
+    background: radial-gradient(circle at top left, rgba(201, 169, 110, 0.16), transparent 32%), var(--bg);
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+  }
+
+  .lotus-public-page a {
+    color: inherit;
+  }
+
+  .lotus-container {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
+  }
+
+  .lotus-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(8, 8, 6, 0.86);
+    border-bottom: 1px solid rgba(201, 169, 110, 0.16);
+    backdrop-filter: blur(18px);
+  }
+
+  .lotus-nav-inner {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .lotus-brand {
+    font-family: Georgia, 'Times New Roman', serif;
+    letter-spacing: 3px;
+    font-size: 25px;
+    font-weight: 700;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .lotus-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .lotus-nav-links a {
+    text-decoration: none;
+  }
+
+  .lotus-nav-links a:hover {
+    color: var(--text);
+  }
+
+  .lotus-btn {
+    border: 0;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 14px;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .lotus-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .lotus-btn-primary {
+    color: #17120a;
+    background: linear-gradient(135deg, #e2c77e, var(--gold-2));
+    box-shadow: 0 18px 48px rgba(201, 169, 110, 0.22);
+  }
+
+  .lotus-btn-secondary {
+    color: var(--text);
+    border: 1px solid rgba(244, 239, 230, 0.18);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .lotus-hero {
+    padding: 92px 0 72px;
+  }
+
+  .lotus-hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 54px;
+    align-items: center;
+  }
+
+  .lotus-eyebrow {
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .lotus-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(44px, 6vw, 78px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #fff8ea;
+    margin: 0 0 24px;
+  }
+
+  .lotus-subtitle {
+    color: #c6bba8;
+    font-size: 18px;
+    line-height: 1.7;
+    max-width: 660px;
+    margin: 0;
+  }
+
+  .lotus-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 34px 0 28px;
+  }
+
+  .lotus-trust-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  .lotus-trust-card {
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.035);
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .lotus-trust-card strong {
+    display: block;
+    color: var(--text);
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .lotus-trust-card span {
+    color: #9f927e;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .lotus-hero-panel {
+    border: 1px solid rgba(201, 169, 110, 0.22);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
+    border-radius: 30px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lotus-hero-panel::before {
+    content: '';
+    position: absolute;
+    inset: -80px -80px auto auto;
+    width: 220px;
+    height: 220px;
+    background: rgba(201, 169, 110, 0.12);
+    filter: blur(30px);
+    border-radius: 50%;
+  }
+
+  .lotus-panel-label {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    position: relative;
+  }
+
+  .lotus-profile-list {
+    display: grid;
+    gap: 12px;
+    position: relative;
+  }
+
+  .lotus-profile-item {
+    padding: 17px;
+    border-radius: 18px;
+    border: 1px solid rgba(244, 239, 230, 0.09);
+    background: rgba(0, 0, 0, 0.18);
+  }
+
+  .lotus-profile-item strong {
+    display: block;
+    font-size: 15px;
+    color: #fff8ea;
+    margin-bottom: 5px;
+  }
+
+  .lotus-profile-item span {
+    color: #afa28e;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .lotus-section {
+    padding: 70px 0;
+  }
+
+  .lotus-section-head {
+    max-width: 760px;
+    margin-bottom: 34px;
+  }
+
+  .lotus-section-head h2 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.05;
+    color: #fff8ea;
+    margin: 0 0 15px;
+  }
+
+  .lotus-section-head p {
+    color: var(--muted);
+    line-height: 1.75;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .lotus-cards-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .lotus-card {
+    border: 1px solid rgba(201, 169, 110, 0.14);
+    background: rgba(255, 255, 255, 0.035);
+    border-radius: 24px;
+    padding: 24px;
+  }
+
+  .lotus-card .lotus-num {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+  }
+
+  .lotus-card h3 {
+    font-size: 18px;
+    color: #fff8ea;
+    margin: 0 0 10px;
+  }
+
+  .lotus-card p {
+    color: #aa9d89;
+    line-height: 1.65;
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .lotus-value-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 26px;
+    align-items: start;
+  }
+
+  .lotus-quote-box {
+    border-left: 3px solid var(--gold);
+    padding: 6px 0 6px 24px;
+    color: #e7dac2;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 30px;
+    line-height: 1.15;
+  }
+
+  .lotus-bullets {
+    display: grid;
+    gap: 12px;
+  }
+
+  .lotus-bullet {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(244, 239, 230, 0.08);
+  }
+
+  .lotus-bullet-icon {
+    color: var(--gold);
+    font-weight: 800;
+  }
+
+  .lotus-bullet strong {
+    display: block;
+    color: #fff8ea;
+    margin-bottom: 4px;
+  }
+
+  .lotus-bullet span {
+    color: #afa28e;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .lotus-form-wrap {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  .lotus-form-card {
+    border: 1px solid rgba(201, 169, 110, 0.2);
+    border-radius: 28px;
+    padding: 26px;
+    background: rgba(255, 255, 255, 0.045);
+  }
+
+  .lotus-field {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .lotus-field label {
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+  }
+
+  .lotus-field input,
+  .lotus-field select,
+  .lotus-field textarea {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 14px;
+    border: 1px solid rgba(244, 239, 230, 0.12);
+    background: rgba(0, 0, 0, 0.25);
+    color: var(--text);
+    padding: 0 14px;
+    font: inherit;
+    outline: none;
+  }
+
+  .lotus-field textarea {
+    min-height: 92px;
+    padding-top: 13px;
+    resize: vertical;
+  }
+
+  .lotus-field input:focus,
+  .lotus-field select:focus,
+  .lotus-field textarea:focus {
+    border-color: rgba(212, 185, 120, 0.55);
+  }
+
+  .lotus-field option {
+    background: #14120f;
+  }
+
+  .lotus-form-note {
+    color: var(--muted-2);
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 12px;
+  }
+
+  .lotus-status {
+    color: var(--gold);
+    font-size: 13px;
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+
+  .lotus-status.error {
+    color: var(--danger);
+  }
+
+  .lotus-status.success {
+    color: var(--success);
+  }
+
+  .lotus-faq {
+    display: grid;
+    gap: 12px;
+  }
+
+  .lotus-faq-item {
+    border: 1px solid rgba(244, 239, 230, 0.09);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 18px;
+    padding: 20px;
+  }
+
+  .lotus-faq-item strong {
+    display: block;
+    color: #fff8ea;
+    margin-bottom: 8px;
+  }
+
+  .lotus-faq-item p {
+    color: #afa28e;
+    line-height: 1.65;
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .lotus-final-cta {
+    border: 1px solid rgba(201, 169, 110, 0.2);
+    background: linear-gradient(135deg, rgba(201, 169, 110, 0.13), rgba(255, 255, 255, 0.03));
+    border-radius: 32px;
+    padding: 42px;
+    display: flex;
+    justify-content: space-between;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .lotus-final-cta h2 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.02;
+    color: #fff8ea;
+    margin: 0;
+  }
+
+  .lotus-final-cta p {
+    color: var(--muted);
+    margin: 12px 0 0;
+    line-height: 1.65;
+    max-width: 680px;
+  }
+
+  .lotus-footer {
+    padding: 36px 0;
+    border-top: 1px solid rgba(201, 169, 110, 0.12);
+    color: var(--muted-2);
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .lotus-signature {
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 900px) {
+    .lotus-nav-links {
+      display: none;
+    }
+
+    .lotus-hero-grid,
+    .lotus-value-grid,
+    .lotus-form-wrap {
+      grid-template-columns: 1fr;
+    }
+
+    .lotus-cards-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .lotus-trust-row {
+      grid-template-columns: 1fr;
+    }
+
+    .lotus-final-cta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .lotus-container {
+      width: min(100% - 28px, 1120px);
+    }
+
+    .lotus-hero {
+      padding-top: 56px;
+    }
+
+    .lotus-cards-4 {
+      grid-template-columns: 1fr;
+    }
+
+    .lotus-hero-actions {
+      flex-direction: column;
+    }
+
+    .lotus-btn {
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="lotus-public-page" id="lotus-public-page">
+  <header class="lotus-nav">
+    <div class="lotus-container lotus-nav-inner">
+      <div class="lotus-brand">LÓTUS BUSINESS</div>
+      <div class="lotus-nav-links">
+        <a href="#lotus-perfis">Para quem</a>
+        <a href="#lotus-valor">Valor</a>
+        <a href="#lotus-diagnostico">Diagnóstico</a>
+        <a href="#lotus-faq">FAQ</a>
+      </div>
+      <a class="lotus-btn lotus-btn-secondary" href="#lotus-diagnostico">Analisar perfil</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="lotus-hero">
+      <div class="lotus-container lotus-hero-grid">
+        <div>
+          <div class="lotus-eyebrow">Torre comercial em Itapema/SC</div>
+          <h1 class="lotus-title">Seu endereço profissional em uma Itapema que cresce além da praia.</h1>
+          <p class="lotus-subtitle">
+            O Lótus Business é uma torre comercial de alto padrão para profissionais, empresas e investidores que buscam presença, estrutura e patrimônio em uma cidade em crescimento.
+          </p>
+
+          <div class="lotus-hero-actions">
+            <a class="lotus-btn lotus-btn-primary" href="#lotus-diagnostico">Quero entender se faz sentido</a>
+            <a class="lotus-btn lotus-btn-secondary" href="#lotus-perfis">Ver perfis atendidos</a>
+          </div>
+
+          <div class="lotus-trust-row">
+            <div class="lotus-trust-card">
+              <strong>Uso próprio</strong>
+              <span>Consultório, escritório ou base profissional.</span>
+            </div>
+            <div class="lotus-trust-card">
+              <strong>Patrimônio</strong>
+              <span>Estratégia empresarial e patrimonial de longo prazo.</span>
+            </div>
+            <div class="lotus-trust-card">
+              <strong>Renda potencial</strong>
+              <span>Análise de cenário para locação futura, sem promessa garantida.</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="lotus-hero-panel">
+          <div class="lotus-panel-label">Análise por perfil</div>
+          <div class="lotus-profile-list">
+            <div class="lotus-profile-item">
+              <strong>Médicos e saúde</strong>
+              <span>Para quem quer presença profissional, consultório próprio ou estrutura para atendimento em Itapema.</span>
+            </div>
+            <div class="lotus-profile-item">
+              <strong>Advogados</strong>
+              <span>Para escritórios que precisam comunicar autoridade, confiança e presença antes da primeira reunião.</span>
+            </div>
+            <div class="lotus-profile-item">
+              <strong>Empresários</strong>
+              <span>Para empresas que enxergam uma base comercial como operação, imagem ou patrimônio empresarial.</span>
+            </div>
+            <div class="lotus-profile-item">
+              <strong>Investidores</strong>
+              <span>Para quem analisa imóvel comercial com critério: localização, demanda, uso e renda potencial.</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="lotus-section" id="lotus-perfis">
+      <div class="lotus-container">
+        <div class="lotus-section-head">
+          <h2>Para quem o Lótus pode fazer sentido?</h2>
+          <p>A análise correta começa pelo objetivo. Uma sala comercial pode ter papéis diferentes para cada perfil: atendimento, expansão, imagem, patrimônio ou investimento.</p>
+        </div>
+
+        <div class="lotus-cards-4">
+          <article class="lotus-card">
+            <div class="lotus-num">01</div>
+            <h3>Médicos e saúde</h3>
+            <p>Presença profissional, consultório próprio ou estrutura de atendimento em uma cidade que cresce como polo de serviços.</p>
+          </article>
+          <article class="lotus-card">
+            <div class="lotus-num">02</div>
+            <h3>Advogados</h3>
+            <p>Um endereço que ajuda a comunicar autoridade, confiança e estrutura antes da primeira reunião.</p>
+          </article>
+          <article class="lotus-card">
+            <div class="lotus-num">03</div>
+            <h3>Empresários</h3>
+            <p>Base comercial, expansão de presença ou construção de patrimônio empresarial em Itapema.</p>
+          </article>
+          <article class="lotus-card">
+            <div class="lotus-num">04</div>
+            <h3>Investidores</h3>
+            <p>Análise de imóvel comercial com critério: localização, demanda, perfil de uso e renda potencial.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="lotus-section" id="lotus-valor">
+      <div class="lotus-container lotus-value-grid">
+        <div>
+          <div class="lotus-eyebrow">Além da metragem</div>
+          <div class="lotus-quote-box">
+            Você não analisa apenas uma sala. Analisa o papel que esse endereço pode ter na sua estratégia.
+          </div>
+        </div>
+
+        <div class="lotus-bullets">
+          <div class="lotus-bullet">
+            <div class="lotus-bullet-icon">◆</div>
+            <div><strong>Endereço</strong><span>Um ponto profissional em uma cidade que cresce além do turismo.</span></div>
+          </div>
+          <div class="lotus-bullet">
+            <div class="lotus-bullet-icon">◆</div>
+            <div><strong>Imagem</strong><span>A estrutura onde você atende também comunica o nível do seu trabalho.</span></div>
+          </div>
+          <div class="lotus-bullet">
+            <div class="lotus-bullet-icon">◆</div>
+            <div><strong>Patrimônio</strong><span>Uma sala comercial pode fazer parte de uma estratégia patrimonial de longo prazo.</span></div>
+          </div>
+          <div class="lotus-bullet">
+            <div class="lotus-bullet-icon">◆</div>
+            <div><strong>Uso</strong><span>Pode servir para atendimento próprio, expansão, consultório, escritório ou locação futura.</span></div>
+          </div>
+          <div class="lotus-bullet">
+            <div class="lotus-bullet-icon">◆</div>
+            <div><strong>Critério</strong><span>A decisão precisa considerar perfil, objetivo, momento e tese comercial.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lotus-section" id="lotus-diagnostico">
+      <div class="lotus-container lotus-form-wrap">
+        <div class="lotus-section-head">
+          <h2>Receba uma análise inicial para o seu perfil.</h2>
+          <p>Responda algumas perguntas rápidas para iniciar uma conversa mais objetiva. A ideia não é empurrar uma sala: é entender se o Lótus combina com seu momento e objetivo.</p>
+        </div>
+
+        <form class="lotus-form-card" id="lotus-lead-form">
+          <div class="lotus-field">
+            <label for="lotus-nome">Nome</label>
+            <input id="lotus-nome" name="nome" type="text" placeholder="Seu nome" required>
+          </div>
+
+          <div class="lotus-field">
+            <label for="lotus-contato">WhatsApp ou e-mail</label>
+            <input id="lotus-contato" name="contato" type="text" placeholder="Como prefere ser contatado?" required>
+          </div>
+
+          <div class="lotus-field">
+            <label for="lotus-perfil">Perfil</label>
+            <select id="lotus-perfil" name="perfil">
+              <option>Médico / saúde</option>
+              <option>Advogado</option>
+              <option>Empresário</option>
+              <option>Investidor</option>
+              <option>Profissional liberal</option>
+              <option>Outro</option>
+            </select>
+          </div>
+
+          <div class="lotus-field">
+            <label for="lotus-objetivo">Objetivo principal</label>
+            <select id="lotus-objetivo" name="objetivo">
+              <option>Uso próprio / consultório / escritório</option>
+              <option>Expansão ou presença em Itapema</option>
+              <option>Patrimônio empresarial</option>
+              <option>Investimento para renda potencial</option>
+              <option>Ainda estou avaliando</option>
+            </select>
+          </div>
+
+          <div class="lotus-field">
+            <label for="lotus-momento">Momento</label>
+            <select id="lotus-momento" name="momento">
+              <option>Quero entender melhor</option>
+              <option>Estou comparando opções</option>
+              <option>Tenho interesse nos próximos meses</option>
+              <option>Quero falar com um especialista</option>
+            </select>
+          </div>
+
+          <div class="lotus-field">
+            <label for="lotus-observacao">Observação opcional</label>
+            <textarea id="lotus-observacao" name="observacao" placeholder="Ex: sou médico, penso em consultório próprio; ou quero avaliar como investimento."></textarea>
+          </div>
+
+          <input type="hidden" name="projeto_interesse" value="Lótus Business">
+          <input type="hidden" name="origem_pagina" value="alexandreborgescorretor.com.br">
+
+          <button class="lotus-btn lotus-btn-primary" type="submit" style="width: 100%;">Quero minha análise inicial</button>
+
+          <div class="lotus-form-note">
+            Não há promessa de renda, ocupação, liquidez ou valorização garantida. A análise considera cenário, perfil e objetivo.
+          </div>
+          <div class="lotus-status" id="lotus-form-status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="lotus-section" id="lotus-faq">
+      <div class="lotus-container">
+        <div class="lotus-section-head">
+          <h2>Perguntas frequentes</h2>
+          <p>Respostas diretas para quem está avaliando sala comercial com critério.</p>
+        </div>
+
+        <div class="lotus-faq">
+          <div class="lotus-faq-item">
+            <strong>O Lótus Business é indicado só para investidores?</strong>
+            <p>Não. Ele pode fazer sentido para investidores, profissionais liberais, empresas, clínicas e escritórios que desejam presença comercial em Itapema.</p>
+          </div>
+          <div class="lotus-faq-item">
+            <strong>Comprar uma sala é melhor do que alugar?</strong>
+            <p>Depende do uso, do momento profissional e da estratégia patrimonial. A análise correta compara custo, imagem, permanência, objetivo e potencial de valorização, sem promessa garantida.</p>
+          </div>
+          <div class="lotus-faq-item">
+            <strong>Existe garantia de renda ou valorização?</strong>
+            <p>Não trabalhamos com promessa de renda, ocupação ou valorização garantida. A análise é feita com base em cenário, localização, perfil de uso e potencial de demanda.</p>
+          </div>
+          <div class="lotus-faq-item">
+            <strong>Como saber se faz sentido para minha profissão?</strong>
+            <p>O primeiro passo é entender se você busca atendimento próprio, expansão, endereço de autoridade, patrimônio ou investimento. A partir disso, a recomendação fica mais precisa.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lotus-section">
+      <div class="lotus-container lotus-final-cta">
+        <div>
+          <h2>Quer avaliar se o Lótus faz sentido para seu momento?</h2>
+          <p>Comece por uma análise simples: perfil, objetivo, uso e potencial estratégico.</p>
+        </div>
+        <a class="lotus-btn lotus-btn-primary" href="#lotus-diagnostico">Analisar meu perfil</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="lotus-footer">
+    <div class="lotus-container">
+      <div class="lotus-signature">Alexandre Borges | CRECI-SC 45148 | Gerente Comercial</div>
+      <div>Lótus Business · Itapema/SC. Material de apresentação comercial. Informações sujeitas a validação documental e disponibilidade. Não constitui promessa de rentabilidade, locação ou valorização garantida.</div>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var N8N_WEBHOOK_URL = "COLE_AQUI_A_URL_DO_WEBHOOK_N8N";
+  var WHATSAPP_NUMBER = "5547988695350";
+  var form = document.getElementById("lotus-lead-form");
+  var status = document.getElementById("lotus-form-status");
+
+  function getUtmParams() {
+    var params = new URLSearchParams(window.location.search || "");
+    return {
+      utm_source: params.get("utm_source") || "",
+      utm_medium: params.get("utm_medium") || "",
+      utm_campaign: params.get("utm_campaign") || "",
+      utm_content: params.get("utm_content") || "",
+      utm_term: params.get("utm_term") || ""
+    };
+  }
+
+  function setStatus(message, type) {
+    if (!status) return;
+    status.textContent = message;
+    status.className = "lotus-status" + (type ? " " + type : "");
+  }
+
+  function buildWhatsAppMessage(payload) {
+    return [
+      "Olá, quero entender se o Lótus Business faz sentido para meu perfil.",
+      "Nome: " + payload.nome,
+      "Contato: " + payload.contato,
+      "Perfil: " + payload.perfil,
+      "Objetivo: " + payload.objetivo,
+      "Momento: " + payload.momento,
+      payload.observacao ? "Observação: " + payload.observacao : ""
+    ].filter(Boolean).join("\n");
+  }
+
+  function collectPayload() {
+    var data = new FormData(form);
+    var utm = getUtmParams();
+    return {
+      nome: (data.get("nome") || "").toString().trim(),
+      contato: (data.get("contato") || "").toString().trim(),
+      perfil: (data.get("perfil") || "").toString(),
+      objetivo: (data.get("objetivo") || "").toString(),
+      momento: (data.get("momento") || "").toString(),
+      observacao: (data.get("observacao") || "").toString().trim(),
+      projeto_interesse: "Lótus Business",
+      origem_pagina: window.location.href,
+      canal_origem: utm.utm_source || "wordpress",
+      utm_source: utm.utm_source,
+      utm_medium: utm.utm_medium,
+      utm_campaign: utm.utm_campaign,
+      utm_content: utm.utm_content,
+      utm_term: utm.utm_term,
+      lead_source: "landing_lotus_wordpress",
+      timestamp: new Date().toISOString(),
+      responsavel: "Alexandre Borges",
+      creci: "CRECI-SC 45148",
+      whatsapp_destino: "+55 47 98869-5350"
+    };
+  }
+
+  function openWhatsApp(payload) {
+    var message = buildWhatsAppMessage(payload);
+    var url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
+    window.open(url, "_blank");
+  }
+
+  if (!form) return;
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    var payload = collectPayload();
+
+    if (!payload.nome) {
+      setStatus("Preencha seu nome para continuar.", "error");
+      return;
+    }
+
+    if (!payload.contato) {
+      setStatus("Preencha seu WhatsApp ou e-mail para continuar.", "error");
+      return;
+    }
+
+    if (!N8N_WEBHOOK_URL || N8N_WEBHOOK_URL.indexOf("COLE_AQUI") === 0) {
+      setStatus("Webhook do n8n ainda não configurado. Abrindo WhatsApp como alternativa.", "error");
+      openWhatsApp(payload);
+      return;
+    }
+
+    setStatus("Enviando sua análise inicial...", "");
+
+    fetch(N8N_WEBHOOK_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("Falha no envio");
+        }
+        return response.text();
+      })
+      .then(function () {
+        setStatus("Recebemos seus dados. Você será direcionado para o WhatsApp.", "success");
+        openWhatsApp(payload);
+        form.reset();
+      })
+      .catch(function () {
+        setStatus("Não consegui enviar pelo formulário agora. Abrindo WhatsApp como alternativa.", "error");
+        openWhatsApp(payload);
+      });
+  });
+})();
+</script>
