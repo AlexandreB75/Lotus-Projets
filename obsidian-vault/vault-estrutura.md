@@ -46,7 +46,7 @@ CLAUDE CODE/
 │   ├── image-generator/
 │   ├── instagram-publisher/
 │   ├── opensquad-agent-creator/
-│   └── opensquad-skill-creator/
+│   └── Skill-Builder-Operacional/
 │
 ├── 05-Contexto/             ← arquivos de contexto permanente
 │   ├── Contexto_Permanente.txt
