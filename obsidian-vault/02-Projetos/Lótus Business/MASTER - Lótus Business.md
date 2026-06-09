@@ -62,8 +62,9 @@ Ele compra:
 - [[Scripts-WhatsApp]] — atendimento inicial e condução por perfil.
 - [[Pitch-de-Vendas]] — falas para WhatsApp, reunião e apresentação.
 - [[Follow-up-CRM]] — cadência e classificação de leads.
-- [[Campanhas-Instagram]] — backlog de marketing.
-- [[../Lotus-Landing|Lótus Landing]] — landing page / aplicação de prospecção existente no GitHub.
+- [[Campanhas-Instagram]] — ideias iniciais de marketing.
+- [[Campanhas-Instagram-LinkedIn]] — estrutura operacional de campanhas Instagram + LinkedIn.
+- [[../Lotus-Landing|Lótus Landing]] — landing pública + ferramenta interna de prospecção no GitHub.
 
 ---
 
@@ -106,8 +107,9 @@ Antes de vender sala, entender o uso:
 
 ## Ativos digitais existentes
 
-- Landing/app de prospecção no GitHub: `lotus-prospecting.jsx`.
-- A landing deve ser melhorada a partir da versão existente, não recriada do zero.
+- Ferramenta interna de prospecção no GitHub: `lotus-prospecting.jsx`.
+- Landing pública nova no GitHub: `lotus-landing-public.jsx`.
+- A ferramenta interna e a landing pública têm funções diferentes e não devem ser misturadas.
 
 ---
 

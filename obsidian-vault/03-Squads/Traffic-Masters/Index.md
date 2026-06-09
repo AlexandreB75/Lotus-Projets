@@ -21,7 +21,8 @@ Tráfego não é só subir anúncio. É testar oferta, público e mensagem com c
 - Testar ângulos de anúncio.
 - Analisar performance de campanha.
 - Criar plano de captação por projeto.
-- Usar a [[../../02-Projetos/Lotus-Landing|Lótus Landing]] como destino principal das campanhas do Lótus quando fizer sentido.
+- Usar a [[../../02-Projetos/Lotus-Landing|Lótus Landing]] pública como destino principal das campanhas do Lótus quando fizer sentido.
+- Estruturar campanhas a partir de [[../../02-Projetos/Lótus Business/Campanhas-Instagram-LinkedIn|Campanhas Instagram + LinkedIn — Lótus Business]].
 
 ---
 

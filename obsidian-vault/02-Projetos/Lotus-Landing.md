@@ -1,12 +1,12 @@
 ---
 tags: [projeto, lotus, lótus, landing-page, leads, github, marketing]
-status: ativo
+status: operacional
 data: 2026-06-09
 ---
 
 # Projeto — Lótus Landing
 
-> Landing page / aplicação de prospecção do Lótus Business já existente no GitHub.
+> Estrutura de landing e prospecção digital do Lótus Business no GitHub.
 
 Projeto relacionado:
 
@@ -14,26 +14,45 @@ Projeto relacionado:
 
 ---
 
-## Status
+## Decisão operacional atual
 
-**Status atual:** pronta / existente no GitHub  
-**Arquivo localizado no repositório:** `lotus-prospecting.jsx`  
-**Repositório:** `AlexandreB75/Lotus-Projets`
+Existem dois ativos diferentes:
 
-A landing não deve ser recriada do zero. Qualquer melhoria deve partir da versão existente.
+| Arquivo | Função | Público |
+|---|---|---|
+| `lotus-prospecting.jsx` | ferramenta interna de inteligência/prospecção | Alexandre/equipe |
+| `lotus-landing-public.jsx` | landing pública para tráfego e captação | leads/clientes |
+
+A ferramenta interna não deve ser usada como landing pública, porque expõe arquitetura, pipeline, Claude API, N8N, Chatwoot e lógica de prospecção.
+
+A landing pública deve ser simples, consultiva e orientada para conversão.
 
 ---
 
-## Função operacional
+## Landing pública
 
-A landing serve como ativo de marketing e prospecção para o Lótus Business, conectando:
+**Arquivo:** `lotus-landing-public.jsx`  
+**Função:** receber tráfego de Instagram/LinkedIn/Meta Ads e iniciar análise de perfil.
 
-- posicionamento comercial;
-- qualificação de perfil;
-- captação de leads;
-- argumentação por público;
-- apoio para campanhas de tráfego;
-- base para otimização SEO/AEO/GEO.
+### Objetivos
+
+- explicar o Lótus de forma clara;
+- segmentar por perfil;
+- reduzir promessa exagerada;
+- gerar conversa qualificada;
+- direcionar para WhatsApp/SDR;
+- apoiar SEO/AEO/GEO.
+
+---
+
+## Ferramenta interna
+
+**Arquivo:** `lotus-prospecting.jsx`  
+**Função:** análise interna de prospect, score, objeção provável, argumento-chave e mensagem personalizada.
+
+### Observação importante
+
+A chamada para IA/API deve preferencialmente passar por backend, N8N ou ambiente seguro. Não expor chave no navegador.
 
 ---
 
@@ -41,41 +60,25 @@ A landing serve como ativo de marketing e prospecção para o Lótus Business, c
 
 | Camada | Uso |
 |---|---|
-| [[03-Squads/Traffic-Masters/Index|Traffic Masters]] | destino de campanhas e testes de público |
-| [[03-Squads/Copy-Squad/Index|Copy Squad]] | melhoria de headline, CTA, textos e perguntas |
-| [[03-Squads/Oferta-Hormozi/Index|Oferta Hormozi]] | ajuste de oferta e valor percebido |
-| [[03-Squads/Storytelling/Index|Storytelling]] | narrativa e diferenciação comercial |
-| [[04-Skills/SEO-AEO-GEO|SEO + AEO + GEO]] | estrutura para busca, respostas e autoridade digital |
-| [[03-Squads/Agentes-Operacionais/SDR-Lotus-Business|SDR-Lotus Business]] | continuação da conversa após o lead entrar |
+| [[03-Squads/Traffic-Masters/Index|Traffic Masters]] | campanhas e destino de tráfego |
+| [[03-Squads/Copy-Squad/Index|Copy Squad]] | headlines, CTA, páginas e mensagens |
+| [[03-Squads/Oferta-Hormozi/Index|Oferta Hormozi]] | proposta de valor e ângulos de conversão |
+| [[03-Squads/Storytelling/Index|Storytelling]] | narrativa e diferenciação |
+| [[04-Skills/SEO-AEO-GEO|SEO + AEO + GEO]] | FAQ, autoridade e busca |
+| [[03-Squads/Agentes-Operacionais/SDR-Lotus-Business|SDR-Lotus Business]] | atendimento depois do lead entrar |
 
 ---
 
-## Regra de uso
+## Campanhas relacionadas
 
-Antes de criar nova página para o Lótus, verificar se a melhoria pode ser feita na landing existente.
-
-Não duplicar landing sem motivo operacional claro.
+- [[Lótus Business/Campanhas-Instagram-LinkedIn|Campanhas Instagram + LinkedIn — Lótus Business]]
 
 ---
 
-## Melhorias futuras possíveis
+## Próximos ajustes técnicos
 
-- Revisar headline principal.
-- Criar variações por público: médicos, advogados, empresários e investidores.
-- Criar FAQ comercial com base nas objeções reais.
-- Conectar com formulário/WhatsApp/CRM.
-- Criar versão otimizada para tráfego pago.
-- Criar blocos SEO/AEO/GEO para perguntas frequentes.
-
----
-
-## Próximo passo recomendado
-
-Auditar a landing existente com foco em:
-
-1. clareza da oferta;
-2. CTA para WhatsApp;
-3. segmentação por público;
-4. promessas comerciais seguras;
-5. conexão com campanhas Meta Ads;
-6. reaproveitamento para SEO/AEO/GEO.
+1. Configurar número de WhatsApp real no `WHATSAPP_NUMBER`.
+2. Decidir hospedagem/deploy da landing pública.
+3. Adicionar pixel/eventos quando a estrutura de campanha estiver pronta.
+4. Conectar formulário com WhatsApp, CRM ou N8N.
+5. Criar variações por público se a campanha validar.
