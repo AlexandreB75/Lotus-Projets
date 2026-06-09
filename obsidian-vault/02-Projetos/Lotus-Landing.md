@@ -32,7 +32,7 @@ A landing pública deve ser simples, consultiva e orientada para conversão.
 ## Landing pública
 
 **Arquivo:** `lotus-landing-public.jsx`  
-**Função:** receber tráfego de Instagram/LinkedIn/Meta Ads e iniciar análise de perfil.
+**Função:** receber tráfego de Instagram/LinkedIn/Meta Ads no WordPress e iniciar análise de perfil.
 
 ### Objetivos
 
@@ -69,16 +69,18 @@ A chamada para IA/API deve preferencialmente passar por backend, N8N ou ambiente
 
 ---
 
-## Campanhas relacionadas
+## Campanhas e integrações relacionadas
 
 - [[Lótus Business/Campanhas-Instagram-LinkedIn|Campanhas Instagram + LinkedIn — Lótus Business]]
+- [[Lótus Business/Fluxo-WordPress-HubSpot-CRM|Fluxo WordPress + HubSpot CRM — Lótus Business]]
 
 ---
 
 ## Próximos ajustes técnicos
 
-1. Configurar número de WhatsApp real no `WHATSAPP_NUMBER`.
-2. Decidir hospedagem/deploy da landing pública.
-3. Adicionar pixel/eventos quando a estrutura de campanha estiver pronta.
-4. Conectar formulário com WhatsApp, CRM ou N8N.
-5. Criar variações por público se a campanha validar.
+1. WhatsApp configurado na landing: `+55 74 98869-5350`.
+2. Publicar a landing no WordPress: `alexandreborgescorretor.com.br`.
+3. Conectar formulário com HubSpot CRM.
+4. Adicionar pixel/eventos quando a estrutura de campanha estiver pronta.
+5. Conectar HubSpot com n8n/Chatwoot para alertas e follow-up.
+6. Criar variações por público se a campanha validar.

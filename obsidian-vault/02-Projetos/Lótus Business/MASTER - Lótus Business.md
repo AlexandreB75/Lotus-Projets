@@ -64,6 +64,7 @@ Ele compra:
 - [[Follow-up-CRM]] — cadência e classificação de leads.
 - [[Campanhas-Instagram]] — ideias iniciais de marketing.
 - [[Campanhas-Instagram-LinkedIn]] — estrutura operacional de campanhas Instagram + LinkedIn.
+- [[Fluxo-WordPress-HubSpot-CRM]] — WordPress, HubSpot CRM, Chatwoot/n8n e WhatsApp comercial.
 - [[../Lotus-Landing|Lótus Landing]] — landing pública + ferramenta interna de prospecção no GitHub.
 
 ---

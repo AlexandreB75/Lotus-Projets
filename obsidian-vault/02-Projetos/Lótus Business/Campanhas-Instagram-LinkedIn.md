@@ -47,11 +47,11 @@ Gerar conversas qualificadas para o Lótus Business com públicos que possam com
 ```text
 Conteúdo / Anúncio
   ↓
-Landing pública Lótus
+Landing pública Lótus no WordPress
   ↓
-Análise inicial de perfil
+Formulário HubSpot / análise inicial de perfil
   ↓
-WhatsApp / SDR-Lotus
+HubSpot CRM + WhatsApp Chatwoot/n8n / SDR-Lotus
   ↓
 Apresentação / reunião
   ↓
@@ -234,6 +234,17 @@ Usar linguagem segura:
 
 ---
 
+## Integração WordPress + CRM
+
+Fluxo operacional: [[Fluxo-WordPress-HubSpot-CRM|Fluxo WordPress + HubSpot CRM — Lótus Business]].
+
+- Site: `alexandreborgescorretor.com.br`
+- WhatsApp da campanha: `+55 74 98869-5350`
+- CRM: HubSpot
+- Automação: n8n + Chatwoot
+
+---
+
 ## Eventos/conversões sugeridos
 
 Para o Claude Code / Meta Ads MCP estruturar campanhas depois:
@@ -259,9 +270,10 @@ Para o Claude Code / Meta Ads MCP estruturar campanhas depois:
 
 ## Próximo passo
 
-1. Configurar número de WhatsApp na landing pública.
-2. Definir primeira campanha: médicos, advogados ou investidores.
-3. Criar 3 criativos por público.
-4. Criar 3 variações de copy por público.
-5. Subir campanha inicial com orçamento controlado.
-6. Medir conversa qualificada, não só lead barato.
+1. Publicar landing pública no WordPress.
+2. Embutir/conectar formulário HubSpot.
+3. Definir primeira campanha: médicos, advogados ou investidores.
+4. Criar 3 criativos por público.
+5. Criar 3 variações de copy por público.
+6. Subir campanha inicial com orçamento controlado.
+7. Medir conversa qualificada, não só lead barato.

@@ -61,7 +61,9 @@ Ver [[04-Skills/N8N|N8N]] para automações que conectam HubSpot com outros sist
 |---|---|---|
 | Instagram Lead Ads | HubSpot Contact | [[04-Skills/N8N|N8N]] |
 | Landing Page Form | HubSpot Contact | HubSpot nativo |
-| HubSpot Deal | Slack notificação | [[04-Skills/N8N|N8N]] |
+| WordPress Form | HubSpot Contact | HubSpot embed/plugin ou formulário integrado |
+| HubSpot Contact | Chatwoot/n8n | [[04-Skills/N8N|N8N]] |
+| HubSpot Deal | Slack/Telegram notificação | [[04-Skills/N8N|N8N]] |
 | HubSpot Contact | Email sequência | HubSpot nativo |
 
 ---
