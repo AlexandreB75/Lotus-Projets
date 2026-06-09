@@ -63,6 +63,7 @@ Ele compra:
 - [[Pitch-de-Vendas]] — falas para WhatsApp, reunião e apresentação.
 - [[Follow-up-CRM]] — cadência e classificação de leads.
 - [[Campanhas-Instagram]] — backlog de marketing.
+- [[../Lotus-Landing|Lótus Landing]] — landing page / aplicação de prospecção existente no GitHub.
 
 ---
 
@@ -100,6 +101,13 @@ Antes de vender sala, entender o uso:
 4. investimento para renda;
 5. patrimônio empresarial;
 6. expansão de marca.
+
+---
+
+## Ativos digitais existentes
+
+- Landing/app de prospecção no GitHub: `lotus-prospecting.jsx`.
+- A landing deve ser melhorada a partir da versão existente, não recriada do zero.
 
 ---
 

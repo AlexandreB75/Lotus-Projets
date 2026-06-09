@@ -122,9 +122,11 @@ Antes de publicar um conteúdo, verificar:
 
 ### Lótus Business
 
+- Usar a landing existente: [[../02-Projetos/Lotus-Landing|Lótus Landing]].
 - FAQ sobre sala comercial como ativo patrimonial.
 - Conteúdo para médicos, advogados, empresários e investidores.
-- Página explicando localização, perfil de uso e diferenciação.
+- Blocos de resposta para otimizar a página/app existente.
+- Página explicando localização, perfil de uso e diferenciação, se for necessário complementar a landing atual.
 
 ---
 

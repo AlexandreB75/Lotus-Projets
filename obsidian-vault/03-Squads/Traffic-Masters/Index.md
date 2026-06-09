@@ -21,6 +21,7 @@ Tráfego não é só subir anúncio. É testar oferta, público e mensagem com c
 - Testar ângulos de anúncio.
 - Analisar performance de campanha.
 - Criar plano de captação por projeto.
+- Usar a [[../../02-Projetos/Lotus-Landing|Lótus Landing]] como destino principal das campanhas do Lótus quando fizer sentido.
 
 ---
 
