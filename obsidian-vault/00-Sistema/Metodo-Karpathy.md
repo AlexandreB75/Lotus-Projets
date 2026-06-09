@@ -109,23 +109,31 @@ Arquivo que define como o LLM deve compilar:
 
 ## Ferramenta Necessária
 
-**Claude Code** (linha de comando) — não é o Claude.ai
+Na versão original, o método usa **Claude Code** como ferramenta de compilação.
 
-Exige setup técnico dedicado. **Não implementar agora** — guardar como próximo nível.
+Na adaptação do OpenBotXD, a compilação pode ser feita por:
+
+- OpenClaw;
+- agentes especializados;
+- skills operacionais;
+- n8n em uma fase futura.
+
+**Decisão atual:** manter sem automação pesada. Usar primeiro como arquitetura de organização e compilação assistida.
 
 ---
 
 ## Status de Implementação
 
 - [x] Conceito entendido e documentado
-- [x] Arquitetura mapeada pro contexto Lotus
-- [ ] Criar pasta `raw/` com primeiras fontes
-- [ ] Definir schema inicial no `CLAUDE.md`
-- [ ] Primeira compilação de teste
+- [x] Arquitetura mapeada para o contexto comercial de Alexandre
+- [x] Criada camada [[../08-Raw/00-INDEX-Raw|08-Raw]] para fontes brutas
+- [x] Criada camada [[../09-Wiki-Compilado/00-INDEX-Wiki-Compilado|09-Wiki-Compilado]] para sínteses
+- [x] Criadas regras operacionais em [[Knowledge-Compiler-Regras]]
+- [ ] Primeira compilação de teste com fonte real
+- [ ] Automatização futura via OpenClaw/n8n
 
-> **Quando implementar:** Depois que o vault atual estiver populado com uso real.
-> Não faz sentido compilar automaticamente um vault vazio.
-> **Primeiro usar, depois automatizar.**
+> **Princípio atual:** implementar de forma leve, sem automação pesada.
+> Primeiro capturar fontes reais, depois compilar padrões, depois alimentar projetos, scripts e skills.
 
 ---
 

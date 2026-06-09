@@ -212,7 +212,14 @@ Mover para lista de **reaquecimento trimestral**.
 
 A cada 3 meses, enviar uma mensagem única com atualização real da obra ou do projeto.
 
-Exemplos de atualização:\n\n- avanço da obra;\n- nova foto oficial;\n- atualização de entrega;\n- definição operacional;\n- novo material institucional;\n- mudança de disponibilidade;
+Exemplos de atualização:
+
+- avanço da obra;
+- nova foto oficial;
+- atualização de entrega;
+- definição operacional;
+- novo material institucional;
+- mudança de disponibilidade;
 - notícia relevante sobre o complexo.
 
 Leads de R$ 65M têm ciclo longo.
@@ -236,4 +243,4 @@ Preferir formulações seguras:
 - “forte potencial de valorização”;
 - “interesse tende a crescer”;
 - “ativo estratégico”;
-- “posição rara no mercado regional”.\n
+- “posição rara no mercado regional”.

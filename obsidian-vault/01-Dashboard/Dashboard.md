@@ -56,6 +56,17 @@ data: 2026-06-09
 
 ---
 
+## Knowledge Compiler
+
+| Camada | Uso |
+|---|---|
+| [[08-Raw/00-INDEX-Raw|08-Raw]] | fontes brutas: conversas, PDFs, prints, tabelas e campanhas |
+| [[09-Wiki-Compilado/00-INDEX-Wiki-Compilado|09-Wiki-Compilado]] | sínteses, padrões e inteligência comercial |
+| [[00-Sistema/Knowledge-Compiler-Regras|Knowledge Compiler — Regras]] | regras de compilação e segurança comercial |
+| [[00-Sistema/Metodo-Karpathy|Método Karpathy]] | base conceitual do sistema |
+
+---
+
 ## Scripts e materiais úteis
 
 - [[06-Scripts/Atendimento-Inicial|Atendimento Inicial]]
