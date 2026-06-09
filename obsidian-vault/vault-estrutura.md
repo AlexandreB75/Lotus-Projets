@@ -1,75 +1,93 @@
-# Estrutura do Vault - CLAUDE CODE
+# Estrutura do Vault — OpenBotXD
 
-## Estrutura Proposta
+> Estrutura operacional atual do vault Obsidian de Alexandre Borges.
 
-```
-CLAUDE CODE/
-├── .obsidianignore          ← exclui node_modules do index
-├── .gitignore
-│
-├── 00-Sistema/              ← antigo _opensquad
-│   ├── _config/
-│   ├── _core/
-│   ├── _investigations/
-│   ├── _memory/
-│   └── _logs/
-│
-├── 01-Dashboard/            ← antigo dashboard
-│
-├── 02-Projetos/             ← projetos ativos
-│   ├── Lotus-Projets/
-│   └── Hubspot/
-│       ├── lotus-business/
-│       └── lotus-landing/
-│
-├── 03-Squads/               ← unificação de squads + xquads
-│   ├── instagram-imoveis/
-│   ├── advisory-board/
-│   ├── brand-squad/
-│   ├── c-level-squad/
-│   ├── claude-code-mastery/
-│   ├── copy-squad/
-│   ├── cybersecurity/
-│   ├── data-squad/
-│   ├── design-squad/
-│   ├── hormozi-squad/
-│   ├── movement/
-│   ├── storytelling/
-│   └── traffic-masters/
-│
-├── 04-Skills/               ← antigo skills
-│   ├── apify/
-│   ├── blotato/
-│   ├── canva/
-│   ├── image-creator/
-│   ├── image-fetcher/
-│   ├── image-generator/
-│   ├── instagram-publisher/
-│   ├── opensquad-agent-creator/
-│   └── Skill-Builder-Operacional/
-│
-├── 05-Contexto/             ← arquivos de contexto permanente
-│   ├── Contexto_Permanente.txt
-│   ├── CLAUDE
-│   └── Claude Memory
-│
-├── Templates/               ← templates reutilizáveis
-│
-├── node_modules/            ← IGNORADO pelo Obsidian
-└── README
+---
+
+## Estrutura atual
+
+```text
+obsidian-vault/
+├── 00-Sistema/                  ← sistema, regras, auditorias e Knowledge Compiler
+├── 01-Dashboard/                ← painel central operacional
+├── 02-Projetos/                 ← projetos comerciais ativos
+│   ├── Hilton Garden Inn Itapema/
+│   └── Lótus Business/
+├── 03-Squads/                   ← agentes e squads por função operacional
+│   ├── 00-INDEX-Agentes-e-Squads.md
+│   ├── Agentes-Operacionais/
+│   ├── Instagram-Imoveis/
+│   ├── Brand-Squad/
+│   ├── Copy-Squad/
+│   ├── Design-Squad/
+│   └── Traffic-Masters/
+├── 04-Skills/                   ← skills operacionais e capacidades reutilizáveis
+├── 05-Contexto/                 ← contexto permanente
+├── 06-Scripts/                  ← scripts gerais
+├── 07-Objecoes/                 ← biblioteca geral de objeções
+├── 08-Raw/                      ← fontes brutas do Knowledge Compiler
+├── 09-Wiki-Compilado/           ← inteligência comercial compilada
+└── Templates/                   ← modelos reutilizáveis
 ```
 
-## Problemas Resolvidos
+---
 
-| Problema | Solução |
-|---|---|
-| `node_modules` indexado | `.obsidianignore` exclui a pasta |
-| `squads` duplicado em `xquads` | Unificados em `03-Squads` |
-| Sem ordem visual | Prefixos `00-` a `05-` ordenam automaticamente |
-| Contexto espalhado | Centralizado em `05-Contexto` |
+## Decisões estruturais
 
-## Como Aplicar
+### `xquads`
 
-1. Copie `reorganize-vault.ps1` para a raiz do vault
-2. Clique com o botão direito → **Executar com PowerShell**
-3. Reinicie o Obsidian
+`xquads` é legado.
+
+Não existe mais como pasta ativa.
+
+Todo conteúdo de squads deve ficar em:
+
+- [[03-Squads/00-INDEX-Agentes-e-Squads|03-Squads]]
+
+Auditoria: [[00-Sistema/Auditoria-Xquads]]
+
+---
+
+### `_opensquad`
+
+`_opensquad` também é legado.
+
+Conteúdo de sistema deve ficar em:
+
+- `00-Sistema/`
+
+---
+
+### Skills
+
+Skills devem ficar em:
+
+- [[04-Skills/00-INDEX-Skills|04-Skills]]
+
+Conceitos antigos como `opensquads-skill-creator` foram renomeados para:
+
+- [[04-Skills/Skill-Builder-Operacional|Skill Builder Operacional]]
+
+---
+
+## Regra anti-bagunça
+
+Não criar pastas antigas novamente:
+
+- `xquads/`
+- `squads/` na raiz
+- `_opensquad/`
+- `skills/` na raiz
+
+Tudo deve entrar nas pastas numeradas atuais.
+
+---
+
+## Fluxo recomendado
+
+1. Projeto comercial → `02-Projetos/`
+2. Agente ou squad → `03-Squads/`
+3. Capacidade reutilizável → `04-Skills/`
+4. Fonte bruta → `08-Raw/`
+5. Inteligência compilada → `09-Wiki-Compilado/`
+6. Script geral → `06-Scripts/`
