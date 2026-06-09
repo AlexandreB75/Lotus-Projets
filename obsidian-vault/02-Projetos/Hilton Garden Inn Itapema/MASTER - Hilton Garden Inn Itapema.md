@@ -38,8 +38,11 @@ A condução correta é:
 ### Comercial
 
 - [[Argumentario-Comercial]] — tese comercial, diferenciais, posicionamento e argumentos centrais.
+- [[Centro-Medico-Hilton-Dados-Scripts]] — dados base, roteiros de Reels, WhatsApp e qualificação do Centro Médico Hilton.
+- [[Centro-Medico-Hilton-Funil-Follow-up]] — sequência de follow-up para leads sem resposta do Centro Médico Hilton.
 - [[Pitch-de-Vendas]] — falas e apresentações para WhatsApp, reunião e evento.
 - [[Scripts-WhatsApp]] — fluxos de atendimento e mensagens práticas.
+- [[Scripts-Operacionais]] — comunicação pré-operacional, hotel, residencial e pool Hilton.
 - [[Objeções-e-Respostas]] — respostas calibradas com base em testes reais.
 - [[Publico-Alvo]] — perfis, motivações e condução por tipo de lead.
 - [[Follow-up-CRM]] — cadência, retomadas e classificação de leads.
