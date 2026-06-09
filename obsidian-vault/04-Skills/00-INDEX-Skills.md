@@ -10,6 +10,19 @@ data: 2026-06-09
 
 ---
 
+## Criação de skills
+
+- [[Skill-Builder-Operacional]] — transforma conhecimento comercial em skills operacionais reutilizáveis.
+
+### Skills comerciais propostas
+
+- **WhatsApp SDR Hilton** — atendimento e qualificação de leads Hilton.
+- **Follow-up Centro Médico Hilton** — cadência para leads de alto ticket sem resposta.
+- **Qualificação Lótus Business** — diagnóstico por perfil e potencial comercial.
+- **Objeções Imobiliárias Premium** — respostas seguras para objeções de leads premium.
+
+---
+
 ## Automação e CRM
 
 | Skill | Uso principal | Agente/Projeto conectado |
