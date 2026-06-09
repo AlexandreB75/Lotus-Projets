@@ -1,38 +1,71 @@
 ---
-tags: [squad, design, visual, canva]
-status: ativo
-data: 2025-05-10
+tags: [squad, design, visual, criativos, canva]
+status: operacional
+prioridade: apoio
+data: 2026-06-09
 ---
 
 # Squad — Design Squad
 
-> [[01-Dashboard/Dashboard|← Dashboard]]
+## Função
 
-## Missão
+Transformar campanhas, argumentos e conteúdos em peças visuais claras para Instagram, anúncios, apresentações e materiais comerciais.
 
-Criar materiais visuais de alta qualidade para os produtos e squads Lotus.
+Design aqui é apoio de conversão, não decoração.
 
-## Projetos
+---
 
-- [[02-Projetos/Lotus-Business|Lotus Business]]
-- [[02-Projetos/Lotus-Landing|Lotus Landing]]
+## Quando usar
 
-## Squads Parceiros
+- Criar criativo para anúncio.
+- Criar carrossel.
+- Criar capa/thumbnail de Reels.
+- Criar apresentação rápida.
+- Criar material visual para WhatsApp ou reunião.
 
-- [[03-Squads/Brand-Squad/Index|Brand Squad]] — identidade visual e guidelines
-- [[03-Squads/Copy-Squad/Index|Copy Squad]] — textos para materiais
-- [[03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]] — posts e stories
+---
 
-## Ferramentas
+## Projetos atendidos
 
-- Canva — criação rápida de materiais
-- Adobe — edições avançadas
+- [[../../02-Projetos/Hilton Garden Inn Itapema/MASTER - Hilton Garden Inn Itapema|Hilton Garden Inn Itapema]]
+- [[../../02-Projetos/Hilton Garden Inn Itapema/Centro-Medico-Hilton/00-INDEX-Centro-Medico-Hilton|Centro Médico Hilton]]
+- [[../../02-Projetos/Lótus Business/MASTER - Lótus Business|Lótus Business]]
+- The Spot One
 
-## Tipos de Material
+---
 
-- Posts para Instagram
-- Stories
-- Apresentações de produto
-- Material para eventos
+## Entradas necessárias
 
-## Notas do Squad
+- Objetivo da peça.
+- Canal de uso.
+- Texto/copy aprovado.
+- Público-alvo.
+- Formato: post, story, carrossel, anúncio ou apresentação.
+
+---
+
+## Saídas práticas
+
+- Briefing visual.
+- Estrutura de carrossel.
+- Direção de criativo para anúncio.
+- Lista de elementos visuais necessários.
+- Revisão de clareza da peça.
+
+---
+
+## Regras
+
+- Uma peça deve comunicar uma ideia principal.
+- Visual precisa facilitar leitura.
+- Evitar excesso de texto.
+- Não usar design bonito que prejudica conversão.
+
+---
+
+## Squads parceiros
+
+- [[../Copy-Squad/Index|Copy Squad]]
+- [[../Brand-Squad/Index|Brand Squad]]
+- [[../Traffic-Masters/Index|Traffic Masters]]
+- [[../Instagram-Imoveis/Index|Instagram Imóveis]]

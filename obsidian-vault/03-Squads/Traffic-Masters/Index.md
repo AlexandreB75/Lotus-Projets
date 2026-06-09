@@ -1,32 +1,74 @@
 ---
-tags: [squad, traffic, meta-ads, trafego]
-status: ativo
-data: 2025-05-10
+tags: [squad, traffic, meta-ads, trafego, campanhas]
+status: operacional
+data: 2026-06-09
 ---
 
 # Squad — Traffic Masters
 
-> [[01-Dashboard/Dashboard|← Dashboard]]
+## Função
 
-## Missão
+Planejar campanhas pagas, públicos, ângulos, criativos e métricas para geração de leads imobiliários qualificados.
 
-Gerar tráfego qualificado via mídia paga para os produtos Lotus.
+Tráfego não é só subir anúncio. É testar oferta, público e mensagem com controle.
 
-## Projetos
+---
 
-- [[02-Projetos/Lotus-Business|Lotus Business]]
-- [[02-Projetos/Lotus-Landing|Lotus Landing]]
+## Quando usar
 
-## Skills do Squad
+- Criar campanha de Meta Ads.
+- Definir público para Hilton, Lótus ou The Spot.
+- Testar ângulos de anúncio.
+- Analisar performance de campanha.
+- Criar plano de captação por projeto.
 
-- [[04-Skills/Meta-Ads|Meta Ads]] — campanhas no Facebook e Instagram Ads
-- [[04-Skills/N8N|N8N]] — automação de relatórios de performance
-- [[04-Skills/HubSpot|HubSpot]] — rastreamento de leads gerados
+---
 
-## Squads Parceiros
+## Projetos atendidos
 
-- [[03-Squads/Copy-Squad/Index|Copy Squad]] — copies para anúncios
-- [[03-Squads/Design-Squad/Index|Design Squad]] — criativos para anúncios
-- [[03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]] — produto a promover
+- [[../../02-Projetos/Hilton Garden Inn Itapema/MASTER - Hilton Garden Inn Itapema|Hilton Garden Inn Itapema]]
+- [[../../02-Projetos/Hilton Garden Inn Itapema/Centro-Medico-Hilton/00-INDEX-Centro-Medico-Hilton|Centro Médico Hilton]]
+- [[../../02-Projetos/Lótus Business/MASTER - Lótus Business|Lótus Business]]
+- The Spot One
 
-## Notas do Squad
+---
+
+## Entradas necessárias
+
+- Projeto/produto.
+- Objetivo da campanha: lead, WhatsApp, visita, reunião ou reconhecimento.
+- Público-alvo.
+- Verba disponível.
+- Região.
+- Oferta ou diferencial principal.
+
+---
+
+## Saídas práticas
+
+- Estrutura de campanha.
+- Públicos sugeridos.
+- Ângulos de anúncio.
+- Briefing de criativos.
+- Copies para teste.
+- Métricas para acompanhar.
+- Diagnóstico de performance.
+
+---
+
+## Regras
+
+- Não rodar campanha sem oferta clara.
+- Separar campanha por projeto e público.
+- Não misturar médico, investidor, comprador residencial e turista na mesma comunicação.
+- Testar poucas variações com clareza.
+- Todo lead captado precisa ter próximo passo comercial.
+
+---
+
+## Squads parceiros
+
+- [[../Copy-Squad/Index|Copy Squad]] — copies e mensagens.
+- [[../Design-Squad/Index|Design Squad]] — criativos.
+- [[../Oferta-Hormozi/Index|Oferta Hormozi]] — proposta de valor.
+- [[../Instagram-Imoveis/Index|Instagram Imóveis]] — conteúdo orgânico e remarketing.

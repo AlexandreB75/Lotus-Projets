@@ -20,13 +20,30 @@ data: 2026-06-09
 
 ---
 
-## Squads existentes
+## Núcleo de marketing
 
 - [[Instagram-Imoveis/Index|Instagram Imóveis]] — conteúdo, autoridade e captação imobiliária.
-- [[Brand-Squad/Index|Brand Squad]] — posicionamento, narrativa e identidade.
-- [[Copy-Squad/Index|Copy Squad]] — copy, scripts e mensagens comerciais.
-- [[Design-Squad/Index|Design Squad]] — materiais visuais e direção criativa.
+- [[Copy-Squad/Index|Copy Squad]] — copy, scripts, anúncios e mensagens comerciais.
 - [[Traffic-Masters/Index|Traffic Masters]] — tráfego pago, campanhas e performance.
+- [[Storytelling/Index|Storytelling]] — narrativas comerciais para projetos e campanhas.
+- [[Oferta-Hormozi/Index|Oferta Hormozi]] — estrutura de oferta, valor percebido e ângulo de conversão.
+- [[Brand-Squad/Index|Brand Squad]] — posicionamento, narrativa e identidade.
+- [[Design-Squad/Index|Design Squad]] — materiais visuais e direção criativa.
+
+---
+
+## Baixa prioridade / referência futura
+
+Não ativar como frente operacional agora:
+
+- Advisory Board
+- C-Level Squad
+- Cybersecurity
+- Claude Code Mastery
+- Data Squad
+- Movement
+
+Se precisar de algo desses temas, criar sob demanda com o agente/skill builder.
 
 ---
 

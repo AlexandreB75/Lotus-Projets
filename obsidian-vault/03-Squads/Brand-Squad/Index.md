@@ -1,32 +1,60 @@
 ---
-tags: [squad, brand, design, identidade]
-status: ativo
-data: 2025-05-10
+tags: [squad, brand, identidade, posicionamento]
+status: operacional
+prioridade: apoio
+data: 2026-06-09
 ---
 
 # Squad — Brand Squad
 
-> [[01-Dashboard/Dashboard|← Dashboard]]
+## Função
 
-## Missão
+Definir posicionamento, tom de voz e coerência de marca para os projetos e materiais comerciais.
 
-Definir e manter a identidade visual e o posicionamento da marca Lotus.
+Brand não deve virar burocracia. Deve ajudar o cliente a perceber valor mais rápido.
 
-## Projetos
+---
 
-- [[02-Projetos/Lotus-Business|Lotus Business]]
-- [[02-Projetos/Lotus-Landing|Lotus Landing]]
+## Quando usar
 
-## Squads Parceiros
+- Criar narrativa institucional.
+- Padronizar tom de comunicação.
+- Definir diferenciais centrais de um projeto.
+- Revisar campanha antes de ir para tráfego.
+- Evitar comunicação genérica ou desalinhada.
 
-- [[03-Squads/Copy-Squad/Index|Copy Squad]] — tom de voz e mensagem
-- [[03-Squads/Design-Squad/Index|Design Squad]] — execução visual
-- [[03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]] — aplicação nas redes
+---
 
-## Diretrizes de Marca
+## Projetos atendidos
 
-- **Posicionamento:** Premium, exclusivo, com essência
-- **Tom:** Confiante, consultivo, aspiracional
-- **Referência:** [[02-Projetos/Lotus-Business|Lotus Business]] — produto que tem nome, sobrenome e história
+- [[../../02-Projetos/Hilton Garden Inn Itapema/MASTER - Hilton Garden Inn Itapema|Hilton Garden Inn Itapema]]
+- [[../../02-Projetos/Lótus Business/MASTER - Lótus Business|Lótus Business]]
+- The Spot One
 
-## Notas do Squad
+---
+
+## Saídas práticas
+
+- Posicionamento resumido.
+- Tom de voz.
+- Promessa permitida / promessa proibida.
+- Diferenciais centrais.
+- Direção para campanha.
+
+---
+
+## Regras
+
+- Clareza acima de estética.
+- Posicionamento precisa ajudar venda.
+- Não criar conceito que o comercial não consegue explicar.
+- Não inventar diferencial.
+
+---
+
+## Squads parceiros
+
+- [[../Copy-Squad/Index|Copy Squad]]
+- [[../Storytelling/Index|Storytelling]]
+- [[../Design-Squad/Index|Design Squad]]
+- [[../Traffic-Masters/Index|Traffic Masters]]

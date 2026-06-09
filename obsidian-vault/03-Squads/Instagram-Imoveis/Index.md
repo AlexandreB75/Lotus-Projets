@@ -1,39 +1,81 @@
 ---
-tags: [squad, instagram, imoveis]
-status: ativo
-data: 2025-05-10
+tags: [squad, instagram, imoveis, conteudo, autoridade]
+status: operacional
+data: 2026-06-09
 ---
 
 # Squad — Instagram Imóveis
 
-> [[01-Dashboard/Dashboard|← Dashboard]]
+## Função
 
-## Missão
+Criar presença, autoridade e captação de leads pelo Instagram para os projetos imobiliários prioritários.
 
-Captação e conversão de leads via Instagram para os produtos Lotus.
+O foco não é postar por postar. É gerar conversa comercial qualificada.
 
-## Projetos
+---
 
-- [[02-Projetos/Lotus-Business|Lotus Business]]
-- [[02-Projetos/Lotus-Landing|Lotus Landing]]
+## Quando usar
 
-## Skills do Squad
+- Planejar calendário de conteúdo.
+- Criar Reels, Stories ou carrossel.
+- Transformar argumento comercial em conteúdo.
+- Aquecer público antes de campanha.
+- Criar autoridade para Alexandre e HKNove.
 
-- [[04-Skills/Instagram|Instagram]] — criação e publicação de conteúdo
-- [[04-Skills/Meta-Ads|Meta Ads]] — impulsionamento e anúncios
-- [[04-Skills/N8N|N8N]] — automação de DMs e follow-up
+---
 
-## Treinamentos
+## Projetos atendidos
+
+- [[../../02-Projetos/Hilton Garden Inn Itapema/MASTER - Hilton Garden Inn Itapema|Hilton Garden Inn Itapema]]
+- [[../../02-Projetos/Hilton Garden Inn Itapema/Centro-Medico-Hilton/00-INDEX-Centro-Medico-Hilton|Centro Médico Hilton]]
+- [[../../02-Projetos/Lótus Business/MASTER - Lótus Business|Lótus Business]]
+- The Spot One
+
+---
+
+## Entradas necessárias
+
+- Projeto/produto.
+- Público-alvo.
+- Objetivo: autoridade, captação, aquecimento ou conversão.
+- Formato: Reels, Story, carrossel, live ou post.
+- Argumento principal.
+
+---
+
+## Saídas práticas
+
+- Ideias de conteúdo.
+- Roteiro de Reels.
+- Sequência de Stories.
+- Legenda.
+- CTA para WhatsApp.
+- Calendário simples de publicação.
+
+---
+
+## Treinamentos e fontes
 
 - [[Treinamento-Kaka-HKnove/Notas-Completas|Treinamento Kaká HKnove — Notas Completas]]
 - [[Treinamento-Kaka-HKnove/Mapa-Mental|Treinamento Kaká HKnove — Mapa Mental]]
 - [[Treinamento-Kaka-HKnove/Transcricao-Original|Transcrição Original]]
 
-## Estratégias Ativas
+---
 
-- **Venda de marca** vs metro quadrado ([[Treinamento-Kaka-HKnove/Notas-Completas#BLOCO 2|ver Bloco 2]])
-- **Técnica do casal** — nunca atender homem sem esposa
-- **Eventos de vendas** — palestra 40min + jantar
-- **Reativação de carteira** de clientes anteriores
+## Estratégias ativas
 
-## Notas do Squad
+- Venda de marca vs metro quadrado.
+- Imóvel como ativo patrimonial.
+- Autoridade local e crescimento da região.
+- Bastidores dos projetos.
+- Reativação de carteira com conteúdo.
+- Conteúdo que chama para conversa, não só curtida.
+
+---
+
+## Squads parceiros
+
+- [[../Copy-Squad/Index|Copy Squad]]
+- [[../Storytelling/Index|Storytelling]]
+- [[../Design-Squad/Index|Design Squad]]
+- [[../Traffic-Masters/Index|Traffic Masters]]
