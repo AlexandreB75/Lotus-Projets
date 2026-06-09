@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-const WHATSAPP_NUMBER = "5574988695350"; // WhatsApp comercial conectado ao Chatwoot/n8n
+const WHATSAPP_NUMBER = "5547988695350"; // WhatsApp comercial conectado ao Chatwoot/n8n
 
 const STYLE = `
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');

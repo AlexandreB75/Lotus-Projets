@@ -78,7 +78,7 @@ A chamada para IA/API deve preferencialmente passar por backend, N8N ou ambiente
 
 ## Próximos ajustes técnicos
 
-1. WhatsApp configurado na landing: `+55 74 98869-5350`.
+1. WhatsApp configurado na landing: `+55 47 98869-5350`.
 2. Publicar a landing no WordPress: `alexandreborgescorretor.com.br`.
 3. Conectar formulário com HubSpot CRM.
 4. Adicionar pixel/eventos quando a estrutura de campanha estiver pronta.

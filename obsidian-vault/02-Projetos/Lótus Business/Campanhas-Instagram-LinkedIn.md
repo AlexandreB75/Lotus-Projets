@@ -239,7 +239,7 @@ Usar linguagem segura:
 Fluxo operacional: [[Fluxo-WordPress-HubSpot-CRM|Fluxo WordPress + HubSpot CRM — Lótus Business]].
 
 - Site: `alexandreborgescorretor.com.br`
-- WhatsApp da campanha: `+55 74 98869-5350`
+- WhatsApp da campanha: `+55 47 98869-5350`
 - CRM: HubSpot
 - Automação: n8n + Chatwoot
 

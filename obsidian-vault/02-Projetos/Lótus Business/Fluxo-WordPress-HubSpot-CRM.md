@@ -15,7 +15,7 @@ projeto: Lótus Business
 
 - Domínio: `alexandreborgescorretor.com.br`
 - Landing pública base: `lotus-landing-public.jsx`
-- WhatsApp comercial conectado ao Chatwoot/n8n: `+55 74 98869-5350`
+- WhatsApp comercial conectado ao Chatwoot/n8n: `+55 47 98869-5350`
 - HubSpot portal/developer ID: `51028942`
 - HubSpot Developer Overview: `https://app.hubspot.com/developer-overview/51028942`
 
