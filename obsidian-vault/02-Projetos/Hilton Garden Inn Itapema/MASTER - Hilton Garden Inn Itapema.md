@@ -42,6 +42,8 @@ A condução correta é:
 - [[Pitch-de-Vendas]] — falas e apresentações para WhatsApp, reunião e evento.
 - [[Scripts-WhatsApp]] — fluxos de atendimento e mensagens práticas.
 - [[Scripts-Operacionais]] — comunicação pré-operacional, hotel, residencial e pool Hilton.
+- [[Hotel-Hilton/00-INDEX-Hotel-Hilton|Hotel Hilton]] — hub operacional das unidades do hotel.
+- [[Residencial-Pool/00-INDEX-Residencial-Pool|Residencial com Pool]] — hub operacional das unidades residenciais com opção de pool.
 - [[Objeções-e-Respostas]] — respostas calibradas com base em testes reais.
 - [[Publico-Alvo]] — perfis, motivações e condução por tipo de lead.
 - [[Follow-up-CRM]] — cadência, retomadas e classificação de leads.
