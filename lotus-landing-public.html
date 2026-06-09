@@ -684,8 +684,18 @@
           </div>
 
           <div class="lotus-field">
-            <label for="lotus-contato">WhatsApp ou e-mail</label>
-            <input id="lotus-contato" name="contato" type="text" placeholder="Como prefere ser contatado?" required>
+            <label for="lotus-whatsapp">WhatsApp</label>
+            <input id="lotus-whatsapp" name="whatsapp" type="tel" placeholder="Ex: (47) 98869-5350" required>
+          </div>
+
+          <div class="lotus-field">
+            <label for="lotus-email">E-mail opcional</label>
+            <input id="lotus-email" name="email" type="email" placeholder="seunome@email.com">
+          </div>
+
+          <div class="lotus-field" style="position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden;" aria-hidden="true">
+            <label for="lotus-site">Site</label>
+            <input id="lotus-site" name="site" type="text" tabindex="-1" autocomplete="off">
           </div>
 
           <div class="lotus-field">
@@ -730,6 +740,11 @@
           <input type="hidden" name="origem_pagina" value="alexandreborgescorretor.com.br">
 
           <button class="lotus-btn lotus-btn-primary" type="submit" style="width: 100%;">Quero minha análise inicial</button>
+
+          <label class="lotus-form-note" style="display:flex;gap:10px;align-items:flex-start;cursor:pointer;">
+            <input type="checkbox" name="consentimento_lgpd" value="true" required style="width:auto;min-height:auto;margin-top:3px;">
+            <span>Aceito receber contato sobre o Lótus Business pelo WhatsApp/e-mail informado.</span>
+          </label>
 
           <div class="lotus-form-note">
             Não há promessa de renda, ocupação, liquidez ou valorização garantida. A análise considera cenário, perfil e objetivo.
@@ -788,7 +803,7 @@
 
 <script>
 (function () {
-  var N8N_WEBHOOK_URL = "https://n8n.alexandreborges.site/webhook/d1c74c0f-66fc-4fb0-b726-5149d5829204/9bbfa001-93a1-4841-94c2-fc82626717ec";
+  var N8N_WEBHOOK_URL = "https://n8n.alexandreborges.site/webhook/lotus-landing";
   var WHATSAPP_NUMBER = "5547988695350";
   var form = document.getElementById("lotus-lead-form");
   var status = document.getElementById("lotus-form-status");
@@ -814,7 +829,7 @@
     return [
       "Olá, quero entender se o Lótus Business faz sentido para meu perfil.",
       "Nome: " + payload.nome,
-      "Contato: " + payload.contato,
+      "WhatsApp: " + payload.whatsapp,
       "Perfil: " + payload.perfil,
       "Objetivo: " + payload.objetivo,
       "Momento: " + payload.momento,
@@ -827,13 +842,18 @@
     var utm = getUtmParams();
     return {
       nome: (data.get("nome") || "").toString().trim(),
-      contato: (data.get("contato") || "").toString().trim(),
+      whatsapp: (data.get("whatsapp") || "").toString().trim(),
+      email: (data.get("email") || "").toString().trim(),
+      consentimento_lgpd: data.get("consentimento_lgpd") === "true",
+      honeypot_site: (data.get("site") || "").toString().trim(),
       perfil: (data.get("perfil") || "").toString(),
       objetivo: (data.get("objetivo") || "").toString(),
       momento: (data.get("momento") || "").toString(),
       observacao: (data.get("observacao") || "").toString().trim(),
       projeto_interesse: "Lótus Business",
       origem_pagina: window.location.href,
+      page_url: window.location.href,
+      referrer: document.referrer || "",
       canal_origem: utm.utm_source || "wordpress",
       utm_source: utm.utm_source,
       utm_medium: utm.utm_medium,
@@ -866,8 +886,18 @@
       return;
     }
 
-    if (!payload.contato) {
-      setStatus("Preencha seu WhatsApp ou e-mail para continuar.", "error");
+    if (!payload.whatsapp) {
+      setStatus("Preencha seu WhatsApp para continuar.", "error");
+      return;
+    }
+
+    if (!payload.consentimento_lgpd) {
+      setStatus("Confirme o aceite de contato para continuar.", "error");
+      return;
+    }
+
+    if (payload.honeypot_site) {
+      setStatus("Não foi possível enviar seus dados agora.", "error");
       return;
     }
 

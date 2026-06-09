@@ -1,0 +1,273 @@
+{
+  "name": "Landing Lótus - Captura de Lead",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lotus-landing",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "1e9b3f5b-landing-webhook",
+      "name": "Webhook Landing Lótus",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "lotus-landing-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $json || {};\n\nfunction clean(value) {\n  return String(value ?? '').trim();\n}\n\nfunction onlyDigits(value) {\n  return clean(value).replace(/\\D/g, '');\n}\n\nfunction normalizePhone(value) {\n  const digits = onlyDigits(value);\n  if (!digits) return '';\n  if (digits.startsWith('55')) return digits;\n  if (digits.length === 10 || digits.length === 11) return '55' + digits;\n  return digits;\n}\n\nfunction splitName(fullName) {\n  const parts = clean(fullName).split(/\\s+/).filter(Boolean);\n  return {\n    firstname: parts[0] || '',\n    lastname: parts.length > 1 ? parts.slice(1).join(' ') : ''\n  };\n}\n\nfunction scoreLead(payload) {\n  let score = 40;\n  const momento = payload.momento_de_compra.toLowerCase();\n  const objetivo = payload.objetivo_do_lead.toLowerCase();\n  const perfil = payload.perfil_profissional.toLowerCase();\n  const obs = payload.observacao.toLowerCase();\n\n  if (payload.telefone) score += 15;\n  if (payload.email) score += 5;\n  if (perfil.includes('médico') || perfil.includes('saúde') || perfil.includes('advogado') || perfil.includes('empresário') || perfil.includes('investidor')) score += 10;\n  if (objetivo.includes('uso próprio') || objetivo.includes('expansão') || objetivo.includes('presença') || objetivo.includes('investimento')) score += 15;\n  if (momento.includes('especialista') || momento.includes('próximos meses') || momento.includes('comparando')) score += 15;\n  if (obs.length > 20) score += 10;\n\n  return Math.max(0, Math.min(100, score));\n}\n\nconst names = splitName(input.nome || input.name);\nconst payload = {\n  nome: clean(input.nome || input.name),\n  firstname: names.firstname,\n  lastname: names.lastname,\n  contato_original: clean(input.whatsapp || input.contato || input.telefone || input.phone || input.email),\n  telefone: normalizePhone(input.whatsapp || input.telefone || input.phone || input.contato),\n  email: clean(input.email).toLowerCase(),\n  perfil_profissional: clean(input.perfil || input.perfil_profissional),\n  objetivo_do_lead: clean(input.objetivo || input.objetivo_do_lead),\n  momento_de_compra: clean(input.momento || input.momento_de_compra),\n  observacao: clean(input.observacao || input.notas),\n  consentimento_lgpd: input.consentimento_lgpd === true || input.consentimento_lgpd === 'true',\n  honeypot_site: clean(input.honeypot_site || input.site),\n  projeto_interesse: clean(input.projeto_interesse || 'Lótus Business'),\n  origem_pagina: clean(input.origem_pagina || input.page_url),\n  page_url: clean(input.page_url || input.origem_pagina),\n  referrer: clean(input.referrer),\n  canal_origem: clean(input.canal_origem || input.utm_source || 'wordpress'),\n  lead_source: clean(input.lead_source || 'landing_lotus_wordpress'),\n  landing_page: 'lotus-landing-public',\n  utm_source: clean(input.utm_source),\n  utm_medium: clean(input.utm_medium),\n  utm_campaign: clean(input.utm_campaign),\n  utm_content: clean(input.utm_content),\n  utm_term: clean(input.utm_term),\n  fbclid: clean(input.fbclid),\n  gclid: clean(input.gclid),\n  timestamp: clean(input.timestamp || new Date().toISOString()),\n  responsavel: 'Alexandre Borges',\n  creci: 'CRECI-SC 45148'\n};\n\npayload.score_inicial = scoreLead(payload);\npayload.temperatura_lead = payload.score_inicial >= 75 ? 'quente' : payload.score_inicial >= 55 ? 'morno' : 'frio';\npayload.prioridade = payload.temperatura_lead === 'quente' ? 'alta' : payload.temperatura_lead === 'morno' ? 'media' : 'baixa';\npayload.status_qualificacao = payload.temperatura_lead === 'quente' ? 'lead_quente_lotus' : payload.temperatura_lead === 'morno' ? 'lead_morno_lotus' : 'lead_frio_lotus';\npayload.lifecyclestage = payload.temperatura_lead === 'quente' ? 'salesqualifiedlead' : 'lead';\npayload.criar_deal = payload.temperatura_lead === 'quente' || payload.momento_de_compra.toLowerCase().includes('especialista');\npayload.is_valid = Boolean(payload.nome && payload.telefone && payload.consentimento_lgpd && !payload.honeypot_site);\npayload.validation_error = payload.is_valid ? '' : 'Nome, WhatsApp e aceite de contato são obrigatórios.';\n\npayload.alert_message = [\n  'Novo lead Lótus via landing',\n  `Nome: ${payload.nome || '-'}`,\n  `WhatsApp: ${payload.telefone || '-'}`,\n  payload.email ? `E-mail: ${payload.email}` : '',\n  `Perfil: ${payload.perfil_profissional || '-'}`,\n  `Objetivo: ${payload.objetivo_do_lead || '-'}`,\n  `Momento: ${payload.momento_de_compra || '-'}`,\n  `Temperatura: ${payload.temperatura_lead}`,\n  `Score: ${payload.score_inicial}`,\n  payload.observacao ? `Obs: ${payload.observacao}` : '',\n  payload.utm_campaign ? `Campanha: ${payload.utm_campaign}` : ''\n].filter(Boolean).join('\\n');\n\nreturn [{ json: payload }];"
+      },
+      "id": "2a1f-normalizar-lead",
+      "name": "Normalizar lead",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "valid-lead-condition",
+              "leftValue": "={{ $json.is_valid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "3b2c-validar-lead",
+      "name": "Lead válido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, error: $json.validation_error, message: 'Não consegui validar seus dados. Verifique nome e contato.' } }}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "id": "4c3d-responder-erro",
+      "name": "Responder erro landing",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        760,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.hubapi.com/crm/v3/objects/contacts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ 'Bearer ' + $env.HUBSPOT_PRIVATE_APP_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { properties: { firstname: $json.firstname, lastname: $json.lastname, phone: $json.telefone, email: $json.email || undefined, lifecyclestage: $json.lifecyclestage, projeto_interesse: $json.projeto_interesse, perfil_profissional: $json.perfil_profissional, objetivo_do_lead: $json.objetivo_do_lead, momento_de_compra: $json.momento_de_compra, temperatura_lead: $json.temperatura_lead, status_qualificacao: $json.status_qualificacao, lead_source: $json.lead_source, landing_page: $json.landing_page, consentimento_lgpd: String($json.consentimento_lgpd), hs_lead_status: 'NEW', utm_source: $json.utm_source, utm_medium: $json.utm_medium, utm_campaign: $json.utm_campaign, utm_content: $json.utm_content, utm_term: $json.utm_term } } }}",
+        "options": {}
+      },
+      "id": "5d4e-hubspot-contato",
+      "name": "HubSpot - criar contato (ativar credencial)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        760,
+        -160
+      ],
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ ($env.CHATWOOT_BASE_URL || 'https://chatwoot.alexandreborges.site') + '/api/v1/accounts/' + ($env.CHATWOOT_ACCOUNT_ID || '1') + '/conversations/' + ($env.CHATWOOT_ALERT_CONVERSATION_ID || '90') + '/messages' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "api_access_token",
+              "value": "={{ $env.CHATWOOT_API_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "content",
+              "value": "={{ $json.alert_message }}"
+            },
+            {
+              "name": "message_type",
+              "value": "outgoing"
+            },
+            {
+              "name": "private",
+              "value": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6e5f-chatwoot-alerta",
+      "name": "Chatwoot - alerta interno (ativar token)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1000,
+        -160
+      ],
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, message: 'Lead recebido com sucesso.', lead: { nome: $json.nome, telefone: $json.telefone, perfil: $json.perfil_profissional, prioridade: $json.prioridade, score: $json.score_inicial, status_qualificacao: $json.status_qualificacao } } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "7f6a-responder-sucesso",
+      "name": "Responder sucesso landing",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        760,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Landing Lótus - Captura de Lead\n\nWebhook público para Elementor/WordPress.\n\nEndpoint esperado após ativar workflow:\n`https://n8n.alexandreborges.site/webhook/lotus-landing`\n\nImportante:\n- Não usar o webhook do Chatwoot Trigger.\n- Ativar HubSpot/Chatwoot depois de configurar tokens em variáveis de ambiente.\n- O HTML deve apontar para `/webhook/lotus-landing`.",
+        "height": 280,
+        "width": 520,
+        "color": 4
+      },
+      "id": "sticky-lotus-info",
+      "name": "Notas do workflow",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -320
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook Landing Lótus": {
+      "main": [
+        [
+          {
+            "node": "Normalizar lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar lead": {
+      "main": [
+        [
+          {
+            "node": "Lead válido?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lead válido?": {
+      "main": [
+        [
+          {
+            "node": "Responder sucesso landing",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HubSpot - criar contato (ativar credencial)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder erro landing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HubSpot - criar contato (ativar credencial)": {
+      "main": [
+        [
+          {
+            "node": "Chatwoot - alerta interno (ativar token)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "Lotus Business"
+    },
+    {
+      "name": "Landing"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2026-06-09T18:58:00.000Z",
+  "versionId": "landing-lotus-v1"
+}
