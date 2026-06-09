@@ -51,6 +51,7 @@ Este squad não existe para criar “história bonita”. Existe para tornar o p
 - Ângulo de anúncio.
 - Argumento para WhatsApp.
 - História curta para apresentação comercial.
+- Narrativas estruturadas para páginas, FAQs e conteúdos de autoridade.
 
 ---
 
@@ -69,3 +70,4 @@ Este squad não existe para criar “história bonita”. Existe para tornar o p
 - [[../Instagram-Imoveis/Treinamento-Kaka-HKnove/Notas-Completas|Treinamento Kaká HKnove]]
 - [[../Copy-Squad/Index|Copy Squad]]
 - [[../Brand-Squad/Index|Brand Squad]]
+- [[../../04-Skills/SEO-AEO-GEO|SEO + AEO + GEO]]

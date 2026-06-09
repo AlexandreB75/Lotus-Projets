@@ -53,6 +53,7 @@ Copy aqui não é texto bonito. É texto que ajuda o lead a avançar.
 - Legenda.
 - Roteiro curto.
 - Sequência de follow-up.
+- FAQ comercial e blocos de resposta para SEO/AEO/GEO.
 
 ---
 
@@ -71,6 +72,7 @@ Copy aqui não é texto bonito. É texto que ajuda o lead a avançar.
 - [[../Instagram-Imoveis/Treinamento-Kaka-HKnove/Notas-Completas|Treinamento Kaká]] — argumentos de venda.
 - [[../Oferta-Hormozi/Index|Oferta Hormozi]] — estrutura de oferta.
 - [[../Storytelling/Index|Storytelling]] — narrativa comercial.
+- [[../../04-Skills/SEO-AEO-GEO|SEO + AEO + GEO]] — textos para busca, resposta direta e IA.
 
 ---
 

@@ -39,7 +39,7 @@ data: 2026-06-09
 |---|---|---|
 | [[Instagram]] | Conteúdo, autoridade e engajamento | [[../03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]] |
 | [[Meta-Ads]] | Tráfego pago, campanhas e segmentação | [[../03-Squads/Traffic-Masters/Index|Traffic Masters]] |
-| [[SEO-AEO-GEO]] | Busca, autoridade e presença em mecanismos/IA | [[../03-Squads/Brand-Squad/Index|Brand Squad]] |
+| [[SEO-AEO-GEO]] | Busca, autoridade, páginas, FAQs e presença em mecanismos/IA | [[../03-Squads/Brand-Squad/Index|Brand Squad]] / [[../03-Squads/Copy-Squad/Index|Copy Squad]] / [[../03-Squads/Storytelling/Index|Storytelling]] |
 
 ---
 
@@ -52,6 +52,7 @@ data: 2026-06-09
 - [[Claude-WhatsApp-Leads]] — scripts e atendimento comercial.
 - [[HubSpot]] — organização de leads e follow-up.
 - [[N8N]] — automações futuras de notificação e CRM.
+- [[SEO-AEO-GEO]] — páginas, FAQs e conteúdos de autoridade para busca e IA.
 
 Projeto: [[../02-Projetos/Hilton Garden Inn Itapema/MASTER - Hilton Garden Inn Itapema|Hilton Garden Inn Itapema]]
 
@@ -63,6 +64,7 @@ Projeto: [[../02-Projetos/Hilton Garden Inn Itapema/MASTER - Hilton Garden Inn I
 - [[Meta-Ads]] — campanhas segmentadas de alto ticket.
 - [[Claude-WhatsApp-Leads]] — follow-up consultivo.
 - [[HubSpot]] — controle de decisores, operadores e investidores.
+- [[SEO-AEO-GEO]] — FAQ e página de autoridade para médicos, clínicas e investidores.
 
 Produto: [[../02-Projetos/Hilton Garden Inn Itapema/Centro-Medico-Hilton/00-INDEX-Centro-Medico-Hilton|Centro Médico Hilton]]
 
@@ -74,6 +76,7 @@ Produto: [[../02-Projetos/Hilton Garden Inn Itapema/Centro-Medico-Hilton/00-INDE
 - [[Meta-Ads]] — campanhas para médicos, advogados, empresários e investidores.
 - [[Claude-WhatsApp-Leads]] — atendimento e qualificação.
 - [[HubSpot]] — CRM e follow-up.
+- [[SEO-AEO-GEO]] — conteúdo de autoridade sobre sala comercial, ativo patrimonial e investimento.
 
 Projeto: [[../02-Projetos/Lótus Business/MASTER - Lótus Business|Lótus Business]]
 

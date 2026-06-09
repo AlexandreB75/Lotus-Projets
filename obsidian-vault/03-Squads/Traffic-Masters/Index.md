@@ -66,8 +66,9 @@ Tráfego não é só subir anúncio. É testar oferta, público e mensagem com c
 
 ---
 
-## Squads parceiros
+## Skills e squads parceiros
 
+- [[../../04-Skills/SEO-AEO-GEO|SEO + AEO + GEO]] — páginas e conteúdos que recebem tráfego com mais autoridade.
 - [[../Copy-Squad/Index|Copy Squad]] — copies e mensagens.
 - [[../Design-Squad/Index|Design Squad]] — criativos.
 - [[../Oferta-Hormozi/Index|Oferta Hormozi]] — proposta de valor.

@@ -40,6 +40,7 @@ Brand não deve virar burocracia. Deve ajudar o cliente a perceber valor mais r�
 - Promessa permitida / promessa proibida.
 - Diferenciais centrais.
 - Direção para campanha.
+- Consistência de entidade para SEO/AEO/GEO.
 
 ---
 
@@ -52,8 +53,9 @@ Brand não deve virar burocracia. Deve ajudar o cliente a perceber valor mais r�
 
 ---
 
-## Squads parceiros
+## Skills e squads parceiros
 
+- [[../../04-Skills/SEO-AEO-GEO|SEO + AEO + GEO]] — autoridade digital e consistência de marca para buscas e IAs.
 - [[../Copy-Squad/Index|Copy Squad]]
 - [[../Storytelling/Index|Storytelling]]
 - [[../Design-Squad/Index|Design Squad]]

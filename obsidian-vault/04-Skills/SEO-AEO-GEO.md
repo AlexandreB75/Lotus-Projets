@@ -1,103 +1,137 @@
 ---
-title: Estratégia de Nicho SEO + AEO + GEO
-tags:
-  - marketing-digital
-  - SEO
-  - AEO
-  - GEO
-  - inteligencia-artificial
-  - estrategia
-date: 2026-05-20
+title: SEO + AEO + GEO — Autoridade Digital para IA e Busca
+tags: [skill, marketing-digital, SEO, AEO, GEO, autoridade, inteligencia-artificial]
+status: operacional
+data: 2026-06-09
+prioridade: apoio
 ---
 
-# Estratégia de Nicho: SEO + AEO + GEO
+# Skill — SEO + AEO + GEO
 
-> [[01-Dashboard/Dashboard|← Dashboard]] | Relacionado: [[04-Skills/Instagram|Instagram]] · [[04-Skills/Meta-Ads|Meta Ads]] · [[03-Squads/Copy-Squad/Index|Copy Squad]]
+## Função
 
-## Introdução
+Aumentar a presença digital dos projetos para que sejam encontrados no Google, respondidos por mecanismos de busca e melhor compreendidos por IAs generativas.
 
-Abordagem estratégica para visibilidade de conteúdo na era da IA, transcendendo o SEO tradicional. O foco é a integração de três pilares:
-
-- **[[#SEO]]** — Search Engine Optimization
-- **[[#AEO]]** — Answer Engine Optimization  
-- **[[#GEO]]** — Generative Engine Optimization
-
-O objetivo: ser **encontrado no Google**, **citado por IAs de resposta** (ChatGPT/Perplexity) e **referenciado por IAs generativas**.
+Esta skill não é um agente principal. Ela apoia marketing, conteúdo, copy e brand quando formos criar páginas, artigos, FAQs, landing pages e conteúdos de autoridade.
 
 ---
 
-## Pilares Fundamentais
+## Onde se encaixa
 
-| Pilar | Foco | Onde Aparece |
+| Camada | Papel |
+|---|---|
+| [[../03-Squads/Brand-Squad/Index|Brand Squad]] | consistência de entidade, nome, posicionamento e autoridade |
+| [[../03-Squads/Copy-Squad/Index|Copy Squad]] | textos estruturados para busca, resposta e conversão |
+| [[../03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]] | conteúdo educativo reaproveitável em páginas e FAQs |
+| [[../03-Squads/Storytelling/Index|Storytelling]] | narrativa com fatos, contexto e diferenciais verificáveis |
+| [[../03-Squads/Traffic-Masters/Index|Traffic Masters]] | campanhas levando tráfego para páginas mais fortes |
+
+---
+
+## Diferença entre SEO, AEO e GEO
+
+| Pilar | Objetivo | Exemplo de uso |
 |---|---|---|
-| SEO | Ranquear no Google | Busca orgânica |
-| AEO | Ser a resposta direta | Featured Snippets, Perplexity |
-| GEO | Ser citado por IA | ChatGPT, Gemini, Claude |
+| SEO | aparecer no Google | página sobre investimento imobiliário em Itapema |
+| AEO | virar resposta direta | FAQ: vale a pena investir em sala comercial? |
+| GEO | ser entendido/citado por IA | conteúdos consistentes sobre Hilton, Lótus e HKNove |
 
 ---
 
-## SEO — Ser Encontrado no Google
+## Quando usar
 
-- **E-E-A-T:** Demonstrar Experiência, Expertise, Autoridade e Confiança
-- Respostas diretas nas primeiras linhas de cada seção
-- Palavras-chave estratégicas e estrutura escaneável
-- Conteúdo longo e aprofundado (pillar pages)
-
----
-
-## AEO — Ser Citado por Motores de Resposta
-
-- **Answer-first:** Resposta principal no início de cada seção
-- **Blocos Semânticos:** FAQs, definições e listas que IAs reconhecem
-- Perguntas explícitas nos títulos (H2/H3)
-- Schema markup para FAQ e HowTo
+- Criar landing page de projeto.
+- Criar página institucional.
+- Criar FAQ comercial.
+- Criar artigo de autoridade.
+- Organizar conteúdo para blog/site.
+- Melhorar descrição de produto.
+- Preparar conteúdo para aparecer melhor em buscas e IAs.
 
 ---
 
-## GEO — Ser Referenciado por IAs Generativas
+## Projetos atendidos
 
-- **Autoridade de Entidade:** Nome e posicionamento idênticos em todos os canais
-  - Instagram, LinkedIn, Blog, YouTube
-- **Dados Verificáveis:** Números reais e fontes internas linkáveis
-- Presença consistente em múltiplas plataformas
-- Citações e backlinks de fontes reconhecidas
-
----
-
-## Estratégias para Agregar Valor
-
-### 1. Ferramentas e Templates
-- Criar templates de conteúdo com estrutura AEO/GEO nativa
-- Checklists de auditoria para avaliar E-E-A-T de conteúdos antigos
-
-### 2. Consultoria de Entidade (GEO)
-- Mapeamento de presença digital para consistência semântica
-- Manuais de identidade para modelos de IA
-
-### 3. Métricas de Visibilidade em IA
-- Rastrear menções no Perplexity e ChatGPT
-- Relatórios de Share of Voice em respostas geradas por IA
-
-### 4. Educação e Estudos de Caso
-- Publicar casos reais de "Antes vs. Depois" da otimização tridimensional
-- Workshops sobre prompts avançados e treinamento de modelos locais
-
-### 5. Automação de Fluxo
-- Integrar prompts de otimização no workflow de redação via [[04-Skills/N8N|N8N]]
-- APIs de CMS + Claude para otimização automática
+- [[../02-Projetos/Hilton Garden Inn Itapema/MASTER - Hilton Garden Inn Itapema|Hilton Garden Inn Itapema]]
+- [[../02-Projetos/Hilton Garden Inn Itapema/Centro-Medico-Hilton/00-INDEX-Centro-Medico-Hilton|Centro Médico Hilton]]
+- [[../02-Projetos/Lótus Business/MASTER - Lótus Business|Lótus Business]]
+- The Spot One
 
 ---
 
-## Conclusão
+## Entradas necessárias
 
-A transição para um modelo tridimensional de visibilidade digital é a maior oportunidade atual no nicho de conteúdo. A chave é simplificar essa complexidade para o cliente através de ferramentas, dados e processos claros.
+- Projeto/produto.
+- Público-alvo.
+- Objetivo do conteúdo.
+- Canal: site, landing page, blog, FAQ, Instagram ou anúncio.
+- Palavras-chave ou perguntas principais.
+- Diferenciais reais e verificáveis.
 
 ---
 
-## Notas Relacionadas
+## Saídas práticas
 
-- [[04-Skills/Instagram|Instagram]] — aplicação de conteúdo otimizado
-- [[04-Skills/Meta-Ads|Meta Ads]] — tráfego pago para conteúdo GEO
-- [[03-Squads/Copy-Squad/Index|Copy Squad]] — produção de conteúdo
-- [[03-Squads/Brand-Squad/Index|Brand Squad]] — autoridade de entidade e consistência de marca
-- [[02-Projetos/Lotus-Business|Lotus Business]] — aplicação prática
+- Estrutura de landing page.
+- FAQ otimizado.
+- Títulos H1/H2/H3.
+- Blocos de resposta curta.
+- Lista de perguntas que o lead pesquisaria.
+- Termos e entidades importantes.
+- Briefing para Copy Squad ou Landing Page.
+
+---
+
+## Checklist operacional
+
+Antes de publicar um conteúdo, verificar:
+
+1. O nome do projeto está escrito de forma consistente?
+2. A resposta principal aparece logo no início?
+3. O texto responde perguntas reais do cliente?
+4. Existem dados, localização, diferenciais ou contexto verificáveis?
+5. O conteúdo tem FAQ ou blocos escaneáveis?
+6. Existe CTA para WhatsApp, reunião, apresentação ou material?
+7. A promessa comercial está segura, sem garantia de renda, valorização ou liquidez?
+
+---
+
+## Regras comerciais
+
+- Não prometer valorização, renda, ocupação ou rentabilidade garantida.
+- Usar linguagem clara, não técnica demais.
+- Conteúdo de autoridade precisa levar para uma ação comercial.
+- Não criar texto só para algoritmo; precisa ajudar o lead a entender melhor.
+- Preferir perguntas reais de clientes a palavras-chave genéricas.
+
+---
+
+## Aplicações prioritárias
+
+### Hilton Garden Inn Itapema
+
+- Página de autoridade sobre investimento imobiliário em Itapema.
+- FAQ sobre hotel, residencial, pool, shopping e Centro Médico.
+- Conteúdo sobre marca internacional, localização e uso misto.
+
+### Centro Médico Hilton
+
+- FAQ para médicos, clínicas e investidores.
+- Página explicando oportunidade comercial e posicionamento de saúde.
+- Conteúdo educativo sobre salas/estrutura médica em região de crescimento.
+
+### Lótus Business
+
+- FAQ sobre sala comercial como ativo patrimonial.
+- Conteúdo para médicos, advogados, empresários e investidores.
+- Página explicando localização, perfil de uso e diferenciação.
+
+---
+
+## Squads parceiros
+
+- [[../03-Squads/Brand-Squad/Index|Brand Squad]]
+- [[../03-Squads/Copy-Squad/Index|Copy Squad]]
+- [[../03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]]
+- [[../03-Squads/Storytelling/Index|Storytelling]]
+- [[../03-Squads/Traffic-Masters/Index|Traffic Masters]]

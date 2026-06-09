@@ -51,6 +51,7 @@ O foco não é postar por postar. É gerar conversa comercial qualificada.
 - Legenda.
 - CTA para WhatsApp.
 - Calendário simples de publicação.
+- Ideias reaproveitáveis em FAQ, landing page e conteúdo de autoridade.
 
 ---
 
@@ -73,8 +74,9 @@ O foco não é postar por postar. É gerar conversa comercial qualificada.
 
 ---
 
-## Squads parceiros
+## Skills e squads parceiros
 
+- [[../../04-Skills/SEO-AEO-GEO|SEO + AEO + GEO]] — transformar conteúdo em autoridade para busca e IA.
 - [[../Copy-Squad/Index|Copy Squad]]
 - [[../Storytelling/Index|Storytelling]]
 - [[../Design-Squad/Index|Design Squad]]
