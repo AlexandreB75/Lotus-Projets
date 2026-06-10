@@ -44,6 +44,7 @@ A condução correta é:
 - [[Scripts-Operacionais]] — comunicação pré-operacional, hotel, residencial e pool Hilton.
 - [[Hotel-Hilton/00-INDEX-Hotel-Hilton|Hotel Hilton]] — hub operacional das unidades do hotel.
 - [[Residencial-Pool/00-INDEX-Residencial-Pool|Residencial com Pool]] — hub operacional das unidades residenciais com opção de pool.
+- [[Multipropriedade-Hilton/00-INDEX-Multipropriedade-Hilton|Multipropriedade Hilton]] — cotas, semanas, tabela 2025, FAQ e conteúdo SEO/AEO.
 - [[Objeções-e-Respostas]] — respostas calibradas com base em testes reais.
 - [[Publico-Alvo]] — perfis, motivações e condução por tipo de lead.
 - [[Follow-up-CRM]] — cadência, retomadas e classificação de leads.

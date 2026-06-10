@@ -19,6 +19,16 @@ data: 2026-06-09
 
 ---
 
+---
+
+## Registro operacional recente
+
+- [[00-Sistema/Registros-Operacionais/Registro-Operacional-2026-06-10|Registro Operacional — 2026-06-10]]
+- [[06-Scripts/OpenClaw/Ollama-Local-Servidor-2026-06-10|Ollama Local no Servidor — 2026-06-10]]
+- [[06-Scripts/n8n/Chatwoot-Hermes-XD/00-INDEX-Chatwoot-Hermes-XD|Chatwoot + Hermes XD]]
+- [[02-Projetos/Lótus Business/MASTER - Lótus Business|MASTER Lótus Business]]
+- [[02-Projetos/Hilton Garden Inn Itapema/Multipropriedade-Hilton/00-INDEX-Multipropriedade-Hilton|Multipropriedade Hilton]]
+
 ## Projetos ativos
 
 | Projeto | Status | Hub |

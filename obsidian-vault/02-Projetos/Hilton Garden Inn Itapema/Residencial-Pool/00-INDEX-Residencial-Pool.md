@@ -15,12 +15,15 @@ produto: Residencial com opção de pool
 ## Material base
 
 - [[../Scripts-Operacionais#Script 02 — Residencial com opção de pool|Script operacional do Residencial com Pool]]
+- [[../Multipropriedade-Hilton/00-INDEX-Multipropriedade-Hilton|Multipropriedade Hilton]] — produto anexo ao Residencial, com unidades específicas dos finais 5, 6, 7 e 8 do 19º ao 22º andar.
 
 ---
 
 ## Objetivo comercial-operacional
 
 Explicar com clareza as opções do proprietário: uso próprio, locação particular ou participação no pool administrado.
+
+Atenção: **multipropriedade não é a mesma coisa que pool**. A multipropriedade é um produto separado, anexo ao Residencial Hilton, com cotas de uso por semanas em unidades específicas.
 
 ---
 

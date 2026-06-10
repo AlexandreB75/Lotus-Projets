@@ -21,7 +21,9 @@ projeto: Lótus Business
 
 ## O que é
 
-O **Lótus Business** é uma torre comercial em Itapema/SC, posicionada para profissionais liberais, empresas e investidores que buscam presença corporativa em uma cidade em crescimento.
+O **Lótus Business** é uma torre de vocação corporativa/comercial em Itapema/SC, posicionada para profissionais liberais, empresas e investidores que buscam presença corporativa em uma cidade em crescimento.
+
+Observação técnica: o projeto possui **2 unidades residenciais no 30º pavimento destinadas aos proprietários**. Elas **não estão à venda** e **não devem ser ofertadas comercialmente**. Essa solução foi adotada para evitar o recuo obrigatório de 4 metros que ocorreria caso o empreendimento fosse juridicamente/arquitetonicamente 100% comercial.
 
 ---
 
@@ -64,6 +66,16 @@ Ele compra:
 - [[Follow-up-CRM]] — cadência e classificação de leads.
 - [[Campanhas-Instagram]] — ideias iniciais de marketing.
 - [[Campanhas-Instagram-LinkedIn]] — estrutura operacional de campanhas Instagram + LinkedIn.
+- [[Material-Investidores-Lotus]] — dados da apresentação de investidores, tese, estrutura, WhatsApp e compliance.
+- [[Apresentacao-2026-Lotus]] — síntese operacional da apresentação 2026 para vendas e reuniões.
+- [[Catalogo-Lotus]] — organização do catálogo visual e uso comercial.
+- [[Plantas-Tecnicas-Lotus]] — índice técnico das plantas, cortes, cobertura, reservatório, garagens e pavimentos corporativos.
+- [[Tabela-Comercial-Lotus-2026]] — valores, metragens e condições comerciais 2026.
+- [[Landing-Template-Lotus]] — template WordPress/landing page para captação de leads.
+- [[Plano-Captacao-30-Dias-Lotus]] — plano operacional de captação para 30 dias, baseado no documento Fable e adaptado ao Lótus.
+- [[Scripts-Prospecao-Direta-Lotus-30-Dias]] — abordagens WhatsApp para empresários, médicos, advogados, investidores e parceiros.
+- [[Campanhas-Meta-Ads-Lotus-30-Dias]] — campanhas de tráfego pago e remarketing para a tese comercial do Lótus.
+- [[Briefing-Estudo-Rentabilidade-Sala-vs-Apartamento-Lotus]] — estrutura da isca/análise comercial sala x apartamento.
 - [[Fluxo-WordPress-HubSpot-CRM]] — WordPress, HubSpot CRM, Chatwoot/n8n e WhatsApp comercial.
 - [[../Lotus-Landing|Lótus Landing]] — landing pública + ferramenta interna de prospecção no GitHub.
 

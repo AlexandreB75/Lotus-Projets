@@ -12,6 +12,9 @@ data: 2026-06-09
 
 ## Entradas
 
+- 2026-06-10 — Lótus Business — [[Lotus-Business/Estrategia-Captacao-Leads-Itapema-30dias-Fable.docx|Estratégia captação leads Itapema 30 dias — Fable DOCX]]
+- 2026-06-10 — Lótus Business — [[Lotus-Business/Estrategia-Captacao-Leads-Itapema-30dias-Fable.txt|Extração texto — Fable]]
+
 Adicionar novas fontes usando o padrão:
 
 `AAAA-MM-DD — Tema — Fonte.md`

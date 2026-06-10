@@ -12,6 +12,8 @@ data: 2026-06-09
 
 ## Entradas
 
+- 2026-06-10 — Multipropriedade Hilton — [[Multipropriedade-Hilton/Tabela-Multipropriedades-2025.pdf|Tabela Multipropriedades 2025]]
+
 Adicionar novas fontes usando o padrão:
 
 `AAAA-MM-DD — Tema — Fonte.md`

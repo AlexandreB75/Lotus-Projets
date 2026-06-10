@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hermes XD Lead Classification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "produto_interesse",
+    "perfil_lead",
+    "funil_etapa",
+    "lead_score",
+    "lead_temperatura",
+    "gatilhos",
+    "labels_add",
+    "labels_remove",
+    "assumir_alexandre",
+    "proxima_acao",
+    "resumo_interno",
+    "resposta_sugerida",
+    "risco_compliance",
+    "observacoes_compliance"
+  ],
+  "properties": {
+    "produto_interesse": {
+      "type": "string",
+      "enum": [
+        "hilton_residencial",
+        "multipropriedade_hilton",
+        "centro_medico_hilton",
+        "lotus_business",
+        "the_spot_one",
+        "indefinido"
+      ]
+    },
+    "perfil_lead": {
+      "type": "string",
+      "enum": [
+        "investidor",
+        "uso_proprio",
+        "ferias_multipropriedade",
+        "medico_clinica",
+        "advogado",
+        "empresario",
+        "profissional_liberal",
+        "corretor_parceiro",
+        "curioso",
+        "indefinido"
+      ]
+    },
+    "funil_etapa": {
+      "type": "string",
+      "enum": [
+        "novo_lead",
+        "atendimento_inicial",
+        "qualificacao",
+        "produto_direcionado",
+        "material_enviado",
+        "reuniao_visita_agendada",
+        "proposta_negociacao",
+        "fechado",
+        "perdido_nutricao"
+      ]
+    },
+    "lead_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "lead_temperatura": {
+      "type": "string",
+      "enum": ["frio", "morno", "quente"]
+    },
+    "gatilhos": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "labels_add": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "labels_remove": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "assumir_alexandre": {
+      "type": "boolean"
+    },
+    "proxima_acao": {
+      "type": "string"
+    },
+    "resumo_interno": {
+      "type": "string"
+    },
+    "resposta_sugerida": {
+      "type": "string"
+    },
+    "risco_compliance": {
+      "type": "boolean"
+    },
+    "observacoes_compliance": {
+      "type": "string"
+    }
+  }
+}
