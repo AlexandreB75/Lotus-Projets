@@ -119,3 +119,18 @@ Implementar primeiro em modo teste:
 3. Montar workflow em n8n sem responder automaticamente.
 4. Testar com conversas internas.
 5. Ativar respostas e atribuições gradualmente.
+
+---
+
+## SDR HK Nove v1 — Primeiro atendimento
+
+- [[SDR-HK-Nove-v1-Primeiro-Atendimento|SDR HK Nove v1 — Primeiro Atendimento]]
+- [[workflow-chatwoot-sdr-hk-nove-assistido-v1.json|Workflow Chatwoot SDR HK Nove Assistido v1]]
+
+Resumo:
+
+- Um agente único de primeiro atendimento.
+- Roteamento por produto/memória lógica.
+- Modo seguro por label `testando-agente`.
+- Auto-resposta pública apenas com `sdr-auto-responder`.
+- Pausa manual com `agente-off`.
