@@ -134,3 +134,8 @@ Resumo:
 - Modo seguro por label `testando-agente`.
 - Auto-resposta pública apenas com `sdr-auto-responder`.
 - Pausa manual com `agente-off`.
+
+### Prompts SDR HK Nove
+
+- [[Prompt-SDR-HK-Nove-v1-Atendimento|Prompt SDR HK Nove v1 — Atendimento Comercial]]
+- [[Prompt-SDR-HK-Nove-v1-Otimizado-n8n|Prompt SDR HK Nove v1 — Otimizado para n8n]]
