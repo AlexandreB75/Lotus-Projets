@@ -59,10 +59,60 @@ const STYLE = `
   .header-status {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 12px;
     font-size: 10px;
     color: var(--text-dim);
     letter-spacing: 2px;
+  }
+  .key-btn {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 4px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .key-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+  .key-btn.active { border-color: var(--gold); color: var(--gold); }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 200;
+  }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 24px;
+    width: 480px;
+    max-width: 90vw;
+  }
+  .modal-title {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .modal-hint {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .modal-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    justify-content: flex-end;
   }
   .dot {
     width: 6px; height: 6px;
@@ -462,14 +512,34 @@ export default function App() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [copied, setCopied] = useState("");
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem("lotus_api_key") || "");
+  const [showKeyModal, setShowKeyModal] = useState(false);
+  const [keyInput, setKeyInput] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const saveApiKey = () => {
+    const trimmed = keyInput.trim();
+    localStorage.setItem("lotus_api_key", trimmed);
+    setApiKey(trimmed);
+    setShowKeyModal(false);
+    setKeyInput("");
+  };
+
+  const openKeyModal = () => {
+    setKeyInput(apiKey);
+    setShowKeyModal(true);
+  };
+
   const handleAnalyze = async () => {
     if (!form.nome.trim()) {
       setError("Nome do prospect obrigatório.");
+      return;
+    }
+    if (!apiKey) {
+      setError("Configure sua Anthropic API Key no botão ⚙ API KEY acima.");
       return;
     }
     setLoading(true);
@@ -506,7 +576,12 @@ Responda APENAS com o JSON, sem texto adicional, sem markdown, sem backticks.`;
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-access": "true",
+        },
         body: JSON.stringify({
           model: "claude-sonnet-4-20250514",
           max_tokens: 1000,
@@ -552,6 +627,34 @@ Responda APENAS com o JSON, sem texto adicional, sem markdown, sem backticks.`;
   return (
     <>
       <style>{STYLE}</style>
+      {showKeyModal && (
+        <div className="modal-overlay" onClick={() => setShowKeyModal(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-title">⚙ Configurar Anthropic API Key</div>
+            <div className="modal-hint">
+              Sua chave fica salva apenas no seu navegador (localStorage). Nunca é enviada a servidores externos.<br />
+              Obtenha em: <span style={{ color: "var(--gold)" }}>console.anthropic.com/settings/keys</span>
+            </div>
+            <input
+              className="form-input"
+              type="password"
+              placeholder="sk-ant-api03-..."
+              value={keyInput}
+              onChange={(e) => setKeyInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && saveApiKey()}
+              autoFocus
+            />
+            <div className="modal-actions">
+              <button className="btn btn-outline" onClick={() => setShowKeyModal(false)}>
+                CANCELAR
+              </button>
+              <button className="btn btn-gold" onClick={saveApiKey} disabled={!keyInput.trim()}>
+                SALVAR KEY
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="app">
         {/* HEADER */}
         <header className="header">
@@ -561,8 +664,14 @@ Responda APENAS com o JSON, sem texto adicional, sem markdown, sem backticks.`;
             <span className="header-sub">Prospecting Intelligence</span>
           </div>
           <div className="header-status">
-            <div className="dot" />
-            CLAUDE API · ONLINE
+            <div className="dot" style={{ background: apiKey ? "var(--green)" : "var(--red)" }} />
+            CLAUDE API · {apiKey ? "ONLINE" : "SEM KEY"}
+            <button
+              className={`key-btn ${apiKey ? "active" : ""}`}
+              onClick={openKeyModal}
+            >
+              ⚙ API KEY
+            </button>
           </div>
         </header>
 
