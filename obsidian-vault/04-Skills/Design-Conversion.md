@@ -52,6 +52,6 @@ role: Designer / Creative & Landing
 - CapCut (Reels e vídeos curtos)
 
 ## Links
-- [[03-Squads/Design-Squad/Index]]
+- [[03-Squads/Design-Squad/00-INDEX-Design-Squad]]
 - [[04-Skills/Instagram]]
 - [[04-Skills/Meta-Ads]]

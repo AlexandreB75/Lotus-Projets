@@ -45,6 +45,6 @@ Sexta: Revisão de pipeline + KPIs
 ```
 
 ## Links
-- [[02-Projetos/Lotus-Business]]
+- [[02-Projetos/Lótus Business/MASTER - Lótus Business]]
 - [[03-Squads/Equipe-Comercial]]
 - [[04-Skills/RevOps-Analytics]]

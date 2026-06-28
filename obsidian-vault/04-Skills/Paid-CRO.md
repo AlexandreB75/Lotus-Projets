@@ -52,4 +52,4 @@ Semana 4: Criar novos criativos baseados nos vencedores
 ## Links
 - [[04-Skills/Meta-Ads]]
 - [[04-Skills/SEO-AEO-GEO]]
-- [[03-Squads/Traffic-Masters/Index]]
+- [[03-Squads/Traffic-Masters/00-INDEX-Traffic-Masters]]

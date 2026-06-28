@@ -23,11 +23,11 @@ Briefing → Pesquisa → Estratégia → Copy+Criativo → Landing
 
 | Função | Agente | Projetos |
 |--------|--------|---------|
-| Qualificação Hilton | [[Agentes-Operacionais/SDR-Hilton\|SDR-Hilton]] | Hilton, Centro Médico, Hotel, Residencial Pool |
-| Qualificação Lótus | [[Agentes-Operacionais/SDR-Lotus-Business\|SDR-Lotus Business]] | Lótus Business |
-| Fechamento e proposta | [[Agentes-Operacionais/Closer-Alexandre\|Closer-Alexandre]] | Todos os projetos |
-| Reativação de leads | [[Agentes-Operacionais/Follow-Up-Inteligente\|Follow-Up Inteligente]] | Todos os projetos |
-| Rotinas e processos | [[Agentes-Operacionais/Gestor-Operacional\|Gestor Operacional]] | Operacional geral |
+| Qualificação Hilton | [[Agentes-Operacionais/agents/SDR-Hilton\|SDR-Hilton]] | Hilton, Centro Médico, Hotel, Residencial Pool |
+| Qualificação Lótus | [[Agentes-Operacionais/agents/SDR-Lotus-Business\|SDR-Lotus Business]] | Lótus Business |
+| Fechamento e proposta | [[Agentes-Operacionais/agents/Closer-Alexandre\|Closer-Alexandre]] | Todos os projetos |
+| Reativação de leads | [[Agentes-Operacionais/agents/Follow-Up-Inteligente\|Follow-Up Inteligente]] | Todos os projetos |
+| Rotinas e processos | [[Agentes-Operacionais/agents/Gestor-Operacional\|Gestor Operacional]] | Operacional geral |
 
 ---
 
@@ -35,13 +35,13 @@ Briefing → Pesquisa → Estratégia → Copy+Criativo → Landing
 
 | Squad | Função |
 |-------|--------|
-| [[Instagram-Imoveis/Index\|Instagram Imóveis]] | Conteúdo, autoridade e captação orgânica |
-| [[Copy-Squad/Index\|Copy Squad]] | Copies, scripts e mensagens comerciais |
-| [[Traffic-Masters/Index\|Traffic Masters]] | Tráfego pago e campanhas |
-| [[Storytelling/Index\|Storytelling]] | Narrativas e ângulo de conversão |
-| [[Oferta-Hormozi/Index\|Oferta Hormozi]] | Estrutura de oferta e valor percebido |
-| [[Brand-Squad/Index\|Brand Squad]] | Posicionamento e identidade |
-| [[Design-Squad/Index\|Design Squad]] | Materiais visuais |
+| [[Instagram-Imoveis/00-INDEX-Instagram-Imoveis\|Instagram Imóveis]] | Conteúdo, autoridade e captação orgânica |
+| [[Copy-Squad/00-INDEX-Copy-Squad\|Copy Squad]] | Copies, scripts e mensagens comerciais |
+| [[Traffic-Masters/00-INDEX-Traffic-Masters\|Traffic Masters]] | Tráfego pago e campanhas |
+| [[storytelling/00-INDEX-storytelling\|Storytelling]] | Narrativas e ângulo de conversão |
+| [[hormozi-squad/00-INDEX-hormozi-squad\|Oferta Hormozi]] | Estrutura de oferta e valor percebido |
+| [[Brand-Squad/00-INDEX-Brand-Squad\|Brand Squad]] | Posicionamento e identidade |
+| [[Design-Squad/00-INDEX-Design-Squad\|Design Squad]] | Materiais visuais |
 
 ---
 

@@ -22,11 +22,11 @@ Esta skill não é um agente principal. Ela apoia marketing, conteúdo, copy e b
 
 | Camada | Papel |
 |---|---|
-| [[../03-Squads/Brand-Squad/Index|Brand Squad]] | consistência de entidade, nome, posicionamento e autoridade |
-| [[../03-Squads/Copy-Squad/Index|Copy Squad]] | textos estruturados para busca, resposta e conversão |
-| [[../03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]] | conteúdo educativo reaproveitável em páginas e FAQs |
-| [[../03-Squads/Storytelling/Index|Storytelling]] | narrativa com fatos, contexto e diferenciais verificáveis |
-| [[../03-Squads/Traffic-Masters/Index|Traffic Masters]] | campanhas levando tráfego para páginas mais fortes |
+| [[../03-Squads/Brand-Squad/00-INDEX-Brand-Squad|Brand Squad]] | consistência de entidade, nome, posicionamento e autoridade |
+| [[../03-Squads/Copy-Squad/00-INDEX-Copy-Squad|Copy Squad]] | textos estruturados para busca, resposta e conversão |
+| [[../03-Squads/Instagram-Imoveis/00-INDEX-Instagram-Imoveis|Instagram Imóveis]] | conteúdo educativo reaproveitável em páginas e FAQs |
+| [[../03-Squads/storytelling/00-INDEX-storytelling|Storytelling]] | narrativa com fatos, contexto e diferenciais verificáveis |
+| [[../03-Squads/Traffic-Masters/00-INDEX-Traffic-Masters|Traffic Masters]] | campanhas levando tráfego para páginas mais fortes |
 
 ---
 
