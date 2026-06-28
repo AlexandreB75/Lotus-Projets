@@ -1,4 +1,4 @@
-﻿---
+---
 title: SEO + AEO + GEO — Autoridade Digital para IA e Busca
 tags: [skill, marketing-digital, SEO, AEO, GEO, autoridade, inteligencia-artificial]
 status: operacional
@@ -8,11 +8,9 @@ prioridade: apoio
 
 # Skill — SEO + AEO + GEO
 
-<<<<<<< HEAD
-## Função
-=======
 > [[01-Dashboard/Dashboard|← Dashboard]] | Relacionado: [[04-Skills/Instagram|Instagram]] · [[04-Skills/Meta-Ads|Meta Ads]] · [[03-Squads/Copy-Squad/00-INDEX-Copy-Squad|Copy Squad]]
->>>>>>> 9845489 (Reorganize vault: squads expandidos, wiki compilado, agentes SKILL.md, sistema docs)
+
+## Função
 
 Aumentar a presença digital dos projetos para que sejam encontrados no Google, respondidos por mecanismos de busca e melhor compreendidos por IAs generativas.
 
@@ -102,7 +100,6 @@ Antes de publicar um conteúdo, verificar:
 
 ## Regras comerciais
 
-<<<<<<< HEAD
 - Não prometer valorização, renda, ocupação ou rentabilidade garantida.
 - Usar linguagem clara, não técnica demais.
 - Conteúdo de autoridade precisa levar para uma ação comercial.
@@ -127,7 +124,7 @@ Antes de publicar um conteúdo, verificar:
 
 ### Lótus Business
 
-- Usar a landing existente: [[../02-Projetos/Lotus-Landing|Lótus Landing]].
+- Usar a landing existente: [[../02-Projetos/Lótus Business/Lotus-Landing|Lótus Landing]].
 - FAQ sobre sala comercial como ativo patrimonial.
 - Conteúdo para médicos, advogados, empresários e investidores.
 - Blocos de resposta para otimizar a página/app existente.
@@ -137,16 +134,8 @@ Antes de publicar um conteúdo, verificar:
 
 ## Squads parceiros
 
-- [[../03-Squads/Brand-Squad/Index|Brand Squad]]
-- [[../03-Squads/Copy-Squad/Index|Copy Squad]]
-- [[../03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]]
-- [[../03-Squads/Storytelling/Index|Storytelling]]
-- [[../03-Squads/Traffic-Masters/Index|Traffic Masters]]
-=======
-- [[04-Skills/Instagram|Instagram]] — aplicação de conteúdo otimizado
-- [[04-Skills/Meta-Ads|Meta Ads]] — tráfego pago para conteúdo GEO
-- [[03-Squads/Copy-Squad/00-INDEX-Copy-Squad|Copy Squad]] — produção de conteúdo
-- [[03-Squads/Brand-Squad/00-INDEX-Brand-Squad|Brand Squad]] — autoridade de entidade e consistência de marca
-- [[02-Projetos/Lotus-Business|Lotus Business]] — aplicação prática
-
->>>>>>> 9845489 (Reorganize vault: squads expandidos, wiki compilado, agentes SKILL.md, sistema docs)
+- [[../03-Squads/Brand-Squad/00-INDEX-Brand-Squad|Brand Squad]]
+- [[../03-Squads/Copy-Squad/00-INDEX-Copy-Squad|Copy Squad]]
+- [[../03-Squads/Instagram-Imoveis/00-INDEX-Instagram-Imoveis|Instagram Imóveis]]
+- [[../03-Squads/storytelling/00-INDEX-storytelling|Storytelling]]
+- [[../03-Squads/Traffic-Masters/00-INDEX-Traffic-Masters|Traffic Masters]]

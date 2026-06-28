@@ -1,4 +1,4 @@
-﻿---
+---
 tags: [skills, index, automacao, marketing, crm]
 status: operacional
 data: 2026-06-09
@@ -38,16 +38,10 @@ data: 2026-06-09
 
 | Skill | Uso principal | Agente/Projeto conectado |
 |---|---|---|
-<<<<<<< HEAD
-| [[Instagram]] | Conteúdo, autoridade e engajamento | [[../03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]] |
-| [[Meta-Ads]] | Tráfego pago, campanhas e segmentação | [[../03-Squads/Traffic-Masters/Index|Traffic Masters]] |
-| [[SEO-AEO-GEO]] | Busca, autoridade, páginas, FAQs e presença em mecanismos/IA | [[../03-Squads/Brand-Squad/Index|Brand Squad]] / [[../03-Squads/Copy-Squad/Index|Copy Squad]] / [[../03-Squads/Storytelling/Index|Storytelling]] |
-=======
 | [[Instagram]] | Conteúdo, autoridade e engajamento | [[../03-Squads/Instagram-Imoveis/00-INDEX-Instagram-Imoveis|Instagram Imóveis]] |
 | [[Meta-Ads]] | Tráfego pago, campanhas e segmentação | [[../03-Squads/Traffic-Masters/00-INDEX-Traffic-Masters|Traffic Masters]] |
-| [[SEO-AEO-GEO]] | Busca, autoridade e presença em mecanismos/IA | [[../03-Squads/Brand-Squad/00-INDEX-Brand-Squad|Brand Squad]] |
+| [[SEO-AEO-GEO]] | Busca, autoridade, páginas, FAQs e presença em mecanismos/IA | [[../03-Squads/Brand-Squad/00-INDEX-Brand-Squad|Brand Squad]] / [[../03-Squads/Copy-Squad/00-INDEX-Copy-Squad|Copy Squad]] / [[../03-Squads/storytelling/00-INDEX-storytelling|Storytelling]] |
 | [[Open-Design]] | Design, criativos, Figma, PPT, vídeo e geração de imagem IA | [[../03-Squads/Design-Squad/00-INDEX-Design-Squad|Design Squad]] / [[../03-Squads/Brand-Squad/00-INDEX-Brand-Squad|Brand Squad]] |
->>>>>>> 9845489 (Reorganize vault: squads expandidos, wiki compilado, agentes SKILL.md, sistema docs)
 
 ---
 

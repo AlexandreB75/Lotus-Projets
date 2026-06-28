@@ -1,4 +1,4 @@
-﻿---
+---
 tags: [lotus, lótus, business, itapema, projeto, comercial, master, index]
 status: operacional
 data: 2026-06-07
@@ -64,22 +64,6 @@ Ele compra:
 - [[Scripts-WhatsApp]] — atendimento inicial e condução por perfil.
 - [[Pitch-de-Vendas]] — falas para WhatsApp, reunião e apresentação.
 - [[Follow-up-CRM]] — cadência e classificação de leads.
-<<<<<<< HEAD
-- [[Campanhas-Instagram]] — ideias iniciais de marketing.
-- [[Campanhas-Instagram-LinkedIn]] — estrutura operacional de campanhas Instagram + LinkedIn.
-- [[Material-Investidores-Lotus]] — dados da apresentação de investidores, tese, estrutura, WhatsApp e compliance.
-- [[Apresentacao-2026-Lotus]] — síntese operacional da apresentação 2026 para vendas e reuniões.
-- [[Catalogo-Lotus]] — organização do catálogo visual e uso comercial.
-- [[Plantas-Tecnicas-Lotus]] — índice técnico das plantas, cortes, cobertura, reservatório, garagens e pavimentos corporativos.
-- [[Tabela-Comercial-Lotus-2026]] — valores, metragens e condições comerciais 2026.
-- [[Landing-Template-Lotus]] — template WordPress/landing page para captação de leads.
-- [[Plano-Captacao-30-Dias-Lotus]] — plano operacional de captação para 30 dias, baseado no documento Fable e adaptado ao Lótus.
-- [[Scripts-Prospecao-Direta-Lotus-30-Dias]] — abordagens WhatsApp para empresários, médicos, advogados, investidores e parceiros.
-- [[Campanhas-Meta-Ads-Lotus-30-Dias]] — campanhas de tráfego pago e remarketing para a tese comercial do Lótus.
-- [[Briefing-Estudo-Rentabilidade-Sala-vs-Apartamento-Lotus]] — estrutura da isca/análise comercial sala x apartamento.
-- [[Fluxo-WordPress-HubSpot-CRM]] — WordPress, HubSpot CRM, Chatwoot/n8n e WhatsApp comercial.
-- [[../Lotus-Landing|Lótus Landing]] — landing pública + ferramenta interna de prospecção no GitHub.
-=======
 - [[Campanhas-Instagram]] — backlog de marketing.
 - [[Campanha-Salas-Comerciais]] — campanha completa: inteligência de mercado, personas, funil, scripts SDR e copy.
 - [[Lotus-Landing]] — landing page (backlog — aguardando validação comercial).
@@ -99,7 +83,6 @@ Ele compra:
 ## Fonte primária
 
 - [[../../08-Raw/PDFs-Empreendimentos/Descritivo-Oficial-Lotus-Business|Descritivo Oficial Lótus Business]] — documento base para SDR, squads e handoff.
->>>>>>> 9845489 (Reorganize vault: squads expandidos, wiki compilado, agentes SKILL.md, sistema docs)
 
 ---
 
@@ -140,13 +123,12 @@ Antes de vender sala, entender o uso:
 
 ---
 
-<<<<<<< HEAD
 ## Ativos digitais existentes
 
 - Ferramenta interna de prospecção no GitHub: `lotus-prospecting.jsx`.
 - Landing pública nova no GitHub: `lotus-landing-public.jsx`.
 - A ferramenta interna e a landing pública têm funções diferentes e não devem ser misturadas.
-=======
+
 ## Squads de apoio
 
 | Squad | Uso no projeto | Link |
@@ -156,7 +138,6 @@ Antes de vender sala, entender o uso:
 | hormozi-squad | Estrutura de oferta premium, conversão e precificação | [[../../03-Squads/hormozi-squad/README\|Hormozi Squad]] |
 | Brand Squad | Posicionamento corporativo — endereço + patrimônio + polo empresarial | [[../../03-Squads/Brand-Squad/00-INDEX-Brand-Squad\|Brand Squad]] |
 | Design Squad | Materiais visuais e criativos por público | [[../../03-Squads/Design-Squad/00-INDEX-Design-Squad\|Design Squad]] |
->>>>>>> 9845489 (Reorganize vault: squads expandidos, wiki compilado, agentes SKILL.md, sistema docs)
 
 ---
 

@@ -1,4 +1,4 @@
-﻿---
+---
 tags: [agentes, squads, index, operacional]
 status: operacional
 data: 2026-06-09
@@ -23,14 +23,13 @@ data: 2026-06-09
 
 ## Núcleo de marketing
 
-<<<<<<< HEAD
-- [[Instagram-Imoveis/Index|Instagram Imóveis]] — conteúdo, autoridade e captação imobiliária.
-- [[Copy-Squad/Index|Copy Squad]] — copy, scripts, anúncios e mensagens comerciais.
-- [[Traffic-Masters/Index|Traffic Masters]] — tráfego pago, campanhas e performance.
-- [[Storytelling/Index|Storytelling]] — narrativas comerciais para projetos e campanhas.
-- [[Oferta-Hormozi/Index|Oferta Hormozi]] — estrutura de oferta, valor percebido e ângulo de conversão.
-- [[Brand-Squad/Index|Brand Squad]] — posicionamento, narrativa e identidade.
-- [[Design-Squad/Index|Design Squad]] — materiais visuais e direção criativa.
+- [[Instagram-Imoveis/00-INDEX-Instagram-Imoveis|Instagram Imóveis]] — conteúdo, autoridade e captação imobiliária.
+- [[Copy-Squad/00-INDEX-Copy-Squad|Copy Squad]] — copy, scripts, anúncios e mensagens comerciais.
+- [[Traffic-Masters/00-INDEX-Traffic-Masters|Traffic Masters]] — tráfego pago, campanhas e performance.
+- [[storytelling/00-INDEX-storytelling|Storytelling]] — narrativas comerciais para projetos e campanhas.
+- [[hormozi-squad/00-INDEX-hormozi-squad|Oferta Hormozi]] — estrutura de oferta, valor percebido e ângulo de conversão.
+- [[Brand-Squad/00-INDEX-Brand-Squad|Brand Squad]] — posicionamento, narrativa e identidade.
+- [[Design-Squad/00-INDEX-Design-Squad|Design Squad]] — materiais visuais e direção criativa.
 
 ---
 
@@ -46,13 +45,6 @@ Não ativar como frente operacional agora:
 - Movement
 
 Se precisar de algo desses temas, criar sob demanda com o agente/skill builder.
-=======
-- [[Instagram-Imoveis/00-INDEX-Instagram-Imoveis|Instagram Imóveis]] — conteúdo, autoridade e captação imobiliária.
-- [[Brand-Squad/00-INDEX-Brand-Squad|Brand Squad]] — posicionamento, narrativa e identidade.
-- [[Copy-Squad/00-INDEX-Copy-Squad|Copy Squad]] — copy, scripts e mensagens comerciais.
-- [[Design-Squad/00-INDEX-Design-Squad|Design Squad]] — materiais visuais e direção criativa.
-- [[Traffic-Masters/00-INDEX-Traffic-Masters|Traffic Masters]] — tráfego pago, campanhas e performance.
->>>>>>> 9845489 (Reorganize vault: squads expandidos, wiki compilado, agentes SKILL.md, sistema docs)
 
 ---
 
