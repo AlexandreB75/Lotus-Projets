@@ -1,0 +1,60 @@
+{
+  "name": "01. CRM XD PRO — Lead Intake (Supabase + Resumo IA)",
+  "_vault_note": "Receptor de leads do CRM XD PRO. Chamado em PARALELO pelos workflows de landing page (The Spot One e Lotus Business). Cria lead no Supabase e gera resumo IA. Exportado em 2026-06-18.",
+  "tipo": "crm_lead_intake",
+  "chamado_por": [
+    "01-Captura-Landing-The-Spot-One.json → webhook/crm-xd-pro-lead",
+    "01-Captura-Landing-Lotus-Business.json → webhook/crm-xd-pro-lead"
+  ],
+  "trigger": {
+    "tipo": "webhook",
+    "metodo": "POST",
+    "path": "crm-xd-pro-lead",
+    "url_completa": "https://n8n.alexandreborges.site/webhook/crm-xd-pro-lead"
+  },
+  "campos_recebidos": {
+    "nome": "string — obrigatorio",
+    "whatsapp": "string — obrigatorio",
+    "email": "string — opcional",
+    "origem": "string — ex: 'The Spot One Landing', 'Lotus Business Landing'",
+    "imovel_interesse": "string — opcional",
+    "valor_estimado": "number — opcional"
+  },
+  "fluxo": [
+    "1. Recebe POST com dados do lead",
+    "2. POST Supabase /rest/v1/leads → cria registro com nome, whatsapp, email, origem, imovel_interesse, valor_estimado",
+    "3. POST OpenAI gpt-4o-mini → gera resumo em 2 frases focando em urgencia e potencial de fechamento",
+    "4. PATCH Supabase → salva resumo no campo 'resumo_ia' do lead criado"
+  ],
+  "prompt_ia": "Resuma o perfil deste lead imobiliario em 2 frases curtas, focando em urgencia e potencial de fechamento. Nome: {nome}, Imovel: {imovel_interesse}, Valor: R$ {valor_estimado}, Origem: {origem}",
+  "modelo_ia": "gpt-4o-mini",
+  "max_tokens": 150,
+  "integracao_supabase": {
+    "url_base": "https://supabase.alexandreborges.site",
+    "tabela": "leads",
+    "criacao": "POST /rest/v1/leads (Prefer: return=representation)",
+    "atualizacao": "PATCH /rest/v1/leads?id=eq.{id_criado}",
+    "campo_ia": "resumo_ia"
+  },
+  "credenciais": {
+    "openai": "6G79NMutiZQYhCC1",
+    "supabase_anon_key": "HARDCODED — ver observacoes"
+  },
+  "nodes": [
+    {"id": "webhook1", "nome": "Receber Lead", "tipo": "webhook"},
+    {"id": "http1", "nome": "Criar Lead Supabase", "tipo": "httpRequest", "metodo": "POST"},
+    {"id": "http2", "nome": "Gerar Resumo IA", "tipo": "httpRequest", "api": "OpenAI"},
+    {"id": "http3", "nome": "Salvar Resumo IA", "tipo": "httpRequest", "metodo": "PATCH"}
+  ],
+  "observacoes": [
+    "ALERTA: Supabase anon key hardcoded — usar variavel de ambiente SUPABASE_ANON_KEY",
+    "Nao ha validacao se lead ja existe — pode criar duplicatas se mesma LP disparar 2x para o mesmo whatsapp",
+    "Nao ha resposta HTTP ao chamador (landing page) — sem Respond to Webhook node",
+    "gpt-4o-mini e usado aqui (mais barato), diferente do Hermes XD que usa gpt-5.2",
+    "O campo 'status' nao e definido na criacao — depende do default do Supabase (provavelmente 'lead_novo')",
+    "Nota: existe uma versao diferente do anon key neste arquivo vs 04-Sync-Chatwoot-Supabase.json — verificar qual e o key ativo"
+  ],
+  "meta": {
+    "instanceId": "b61fc3510ca407dff389465d1339cbc17d60de9706e44070f51a4676f6e8d320"
+  }
+}

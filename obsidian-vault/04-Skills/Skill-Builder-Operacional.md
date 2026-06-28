@@ -50,10 +50,10 @@ Evitar criar skill por estética ou excesso de organização.
 
 ## Relação com agentes
 
-- [[../03-Squads/Agentes-Operacionais/SDR-Hilton|SDR-Hilton]]
-- [[../03-Squads/Agentes-Operacionais/SDR-Lotus-Business|SDR-Lotus Business]]
-- [[../03-Squads/Agentes-Operacionais/Follow-Up-Inteligente|Follow-Up Inteligente]]
-- [[../03-Squads/Agentes-Operacionais/Gestor-Operacional|Gestor Operacional]]
+- [[../03-Squads/Agentes-Operacionais/agents/SDR-Hilton|SDR-Hilton]]
+- [[../03-Squads/Agentes-Operacionais/agents/SDR-Lotus-Business|SDR-Lotus Business]]
+- [[../03-Squads/Agentes-Operacionais/agents/Follow-Up-Inteligente|Follow-Up Inteligente]]
+- [[../03-Squads/Agentes-Operacionais/agents/Gestor-Operacional|Gestor Operacional]]
 
 ---
 

@@ -13,7 +13,7 @@ fonte: Allessandra Sinisgalli | IA Club Comunidade
 
 # Claude no WhatsApp — Como Responder Todos os Seus Leads em 1 Minuto
 
-> [[01-Dashboard/Dashboard|← Dashboard]] | Relacionado: [[03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]] · [[04-Skills/HubSpot|HubSpot]] · [[04-Skills/N8N|N8N]]
+> [[01-Dashboard/Dashboard|← Dashboard]] | Relacionado: [[03-Squads/Instagram-Imoveis/00-INDEX-Instagram-Imoveis|Instagram Imóveis]] · [[04-Skills/HubSpot|HubSpot]] · [[04-Skills/N8N|N8N]]
 
 ## O que é
 
@@ -153,7 +153,8 @@ Ver argumentos completos em [[03-Squads/Instagram-Imoveis/Treinamento-Kaka-HKnov
 
 ## Notas Relacionadas
 
-- [[03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]] — squad de captação
+- [[03-Squads/Instagram-Imoveis/00-INDEX-Instagram-Imoveis|Instagram Imóveis]] — squad de captação
 - [[04-Skills/HubSpot|HubSpot]] — CRM para organizar os leads respondidos
 - [[04-Skills/N8N|N8N]] — automação avançada de follow-up
-- [[03-Squads/Copy-Squad/Index|Copy Squad]] — tom de voz e scripts
+- [[03-Squads/Copy-Squad/00-INDEX-Copy-Squad|Copy Squad]] — tom de voz e scripts
+

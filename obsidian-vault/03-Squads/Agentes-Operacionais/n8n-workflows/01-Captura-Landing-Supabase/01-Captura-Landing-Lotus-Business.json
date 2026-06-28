@@ -1,0 +1,57 @@
+{
+  "name": "01. Captura Lead — Lótus Business Landing Page",
+  "_vault_note": "Workflow de captura de leads da landing page Lótus Business. Exportado em 2026-06-18.",
+  "tipo": "captura_lead_landing",
+  "trigger": {
+    "tipo": "webhook",
+    "metodos": ["POST", "GET"],
+    "path": "lotus-lead",
+    "url_completa": "https://n8n.alexandreborges.site/webhook/lotus-lead"
+  },
+  "campos_recebidos": {
+    "nome": "string — nome do lead",
+    "whatsapp": "string — numero sem + (ex: 5547999999999)",
+    "perfil": "string — opcional (ex: medico, advogado, empresario, investidor)",
+    "cidade": "string — opcional"
+  },
+  "diferenca_vs_the_spot_one": "Campo 'perfil' no lugar de 'email' — permite roteamento por segmento no Hermes XD",
+  "fluxo": [
+    "1. Recebe lead via POST ou GET",
+    "2. Normaliza campos (nome, whatsapp, perfil, cidade)",
+    "3. Busca contato existente no Chatwoot pelo whatsapp",
+    "4. Se nao existe: cria contato com origem=lotus-landing + perfil",
+    "5. Cria conversa no Chatwoot (inbox_id=2)",
+    "6. Adiciona label 'lotus-landing'",
+    "7. Envia mensagem de boas-vindas automatica",
+    "8. Responde HTTP 200 OK para a landing page",
+    "9. [PARALELO] Envia lead ao CRM XD PRO via webhook"
+  ],
+  "integracoes": {
+    "chatwoot": {
+      "url": "https://chatwoot.alexandreborges.site",
+      "account_id": 1,
+      "inbox_id": 2,
+      "label": "lotus-landing",
+      "token": "i8sWiqTrcAyAQbRnVekJavXQ"
+    },
+    "crm_xd_pro": {
+      "webhook": "https://n8n.alexandreborges.site/webhook/crm-xd-pro-lead",
+      "payload": {
+        "nome": "string",
+        "whatsapp": "string",
+        "origem": "Lotus Business Landing",
+        "imovel_interesse": "Lotus Business - Itapema",
+        "status": "lead_novo"
+      }
+    }
+  },
+  "mensagem_boas_vindas": "Olá, [nome]! Vi que você quer entender melhor o Lótus Business. Pode me contar mais sobre o que está buscando — é para uso próprio, investimento ou ainda está avaliando as opções?",
+  "observacoes": [
+    "Token Chatwoot hardcoded — considerar variavel de ambiente CHATWOOT_TOKEN",
+    "Campo 'perfil' capturado da LP permite que o Hermes XD já saiba o segmento do lead",
+    "Falta: workflow equivalente para Hilton Garden Inn"
+  ],
+  "meta": {
+    "instanceId": "b61fc3510ca407dff389465d1339cbc17d60de9706e44070f51a4676f6e8d320"
+  }
+}

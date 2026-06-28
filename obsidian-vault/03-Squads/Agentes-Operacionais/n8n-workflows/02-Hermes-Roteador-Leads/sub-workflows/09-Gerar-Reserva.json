@@ -1,0 +1,54 @@
+{
+  "name": "09. Hermes Tool — Gerar Reserva",
+  "_vault_note": "Sub-workflow ferramenta do Hermes XD. ID referenciado: LP5qzJBbxAD0W5FH. Registra proposta/reserva do imovel, atualiza atributos Kanban, move step e envia confirmacao ao lead. Exportado em 2026-06-18.",
+  "tipo": "sub_workflow_ferramenta",
+  "trigger": "executeWorkflowTrigger",
+  "numero_ferramenta": "09",
+  "id_no_hermes": "LP5qzJBbxAD0W5FH",
+  "inputs_esperados": {
+    "account_id": "number",
+    "inbox_id": "number",
+    "conversation_id": "number",
+    "task_id": "number",
+    "board_id": "number",
+    "codigo_imovel": "string — codigo ou referencia do imovel",
+    "endereco_imovel": "string — endereco (fallback se nao tiver codigo)",
+    "valor_proposta": "number — valor em R$ (formatado para pt-BR na mensagem)",
+    "condicoes_pagamento": "string — ex: '30% entrada + financiamento'",
+    "numero_proposta": "string — numero da proposta gerada"
+  },
+  "fluxo": [
+    "1. Busca dados da task Kanban via @fazer-ai/n8n-nodes-chatwoot (para obter lista de steps)",
+    "2. Prepara: encontra step_id de 'Em Negociacao' (aceita com e sem acento), formata valor em pt-BR, monta mensagem de confirmacao",
+    "3. Atualiza atributos da task no Kanban (numero_proposta, valor_venda)",
+    "4. Move task para step 'Em Negociacao'",
+    "5. Envia mensagem de confirmacao ao lead no WhatsApp",
+    "6. Retorna: {status: 'reserva_registrada', numero_proposta, valor_proposta, mensagem_enviada}"
+  ],
+  "mensagem_confirmacao_template": "📋 *Proposta registrada com sucesso!*\n\n🏢 *Imóvel:* {codigo_imovel|endereco_imovel}\n💰 *Valor proposto:* R$ {valor_proposta formatado}\n💳 *Condições:* {condicoes_pagamento}\n\nAlexandre Borges irá verificar a disponibilidade e confirmar as condições diretamente com a incorporadora. Você será avisado aqui. 🤝",
+  "step_destino": "Em Negociacao (buscado por nome — aceita com e sem acento)",
+  "credenciais": {
+    "chatwoot_fazer_ai": "Oganm2I5WSEBasX4",
+    "chatwoot_token_direto": "i8sWiqTrcAyAQbRnVekJavXQ"
+  },
+  "nodes": [
+    {"id": "c7c1e658", "nome": "Gatilho", "tipo": "executeWorkflowTrigger"},
+    {"id": "f18a2365", "nome": "Buscar tarefa", "tipo": "@fazer-ai/n8n-nodes-chatwoot", "op": "kanbanTask.get"},
+    {"id": "f056b42c", "nome": "Preparar", "tipo": "code", "linguagem": "JavaScript"},
+    {"id": "e8ad8c32", "nome": "Atualizar atributos tarefa", "tipo": "@fazer-ai/n8n-nodes-chatwoot", "op": "kanbanTask.update", "nota": "updateFields vazio — revisar se atributos sao passados"},
+    {"id": "e53b6c3e", "nome": "Mover para Em Negociacao", "tipo": "@fazer-ai/n8n-nodes-chatwoot", "op": "kanbanTask.update"},
+    {"id": "613fa6fd", "nome": "Enviar confirmacao", "tipo": "httpRequest", "privado": false},
+    {"id": "98acafaf", "nome": "Resposta ao agente", "tipo": "set"}
+  ],
+  "observacoes": [
+    "Token Chatwoot hardcoded — usar variavel de ambiente CHATWOOT_TOKEN",
+    "Node 'Atualizar atributos tarefa' tem updateFields VAZIO no JSON exportado — atributos numero_proposta e valor_venda podem nao estar sendo persistidos",
+    "Step 'Em Negociacao' buscado por nome (aceita com e sem acento) — robusto contra variacao de encoding",
+    "Nao confundir com sub-workflow 07 que tambem move para step 34 (Em Negociacao) — este registra a proposta formal",
+    "retorno usa 'reserva_registrada' mas o sticky note chama de proposta — semantica ainda em definicao",
+    "Se step_id for null (step nao encontrado), o PATCH de mover Kanban falha silenciosamente"
+  ],
+  "meta": {
+    "instanceId": "b61fc3510ca407dff389465d1339cbc17d60de9706e44070f51a4676f6e8d320"
+  }
+}

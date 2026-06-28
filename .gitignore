@@ -1,2 +1,11 @@
 .obsidian/
 _backup-duplicados-fora-vault_*/
+
+# Claude Code / swarm coordination state
+.claude-flow/
+.swarm/
+
+# Node.js (site projects inside vault)
+node_modules/
+.next/
+tsconfig.tsbuildinfo

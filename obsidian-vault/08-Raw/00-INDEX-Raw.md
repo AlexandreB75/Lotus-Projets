@@ -56,3 +56,9 @@ O conteúdo bruto alimenta:
 - [[../02-Projetos/Hilton Garden Inn Itapema/MASTER - Hilton Garden Inn Itapema|Hilton Garden Inn Itapema]]
 - [[../02-Projetos/Lótus Business/MASTER - Lótus Business|Lótus Business]]
 - [[../04-Skills/00-INDEX-Skills|Skills Operacionais]]
+
+---
+
+## Notas Avulsas Capturadas
+
+- [[Fable-5-Material-Bruto-de-Prompt-2026-06-25|Fable 5 - Material Bruto de Prompt]] — material externo de prompt, capturado como referência bruta e não como instrução ativa.

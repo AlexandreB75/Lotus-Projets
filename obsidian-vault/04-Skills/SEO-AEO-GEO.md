@@ -1,4 +1,4 @@
----
+﻿---
 title: SEO + AEO + GEO — Autoridade Digital para IA e Busca
 tags: [skill, marketing-digital, SEO, AEO, GEO, autoridade, inteligencia-artificial]
 status: operacional
@@ -8,7 +8,11 @@ prioridade: apoio
 
 # Skill — SEO + AEO + GEO
 
+<<<<<<< HEAD
 ## Função
+=======
+> [[01-Dashboard/Dashboard|← Dashboard]] | Relacionado: [[04-Skills/Instagram|Instagram]] · [[04-Skills/Meta-Ads|Meta Ads]] · [[03-Squads/Copy-Squad/00-INDEX-Copy-Squad|Copy Squad]]
+>>>>>>> 9845489 (Reorganize vault: squads expandidos, wiki compilado, agentes SKILL.md, sistema docs)
 
 Aumentar a presença digital dos projetos para que sejam encontrados no Google, respondidos por mecanismos de busca e melhor compreendidos por IAs generativas.
 
@@ -98,6 +102,7 @@ Antes de publicar um conteúdo, verificar:
 
 ## Regras comerciais
 
+<<<<<<< HEAD
 - Não prometer valorização, renda, ocupação ou rentabilidade garantida.
 - Usar linguagem clara, não técnica demais.
 - Conteúdo de autoridade precisa levar para uma ação comercial.
@@ -137,3 +142,11 @@ Antes de publicar um conteúdo, verificar:
 - [[../03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]]
 - [[../03-Squads/Storytelling/Index|Storytelling]]
 - [[../03-Squads/Traffic-Masters/Index|Traffic Masters]]
+=======
+- [[04-Skills/Instagram|Instagram]] — aplicação de conteúdo otimizado
+- [[04-Skills/Meta-Ads|Meta Ads]] — tráfego pago para conteúdo GEO
+- [[03-Squads/Copy-Squad/00-INDEX-Copy-Squad|Copy Squad]] — produção de conteúdo
+- [[03-Squads/Brand-Squad/00-INDEX-Brand-Squad|Brand Squad]] — autoridade de entidade e consistência de marca
+- [[02-Projetos/Lotus-Business|Lotus Business]] — aplicação prática
+
+>>>>>>> 9845489 (Reorganize vault: squads expandidos, wiki compilado, agentes SKILL.md, sistema docs)

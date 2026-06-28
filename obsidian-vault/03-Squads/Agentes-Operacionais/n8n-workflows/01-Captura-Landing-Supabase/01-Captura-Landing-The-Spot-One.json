@@ -1,0 +1,58 @@
+{
+  "name": "01. Captura Lead — The Spot One Landing Page",
+  "_vault_note": "Workflow de captura de leads da landing page The Spot One. Exportado em 2026-06-18.",
+  "tipo": "captura_lead_landing",
+  "trigger": {
+    "tipo": "webhook",
+    "metodos": ["POST", "GET"],
+    "path": "the-spot-one-lead",
+    "url_completa": "https://n8n.alexandreborges.site/webhook/the-spot-one-lead"
+  },
+  "campos_recebidos": {
+    "nome": "string — nome do lead",
+    "whatsapp": "string — numero sem + (ex: 5547999999999)",
+    "email": "string — opcional",
+    "cidade": "string — opcional"
+  },
+  "fluxo": [
+    "1. Recebe lead via POST ou GET",
+    "2. Normaliza campos (nome, whatsapp, email, cidade)",
+    "3. Busca contato existente no Chatwoot pelo whatsapp",
+    "4. Se nao existe: cria contato com origem=the-spot-one-landing",
+    "5. Cria conversa no Chatwoot (inbox_id=2)",
+    "6. Adiciona label 'the-spot-one-landing'",
+    "7. Envia mensagem de boas-vindas automatica ao lead",
+    "8. Responde HTTP 200 OK para a landing page",
+    "9. [PARALELO] Envia lead ao CRM XD PRO via webhook"
+  ],
+  "integrações": {
+    "chatwoot": {
+      "url": "https://chatwoot.alexandreborges.site",
+      "account_id": 1,
+      "inbox_id": 2,
+      "label": "the-spot-one-landing",
+      "token": "i8sWiqTrcAyAQbRnVekJavXQ"
+    },
+    "crm_xd_pro": {
+      "webhook": "https://n8n.alexandreborges.site/webhook/crm-xd-pro-lead",
+      "payload": {
+        "nome": "string",
+        "whatsapp": "string",
+        "email": "string",
+        "origem": "The Spot One Landing",
+        "imovel_interesse": "The Spot One - Itapema",
+        "status": "lead_novo"
+      }
+    }
+  },
+  "mensagem_boas_vindas": "Olá, [nome]! Obrigado pelo interesse no The Spot One. É um empreendimento fantástico em Itapema! Pode me contar mais sobre o que está buscando — é para morar, investir ou ainda está avaliando as opções?",
+  "observacoes": [
+    "O token do Chatwoot está hardcoded no workflow — considerar usar variavel de ambiente",
+    "O webhook do CRM XD PRO roda em PARALELO com a captura no Chatwoot (nao e sequencial)",
+    "Esse workflow NAO salva no Supabase diretamente — o CRM XD PRO e quem persiste",
+    "Falta: workflow equivalente para Hilton e Lotus Business (apenas The Spot One mapeado)"
+  ],
+  "meta": {
+    "instanceId": "b61fc3510ca407dff389465d1339cbc17d60de9706e44070f51a4676f6e8d320"
+  }
+}

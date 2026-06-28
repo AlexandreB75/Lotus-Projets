@@ -1,0 +1,336 @@
+{
+  "name": "02. Hermes XD — SEMENTE (Workflow Completo Original)",
+  "_vault_note": "ARQUIVO FUNDACIONAL. Este e o workflow completo original de onde o projeto nasceu. Todos os nodes reais estao documentados aqui. Exportado em 2026-06-18. Use como referencia mestre ao reconstruir ou evoluir o sistema.",
+  "tipo": "workflow_principal_completo",
+  "status": "ATIVO — workflow principal em producao",
+  "importancia": "SEMENTE DO PROJETO — origem de toda a arquitetura Hermes XD",
+  "trigger": {
+    "node": "Gatilho WhatsApp",
+    "tipo": "@fazer-ai/n8n-nodes-chatwoot.chatwootTrigger",
+    "evento": "message_incoming",
+    "account_id": 1,
+    "inbox_id": 2,
+    "inbox_nome": "Fone Escritorio HK9",
+    "credencial": "Oganm2I5WSEBasX4"
+  },
+  "arquitetura_geral": {
+    "secoes": [
+      "1. Pre-processamento de mensagens (Info → Reset/Teste → Agente ativado? → Horario → Tipo mensagem → Extrair mensagem)",
+      "2. Fila anti-encavalamento (Enfileirar → Esperar 10s → Buscar → Mensagem encavalada?)",
+      "3. Lock de atendimento (Verificar status → Bloquear → Limpar fila → Marcar como lida)",
+      "4. Agente IA (Coletar mensagens → Agente Imobiliario GPT-5.2 + 9 ferramentas + memoria Postgres)",
+      "5. Pos-processamento (Output valido? → Buscar novas entradas fila → Fila re-processamento)",
+      "6. Formatar e enviar (Audio: SSML+ElevenLabs / Texto: formatacao WhatsApp com gpt-4.1-mini)"
+    ]
+  },
+  "node_info": {
+    "descricao": "Extrai todos os dados do payload Chatwoot",
+    "campos_extraidos": [
+      "id_mensagem",
+      "id_mensagem_referenciada",
+      "id_conta",
+      "id_conversa",
+      "id_contato",
+      "id_inbox",
+      "telefone",
+      "nome",
+      "mensagem",
+      "mensagem_de_audio",
+      "timestamp",
+      "tipo_arquivo",
+      "id_anexo",
+      "url_arquivo",
+      "etiquetas",
+      "atributos_contato",
+      "atributos_conversa",
+      "tarefa (kanban_task)",
+      "funil (kanban_task.board)"
+    ],
+    "alerta_alerta_ids_hardcoded": "alerta_conversation_id=90, alerta_inbox_id=2 — hardcoded no node Info"
+  },
+  "comandos_especiais": {
+    "/reset": {
+      "descricao": "Limpa tudo para o contato — reseta conversa completa",
+      "acoes": [
+        "Limpar n8n_historico_mensagens (DELETE por telefone)",
+        "Resetar atributos contato: cpf, data_nascimento, sexo, profissao, cidade, uf",
+        "Resetar atributos conversa: motivo_cancelamento",
+        "Preparar reset task (JS: encontra firstStep do funil)",
+        "Resetar task (move para step 0, limpa 17 atributos customizados de seguros)",
+        "Resetar etiquetas: remove 'retorno', 'agente-off'",
+        "Resetar status atendimento (lock_conversa=false)",
+        "Limpar n8n_fila_mensagens (DELETE por telefone)",
+        "Enviar 'Memória resetada.' como reply"
+      ]
+    },
+    "/teste": {
+      "descricao": "Habilita modo de teste",
+      "acoes": [
+        "Adicionar label 'testando-agente' na conversa",
+        "Enviar 'Modo de teste habilitado.' como reply"
+      ]
+    }
+  },
+  "bug_critico_detectado": {
+    "node": "Agente ativado?",
+    "problema": "CORRIGIDO NO MANIFESTO: regra de producao nao deve exigir label testando-agente",
+    "impacto": "Resolvido no modelo estrutural: leads reais devem ser processados salvo quando houver label agente-off ou outra trava operacional explicita.",
+    "correcao_necessaria": "Aplicar no workflow real do n8n: remover qualquer condicao contains testando-agente do node Agente ativado? e manter apenas notContains agente-off.",
+    "regra_corrigida": "etiquetas notContains 'agente-off'",
+    "condicao_removida": "etiquetas contains 'testando-agente'",
+    "status_correcao": "APLICADO_NO_MODELO_LOCAL__REPLICAR_NO_N8N_UI_SE_NECESSARIO"
+  },
+  "horario_comercial_bug": {
+    "node": "Horario comercial?",
+    "problema": "Condicao hardcoded como TRUE — nao verifica horario real",
+    "nota_sticky": "'Habilite esse node so depois de terminar de testar!' — node desabilitado/bypassed",
+    "impacto": "Agente responde 24h sem restricao de horario"
+  },
+  "pipeline_audio": {
+    "fluxo": [
+      "Download audio (fazer-ai downloadAttachment por URL)",
+      "Extract from File (binaryToProperty)",
+      "Convert to File (audio/mpeg)",
+      "Transcrever audio (OpenAI Whisper, language=pt, retryOnFail=true)",
+      "Extrair mensagem (JS: normaliza transcricao, remove artefatos Amara.org, formata tags XML)"
+    ],
+    "tratamento_silencio": "Se transcricao contem 'Amara.org' → substitui por '<mensagem de audio nao audivel>'"
+  },
+  "fila_anti_encavalamento": {
+    "tabela": "n8n_fila_mensagens",
+    "campos": [
+      "telefone",
+      "mensagem",
+      "timestamp",
+      "id_mensagem"
+    ],
+    "fluxo": [
+      "Enfileirar mensagem (INSERT na fila)",
+      "Esperar 10 segundos (Wait node)",
+      "Buscar mensagens (SELECT por telefone ORDER BY timestamp)",
+      "Mensagem encavalada? (JS: verifica se id_mensagem da ultima da fila == id do workflow atual; deduplica por conteudo)"
+    ],
+    "logica_js": "Se ultima mensagem da fila nao e a mensagem deste workflow → abandona (retorna []). Caso contrario, deduplica mensagens identicas e processa todas."
+  },
+  "lock_atendimento": {
+    "tabela": "n8n_status_atendimento",
+    "campos": [
+      "session_id",
+      "lock_conversa",
+      "updated_at"
+    ],
+    "session_key": "telefone (apenas — diferente do Hermes resumido que usa inbox_id+telefone)",
+    "fluxo": [
+      "Verificar status atendimento (alwaysOutputData=true, executeOnce=true)",
+      "Agente ja terminou de responder? (OR: isEmpty OR lock=false OR runIndex>=5)",
+      "SE PRONTO: Bloquear status (lock=true) → Limpar fila → Marcar como lida → processar",
+      "SE OCUPADO: volta para Esperar (loop ate max 5 iteracoes)"
+    ]
+  },
+  "agente_ia": {
+    "node": "Agente Imobiliario",
+    "tipo": "@n8n/n8n-nodes-langchain.agent",
+    "modelo": "gpt-5.2",
+    "memoria": {
+      "tipo": "memoryPostgresChat",
+      "tabela": "n8n_historico_mensagens",
+      "session_key": "id_inbox + '_' + telefone",
+      "janela_contexto": 50
+    },
+    "ferramentas_builtin": [
+      "Refletir (toolThink)",
+      "Reagir mensagem (chatwootTool)",
+      "Atualizar tarefa (chatwootTool)"
+    ],
+    "sub_workflows_como_ferramentas": {
+      "02_informacoes": {
+        "id": "5yqbPEIEAHWRKuLm",
+        "descricao": "Busca informacoes detalhadas dos empreendimentos. Filtra por perfil, localizacao.",
+        "inputs_ai": [
+          "tipo_cliente",
+          "empreendimento_preferido",
+          "localizacao",
+          "objetivo"
+        ]
+      },
+      "02b_simular_roi": {
+        "id": "h21Hv4e2HfISf45m",
+        "descricao": "Simula ROI de um empreendimento para valor de investimento especifico.",
+        "inputs_ai": [
+          "empreendimento",
+          "valor_investimento"
+        ]
+      },
+      "03_enviar_proposta": {
+        "id": "swXlsuJ4ukfx8OeF",
+        "descricao": "Gera PDF da proposta comercial e envia via WhatsApp. Move para Proposta Enviada.",
+        "inputs_ai": [
+          "opcoes (array JSON)",
+          "mensagem_abertura"
+        ]
+      },
+      "04_verificar_disponibilidade": {
+        "id": "CP6f2tCXalIJoLRN",
+        "descricao": "Verifica imovel vinculado a conversa — status, dados, etapa do funil.",
+        "inputs_ai": []
+      },
+      "05_agendar_visita": {
+        "id": "geLNi1Kw0VmXkk0M",
+        "descricao": "Agenda visita presencial ou virtual. Confirma data e horario antes.",
+        "inputs_ai": [
+          "data_visita",
+          "horario_visita",
+          "tipo_visita",
+          "endereco_visita",
+          "observacoes"
+        ]
+      },
+      "06_cancelar_interesse": {
+        "id": "h1xS3Z9xenaFjj1d",
+        "descricao": "Registra desistencia, move para Perdido, envia mensagem de encerramento.",
+        "inputs_ai": [
+          "motivo",
+          "mensagem_despedida"
+        ]
+      },
+      "07_escalar_alexandre": {
+        "id": "qOyuDrytX5GnVva7",
+        "nota_discrepancia": "ATENCAO: ID diferente do 02-Hermes-Roteador-Leads.json (HQr37y9CEfriRkd4). Este arquivo e a semente original — qOyuDrytX5GnVva7 pode ser o ID correto.",
+        "descricao": "Transfere para Alexandre quando: negociacao de valores, visita confirmada, pedido do cliente, duvida juridica, questao complexa.",
+        "inputs_ai": [
+          "mensagem_cliente",
+          "motivo_escalada"
+        ]
+      },
+      "08_follow_up": {
+        "id": "87LFS2eSGiiKEdE7",
+        "descricao": "Envia acompanhamento quando cliente ficou sem responder.",
+        "inputs_ai": [
+          "tipo_followup",
+          "mensagem_custom"
+        ]
+      },
+      "09_gerar_reserva": {
+        "id": "LP5qzJBbxAD0W5FH",
+        "descricao": "Registra proposta/reserva, atualiza Kanban, envia confirmacao.",
+        "inputs_ai": [
+          "codigo_imovel",
+          "endereco_imovel",
+          "valor_proposta",
+          "condicoes_pagamento",
+          "numero_proposta"
+        ]
+      }
+    },
+    "ferramenta_atualizar_tarefa": {
+      "campos_ai": [
+        "Title",
+        "Description",
+        "Kanban_Step",
+        "End_Date"
+      ],
+      "regra_end_date": "Para agendamentos: data_agendamento - 1 dia. Nos demais: hoje + 1 dia (prazo follow-up)"
+    }
+  },
+  "system_prompt_resumo": {
+    "persona": "Assistente comercial de Alexandre Borges, CRECI-SC 45148",
+    "papel": "SDR imobiliario premium — atende, qualifica, conduz para proximo passo, prepara lead para Alexandre fechar",
+    "nao_faz": [
+      "fecha venda sozinho",
+      "inventa informacoes",
+      "promete rentabilidade",
+      "negocia preco"
+    ],
+    "leitura_intencao_lead_quente": [
+      "visita",
+      "planta",
+      "metragem",
+      "disponibilidade",
+      "condicoes",
+      "prazo",
+      "preco",
+      "tabela",
+      "proposta",
+      "reserva",
+      "urgencia"
+    ],
+    "horario_alexandre": "segunda a sabado, 8h as 20h",
+    "produtos": [
+      "Hilton Garden Inn Itapema (hotelaria internacional, multipropriedade)",
+      "Hilton Residencial (residencial + pool locacao)",
+      "Hilton Hotel (investimento hotelaria)",
+      "Shopping Center Hilton (salas comerciais)",
+      "MedCenter Hilton (salas clinicas/saude)",
+      "Lotus Business (centro empresarial corporativo)",
+      "The Spot One (investimento, moradia, locacao temporada)",
+      "Casa de alto padrao no Condominio Plaza, Itapema (residencial premium)"
+    ],
+    "kanban_steps_sistema_prompt": [
+      "Novo Lead",
+      "Contato Iniciado",
+      "Qualificando",
+      "Engajado",
+      "Proposta Enviada",
+      "Negociacao",
+      "Follow-up",
+      "Oportunidade Ganha",
+      "Oportunidade Perdida"
+    ]
+  },
+  "pos_processamento_output": {
+    "output_valido": "output notEmpty AND output != 'Agent stopped due to max iterations.'",
+    "output_invalido": "Limpar status → StopAndError com mensagem do output",
+    "fila_reprocessamento": {
+      "descricao": "Apos responder, verifica se chegou nova mensagem enquanto respondia",
+      "fluxo": [
+        "Buscar novas entradas na fila (SELECT top 1 DESC por id)",
+        "Recebeu mensagem enquanto respondia? (json notEmpty)",
+        "SE SIM: Buscar mensagens na memoria → Deletar ultima mensagem → Usou tools? → Salvar tool calls3 → Limpar status3",
+        "SE NAO: Usou tools? → Salvar tool calls → Continuar para envio"
+      ]
+    }
+  },
+  "pipeline_envio": {
+    "audio": {
+      "condicao": "Info.mensagem_de_audio === true",
+      "fluxo": [
+        "Formatar SSML (chainLlm gpt-4.1-mini — converte texto para SSML com regras: numeros por extenso, datas, telefones, emojis removidos, break inicial 1.0s)",
+        "Gravando... (updatePresence: recording)",
+        "Gerar audio (ElevenLabs, voz IKne3meq5aSn9XLyUdCD, modelo eleven_flash_v2_5, mp3_44100_32, stability=0.35, similarity=0.44, speed=1.1, retryOnFail=true)",
+        "Enviar audio (fazer-ai sendFile, isRecordedAudio=true, com transcribed_text no metadata)",
+        "FALLBACK: se ElevenLabs falhar → Formatar texto → Enviar texto"
+      ]
+    },
+    "texto": {
+      "condicao": "mensagem nao e audio",
+      "fluxo": [
+        "Formatar texto (chainLlm gpt-4.1-mini — converte ** para *, remove # Markdown, divide em blocos max 5 separados por \\n\\n, simula digitacao humana)",
+        "Enviar texto (fazer-ai sendMessage, split_message=true, wait_before_sending=dynamic)"
+      ]
+    }
+  },
+  "salvar_tool_calls": {
+    "descricao": "Persiste intermediateSteps do agente na memoria Postgres",
+    "tabela": "n8n_historico_mensagens",
+    "formato": "JSON com type='ai', content='<tool-calls>...</tool-calls>', tool_calls=[], additional_kwargs={}"
+  },
+  "credenciais": {
+    "chatwoot_fazer_ai": "Oganm2I5WSEBasX4",
+    "openai": "6G79NMutiZQYhCC1",
+    "postgres": "1cqlgjrWeup8stbp",
+    "elevenlabs": "ZohXn1MkfFNOjH5L",
+    "google_calendar": "uqH5AeK7xR8aN0Xf"
+  },
+  "alertas_criticos": [
+    "CORRIGIDO NO MODELO: remover condicao contains 'testando-agente' do node 'Agente ativado?' no workflow real; regra final: notContains 'agente-off'.",
+    "Horario comercial? hardcoded TRUE — agente responde 24h",
+    "ID do sub-workflow 07 neste arquivo e 'qOyuDrytX5GnVva7', diferente de 'HQr37y9CEfriRkd4' no sumario",
+    "Reset task limpa 17 atributos de 'seguros' (ramo, operadora, numero_apolice...) — codigo copiado de outro projeto. Revisar atributos corretos para imobiliaria",
+    "session_key no lock usa apenas 'telefone' (sem inbox_id) — diferente da memoria Postgres que usa 'inbox_id + telefone'",
+    "Modelos usados: gpt-5.2 (agente), gpt-4.1-mini (formatacao SSML e texto)"
+  ],
+  "observacao_residual_seguros": "O node 'Resetar task' limpa atributos como consent_id_cotacao, ramo, plano_escolhido, operadora, premio_mensal, numero_apolice — tipicos de sistema de seguros. O stickyNote referencia 'n8n-kanban-seguros'. Esses atributos nao existem no setup da imobiliaria. Remover do /reset para evitar erros.",
+  "meta": {
+    "instanceId": "b61fc3510ca407dff389465d1339cbc17d60de9706e44070f51a4676f6e8d320"
+  }
+}

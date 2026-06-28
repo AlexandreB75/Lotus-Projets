@@ -12,8 +12,8 @@ Meta Ads é a plataforma de anúncios do Facebook e Instagram. Permite criar cam
 
 ## Squads que Usam
 
-- [[03-Squads/Traffic-Masters/Index|Traffic Masters]]
-- [[03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]]
+- [[03-Squads/Traffic-Masters/00-INDEX-Traffic-Masters|Traffic Masters]]
+- [[03-Squads/Instagram-Imoveis/00-INDEX-Instagram-Imoveis|Instagram Imóveis]]
 
 ## Projetos
 
@@ -71,9 +71,10 @@ Campanha (objetivo)
 
 ## Copy para Anúncios
 
-Ver frases-chave em [[03-Squads/Copy-Squad/Index|Copy Squad]]
+Ver frases-chave em [[03-Squads/Copy-Squad/00-INDEX-Copy-Squad|Copy Squad]]
 
 Exemplos validados:
 - "Seu dinheiro trabalhando por você — R$ 6.000/mês de renda com sala comercial"
 - "Por que pagar aluguel quando você pode ser dono?"
 - "Samsung escolheu este endereço. E você?"
+

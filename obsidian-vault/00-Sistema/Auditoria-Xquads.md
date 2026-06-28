@@ -34,16 +34,16 @@ Essa consolidação já está refletida na estrutura atual.
 ## Estrutura atual de squads
 
 - [[../03-Squads/00-INDEX-Agentes-e-Squads|00-INDEX-Agentes-e-Squads]]
-- [[../03-Squads/Agentes-Operacionais/SDR-Hilton|SDR-Hilton]]
-- [[../03-Squads/Agentes-Operacionais/SDR-Lotus-Business|SDR-Lotus Business]]
-- [[../03-Squads/Agentes-Operacionais/Closer-Alexandre|Closer-Alexandre]]
-- [[../03-Squads/Agentes-Operacionais/Follow-Up-Inteligente|Follow-Up Inteligente]]
-- [[../03-Squads/Agentes-Operacionais/Gestor-Operacional|Gestor Operacional]]
-- [[../03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]]
-- [[../03-Squads/Brand-Squad/Index|Brand Squad]]
-- [[../03-Squads/Copy-Squad/Index|Copy Squad]]
-- [[../03-Squads/Design-Squad/Index|Design Squad]]
-- [[../03-Squads/Traffic-Masters/Index|Traffic Masters]]
+- [[../03-Squads/Agentes-Operacionais/agents/SDR-Hilton|SDR-Hilton]]
+- [[../03-Squads/Agentes-Operacionais/agents/SDR-Lotus-Business|SDR-Lotus Business]]
+- [[../03-Squads/Agentes-Operacionais/agents/Closer-Alexandre|Closer-Alexandre]]
+- [[../03-Squads/Agentes-Operacionais/agents/Follow-Up-Inteligente|Follow-Up Inteligente]]
+- [[../03-Squads/Agentes-Operacionais/agents/Gestor-Operacional|Gestor Operacional]]
+- [[../03-Squads/Instagram-Imoveis/00-INDEX-Instagram-Imoveis|Instagram Imóveis]]
+- [[../03-Squads/Brand-Squad/00-INDEX-Brand-Squad|Brand Squad]]
+- [[../03-Squads/Copy-Squad/00-INDEX-Copy-Squad|Copy Squad]]
+- [[../03-Squads/Design-Squad/00-INDEX-Design-Squad|Design Squad]]
+- [[../03-Squads/Traffic-Masters/00-INDEX-Traffic-Masters|Traffic Masters]]
 
 ---
 
@@ -79,3 +79,4 @@ Mover ou reinterpretar dentro de:
 Auditoria concluída.
 
 `xquads` é legado. A estrutura oficial agora é `03-Squads`.
+

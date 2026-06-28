@@ -144,9 +144,23 @@ Criar conexão com CRM/n8n somente depois da cadência manual estar madura.
 
 ---
 
+## Squads de apoio
+
+| Squad | Uso no projeto | Link |
+|---|---|---|
+| Copy Squad | Scripts WhatsApp, copy de anúncios, falas de evento | [[../../03-Squads/Copy-Squad/00-INDEX-Copy-Squad\|Copy Squad]] |
+| Traffic Masters | Meta Ads para investidor premium, Balneário x Itapema | [[../../03-Squads/Traffic-Masters/00-INDEX-Traffic-Masters\|Traffic Masters]] |
+| hormozi-squad | Estrutura de oferta, conversão e follow-up | [[../../03-Squads/hormozi-squad/README\|Hormozi Squad]] |
+| Brand Squad | Posicionamento anti-hype para lead premium | [[../../03-Squads/Brand-Squad/00-INDEX-Brand-Squad\|Brand Squad]] |
+| storytelling | Narrativa para contornar "parece tudo marketing" | [[../../03-Squads/storytelling/README\|Storytelling]] |
+| Design Squad | Materiais visuais e criativos | [[../../03-Squads/Design-Squad/00-INDEX-Design-Squad\|Design Squad]] |
+
+---
+
 ## Decisão operacional
 
 Este projeto está em modo de validação comercial.
 
 A prioridade não é volume de conteúdo.
 A prioridade é precisão de comportamento comercial.
+

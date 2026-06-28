@@ -12,6 +12,8 @@ data: 2026-06-09
 
 ## Entradas
 
+- [[Descritivo-Oficial-Lotus-Business|Descritivo Oficial — Lótus Business]] — fonte primária para SDR, squads e handoff Alexandre
+
 Adicionar novas fontes usando o padrão:
 
 `AAAA-MM-DD — Tema — Fonte.md`

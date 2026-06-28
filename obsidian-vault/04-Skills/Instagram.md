@@ -12,9 +12,9 @@ Instagram é a principal plataforma de captação orgânica de leads para o Lotu
 
 ## Squads que Usam
 
-- [[03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]]
-- [[03-Squads/Brand-Squad/Index|Brand Squad]]
-- [[03-Squads/Design-Squad/Index|Design Squad]]
+- [[03-Squads/Instagram-Imoveis/00-INDEX-Instagram-Imoveis|Instagram Imóveis]]
+- [[03-Squads/Brand-Squad/00-INDEX-Brand-Squad|Brand Squad]]
+- [[03-Squads/Design-Squad/00-INDEX-Design-Squad|Design Squad]]
 
 ## Projetos
 
@@ -67,3 +67,4 @@ Fontes: [[03-Squads/Instagram-Imoveis/Treinamento-Kaka-HKnove/Notas-Completas|Tr
 - Responder DMs em **menos de 1 hora**
 - Usar **hashtags** segmentadas por cidade e produto
 - Criar **séries de conteúdo** para manter sequência
+

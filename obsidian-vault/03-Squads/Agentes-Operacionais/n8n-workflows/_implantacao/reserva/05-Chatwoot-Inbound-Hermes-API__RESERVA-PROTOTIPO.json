@@ -1,0 +1,83 @@
+{
+  "name": "06. Chatwoot Inbound → Hermes API Externa (Protótipo)",
+  "_vault_note": "Workflow prototipo gerado por AI Builder (aiBuilderAssisted: true). Arquitetura alternativa: roteia Chatwoot para orquestrador Hermes externo via API REST + integra HubSpot. URLs sao PLACEHOLDER — nunca entrou em producao. Exportado em 2026-06-18.",
+  "tipo": "chatwoot_inbound_hermes_api",
+  "status": "PROTOTIPO — nao ativo em producao",
+  "gerado_por": "n8n AI Builder (builderVariant: mcp)",
+  "diferenca_critica": "Esta versao chama API externa (hermes.seu-dominio.com). O workflow ATIVO e 02-Hermes-Roteador-Leads.json que usa GPT-5.2 direto no n8n + Postgres + 9 sub-workflows.",
+  "trigger": {
+    "tipo": "webhook",
+    "metodo": "POST",
+    "path": "hermes/chatwoot/message",
+    "url_completa": "https://n8n.alexandreborges.site/webhook/hermes/chatwoot/message",
+    "responseMode": "responseNode"
+  },
+  "fluxo": [
+    "1. Recebe mensagem do Chatwoot (Nova Mensagem)",
+    "2. Monta payload com: system_prompt completo, dados do lead (external_id, name, email, phone), conversation_id, message, source, required_output",
+    "3. POST para Hermes API externa (PLACEHOLDER: hermes.seu-dominio.com/api/orchestrator/message)",
+    "4. Envia reply do Hermes de volta ao Chatwoot via API (PLACEHOLDER: conta/conversa)",
+    "5. Registra nota no HubSpot com: mensagem lead, resposta Hermes, handoff_required, next_action",
+    "6. Responde webhook com: {ok: true, routed_to, conversation_id, handoff_required}"
+  ],
+  "system_prompt_hermes": {
+    "persona": "Iris",
+    "missao": "Central SDR Autonoma — maximizar qualificacao de leads e vendas",
+    "imoveis_mencionados": ["Hotel Hilton", "Lotus Business", "Plaza Itapema", "The Spot One"],
+    "foco": "Pronta entrega, valorizacao regional, retorno rapido, Itapema e Balneario Camboriu",
+    "regras": [
+      "Nunca negocie preco ou ofereca desconto",
+      "Escale para corretor humano quando: alto interesse, pedido de negociacao, pergunta complexa, intencao de visita",
+      "Qualifique: interesse, orcamento, tipo imovel, localizacao, prazo"
+    ],
+    "ecossistema_mencionado": "n8n + PostgreSQL + Chatwoot + HubSpot"
+  },
+  "required_output_estrutura": {
+    "reply": "texto para enviar ao lead",
+    "qualification": "dados extraidos/atualizados",
+    "handoff_required": "boolean",
+    "handoff_reason": "motivo se houver",
+    "next_action": "acao recomendada"
+  },
+  "integracoes": {
+    "hermes_api": {
+      "url": "PLACEHOLDER: https://hermes.seu-dominio.com/api/orchestrator/message",
+      "auth": "Bearer token hardcoded (11bbc14f... — PLACEHOLDER/dev token)",
+      "status": "NAO CONFIGURADO"
+    },
+    "chatwoot": {
+      "url": "PLACEHOLDER: https://chatwoot.seu-dominio.com/...",
+      "token": "i8sWiqTrcAyAQbRnVekJavXQ",
+      "status": "URL placeholder — token real"
+    },
+    "hubspot": {
+      "endpoint": "PLACEHOLDER: https://api.hubapi.com/crm/v3/objects/notes",
+      "auth": "Bearer token hardcoded (CiRuYTEt... — PLACEHOLDER/dev token)",
+      "objeto": "notes",
+      "status": "NAO CONFIGURADO — HubSpot nao usado nos outros workflows"
+    }
+  },
+  "nodes": [
+    {"id": "c3376fcf", "nome": "Chatwoot - Nova Mensagem", "tipo": "webhook", "path": "hermes/chatwoot/message"},
+    {"id": "951ae599", "nome": "Normalizar Mensagem e Prompt Hermes", "tipo": "set"},
+    {"id": "08a16712", "nome": "Hermes - Orquestrar Atendimento", "tipo": "httpRequest", "url": "PLACEHOLDER"},
+    {"id": "6f63e591", "nome": "Chatwoot - Responder Lead", "tipo": "httpRequest", "url": "PLACEHOLDER"},
+    {"id": "45ff57a9", "nome": "HubSpot - Registrar Decisao Hermes", "tipo": "httpRequest", "url": "PLACEHOLDER"},
+    {"id": "197fce5a", "nome": "Responder Webhook", "tipo": "respondToWebhook"}
+  ],
+  "observacoes_criticas": [
+    "TODAS as URLs de destino sao PLACEHOLDER — nao funciona sem configuracao",
+    "Arquitetura diferente do sistema ativo: pressupoe API Hermes externa que NAO existe ainda",
+    "HubSpot aparece pela primeira vez — nao integrado em nenhum outro workflow atual",
+    "Persona 'Iris' mencionada no system prompt — diferente da identidade 'Alexandre Borges' usada nos outros workflows",
+    "Plaza Itapema mencionado — nao aparece em nenhum outro workflow (novo empreendimento?)",
+    "Este prototipo pode representar a VISAO FUTURA do sistema (Hermes como API standalone)",
+    "Bearer tokens hardcoded sao claramente placeholders/dev tokens (formatos invalidos para producao)"
+  ],
+  "relevancia_estrategica": "Demonstra intencao de evoluir Hermes de workflow n8n para servico API standalone com integracao HubSpot. Considerar ao planejar roadmap futuro.",
+  "meta": {
+    "aiBuilderAssisted": true,
+    "builderVariant": "mcp",
+    "instanceId": "b61fc3510ca407dff389465d1339cbc17d60de9706e44070f51a4676f6e8d320"
+  }
+}

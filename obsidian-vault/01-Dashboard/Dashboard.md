@@ -46,10 +46,11 @@ data: 2026-06-09
 | Área | Hub |
 |---|---|
 | Agentes e Squads | [[03-Squads/00-INDEX-Agentes-e-Squads|Índice de Agentes e Squads]] |
-| SDR-Hilton | [[03-Squads/Agentes-Operacionais/SDR-Hilton|SDR-Hilton]] |
-| SDR-Lotus Business | [[03-Squads/Agentes-Operacionais/SDR-Lotus-Business|SDR-Lotus Business]] |
-| Follow-Up Inteligente | [[03-Squads/Agentes-Operacionais/Follow-Up-Inteligente|Follow-Up Inteligente]] |
-| Gestor Operacional | [[03-Squads/Agentes-Operacionais/Gestor-Operacional|Gestor Operacional]] |
+| SDR-HK-Nove | [[03-Squads/Agentes-Operacionais/agents/SDR-HK-Nove|SDR-HK-Nove]] — **ATIVO** (WF HFM5h8hZE6gkzfdK) |
+| SDR-Hilton | [[03-Squads/Agentes-Operacionais/agents/SDR-Hilton|SDR-Hilton]] |
+| SDR-Lotus Business | [[03-Squads/Agentes-Operacionais/agents/SDR-Lotus-Business|SDR-Lotus Business]] |
+| Follow-Up Inteligente | [[03-Squads/Agentes-Operacionais/agents/Follow-Up-Inteligente|Follow-Up Inteligente]] |
+| Gestor Operacional | [[03-Squads/Agentes-Operacionais/agents/Gestor-Operacional|Gestor Operacional]] |
 
 ---
 
@@ -115,7 +116,15 @@ data: 2026-06-09
 
 ---
 
+## Manutencao do vault
+
+| Item | Uso |
+|---|---|
+| [[00-Sistema/Mapa-de-Notas-Soltas|Mapa de Notas Soltas]] | Revisao de notas pouco conectadas, indices fora do padrao e proximas costuras |
+---
+
 ## Contexto permanente
 
 - [[05-Contexto/CONTEXTO-ALEXANDRE|Contexto Alexandre]]
 - [[00-Sistema/Metodo-Karpathy|Método Karpathy]]
+

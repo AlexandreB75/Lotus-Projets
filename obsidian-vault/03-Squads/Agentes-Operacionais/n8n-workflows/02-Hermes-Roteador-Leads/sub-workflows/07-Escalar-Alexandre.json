@@ -1,0 +1,57 @@
+{
+  "name": "07. Hermes Tool — Escalar Alexandre",
+  "_vault_note": "Sub-workflow ferramenta do Hermes XD. ID referenciado: HQr37y9CEfriRkd4. Acionado quando o agente decide que o lead precisa de atendimento humano pelo Alexandre. Exportado em 2026-06-18.",
+  "tipo": "sub_workflow_ferramenta",
+  "trigger": "executeWorkflowTrigger (nao e webhook — e chamado internamente pelo agente Hermes XD)",
+  "numero_ferramenta": "07",
+  "id_no_hermes": "HQr37y9CEfriRkd4",
+  "inputs_esperados": {
+    "account_id": "number — ID da conta Chatwoot (padrao: 1)",
+    "inbox_id": "number — ID da inbox WhatsApp (padrao: 2)",
+    "conversation_id": "number — ID da conversa Chatwoot",
+    "task_id": "number — ID da task no Kanban",
+    "board_id": "number — ID do board Kanban (padrao: 5)",
+    "mensagem_cliente": "string — mensagem personalizada para enviar ao lead (opcional, tem fallback)",
+    "motivo_escalada": "string — motivo pelo qual o agente decidiu escalar"
+  },
+  "fluxo": [
+    "1. Recebe inputs do agente Hermes XD",
+    "2. Aplica labels ['lead-quente', 'hermes-hk-nove'] na conversa Chatwoot",
+    "3. Atribui conversa ao Alexandre (assignee_id=1) no Chatwoot",
+    "4. Move task Kanban para step 34 (Em Negociação)",
+    "5. Verifica horario comercial: seg-sab 8h-20h (America/Sao_Paulo)",
+    "   5a. Dentro do horario: envia mensagem ao cliente avisando que Alexandre retorna em breve",
+    "   5b. Fora do horario: envia mensagem avisando retorno no proximo horario comercial",
+    "6. Cria nota privada para Alexandre com alerta de lead quente + motivo da escalada",
+    "7. Retorna: {status: 'escalado_alexandre', motivo_escalada, step_movido: 'Em Negociação (34)'}"
+  ],
+  "mensagens": {
+    "dentro_horario_fallback": "Pelo que você me explicou, vale a pena o Alexandre Borges, CRECI-SC 45148, te apresentar a melhor opção com segurança. Vou acionar ele agora e ele te retorna em breve por aqui. 🤝",
+    "fora_horario_fallback": "Perfeito, anotei tudo! O Alexandre Borges vai te retornar no próximo horário comercial — seg a sáb, das 8h às 20h. 😊",
+    "nota_privada": "⚠️ Lead Quente — HK Nove\n\nMotivo: {motivo_escalada}\n\nLead atribuído a você. Task movida para 'Em Negociação' (step 34). Retorne por este WhatsApp."
+  },
+  "horario_comercial": "Segunda a sábado, 08h00 às 20h00 (America/Sao_Paulo)",
+  "step_destino": 34,
+  "assignee_alexandre": 1,
+  "nodes": [
+    {"id": "hk07-0001", "nome": "Gatilho", "tipo": "executeWorkflowTrigger"},
+    {"id": "hk07-0002", "nome": "Aplicar label lead-quente", "tipo": "httpRequest", "metodo": "POST", "endpoint": "conversations/{id}/labels"},
+    {"id": "hk07-0003", "nome": "Atribuir Alexandre", "tipo": "httpRequest", "metodo": "POST", "endpoint": "conversations/{id}/assignments"},
+    {"id": "hk07-0004", "nome": "Mover step Em Negociacao", "tipo": "httpRequest", "metodo": "PATCH", "endpoint": "kanban/tasks/{task_id}"},
+    {"id": "hk07-0005", "nome": "Horario comercial?", "tipo": "if"},
+    {"id": "hk07-0006", "nome": "Enviar mensagem cliente", "tipo": "httpRequest", "privado": false},
+    {"id": "hk07-0007", "nome": "Enviar fora do horario", "tipo": "httpRequest", "privado": false},
+    {"id": "hk07-0008", "nome": "Criar nota privada", "tipo": "httpRequest", "privado": true},
+    {"id": "hk07-0009", "nome": "Resposta ao agente", "tipo": "set"}
+  ],
+  "observacoes": [
+    "Token Chatwoot hardcoded (i8sWiqTrcAyAQbRnVekJavXQ) — usar variavel de ambiente CHATWOOT_TOKEN",
+    "mensagem_cliente pode ser customizada pelo agente IA — se nao enviada, usa fallback padrao",
+    "Todos os nodes HTTP tem onError: continueRegularOutput — erros nao interrompem o fluxo",
+    "A nota privada (hk07-0008) sempre e criada — independente do horario",
+    "Step 34 = 'Em Negociacao' no Kanban HK Nove (board_id=5)"
+  ],
+  "meta": {
+    "instanceId": "b61fc3510ca407dff389465d1339cbc17d60de9706e44070f51a4676f6e8d320"
+  }
+}

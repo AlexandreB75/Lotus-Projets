@@ -1,4 +1,4 @@
----
+﻿---
 tags: [lotus, lótus, business, itapema, projeto, comercial, master, index]
 status: operacional
 data: 2026-06-07
@@ -64,6 +64,7 @@ Ele compra:
 - [[Scripts-WhatsApp]] — atendimento inicial e condução por perfil.
 - [[Pitch-de-Vendas]] — falas para WhatsApp, reunião e apresentação.
 - [[Follow-up-CRM]] — cadência e classificação de leads.
+<<<<<<< HEAD
 - [[Campanhas-Instagram]] — ideias iniciais de marketing.
 - [[Campanhas-Instagram-LinkedIn]] — estrutura operacional de campanhas Instagram + LinkedIn.
 - [[Material-Investidores-Lotus]] — dados da apresentação de investidores, tese, estrutura, WhatsApp e compliance.
@@ -78,6 +79,27 @@ Ele compra:
 - [[Briefing-Estudo-Rentabilidade-Sala-vs-Apartamento-Lotus]] — estrutura da isca/análise comercial sala x apartamento.
 - [[Fluxo-WordPress-HubSpot-CRM]] — WordPress, HubSpot CRM, Chatwoot/n8n e WhatsApp comercial.
 - [[../Lotus-Landing|Lótus Landing]] — landing pública + ferramenta interna de prospecção no GitHub.
+=======
+- [[Campanhas-Instagram]] — backlog de marketing.
+- [[Campanha-Salas-Comerciais]] — campanha completa: inteligência de mercado, personas, funil, scripts SDR e copy.
+- [[Lotus-Landing]] — landing page (backlog — aguardando validação comercial).
+
+## Materiais complementares
+
+- [[campaign-brief]] — briefing de campanha e posicionamento operacional.
+- [[image-prompts]] — prompts e direção para imagens/criativos.
+- [[Landing-Page-Elementor]] — estrutura e conteúdo da landing no Elementor.
+- [[Leads-Remarketing-Meta-Ads]] — lógica de remarketing e reaproveitamento de leads.
+- [[Lotus-Business-Legacy]] — material legado mantido para consulta histórica.
+
+## The Spot One
+
+- [[The spot One/00-INDEX-The-Spot-One|The Spot One]] — hub local da campanha, assets e referências.
+
+## Fonte primária
+
+- [[../../08-Raw/PDFs-Empreendimentos/Descritivo-Oficial-Lotus-Business|Descritivo Oficial Lótus Business]] — documento base para SDR, squads e handoff.
+>>>>>>> 9845489 (Reorganize vault: squads expandidos, wiki compilado, agentes SKILL.md, sistema docs)
 
 ---
 
@@ -118,11 +140,23 @@ Antes de vender sala, entender o uso:
 
 ---
 
+<<<<<<< HEAD
 ## Ativos digitais existentes
 
 - Ferramenta interna de prospecção no GitHub: `lotus-prospecting.jsx`.
 - Landing pública nova no GitHub: `lotus-landing-public.jsx`.
 - A ferramenta interna e a landing pública têm funções diferentes e não devem ser misturadas.
+=======
+## Squads de apoio
+
+| Squad | Uso no projeto | Link |
+|---|---|---|
+| Copy Squad | Copy por público (médico, advogado, empresário, investidor), scripts WhatsApp | [[../../03-Squads/Copy-Squad/00-INDEX-Copy-Squad\|Copy Squad]] |
+| Traffic Masters | Campanhas Meta Ads segmentadas por perfil | [[../../03-Squads/Traffic-Masters/00-INDEX-Traffic-Masters\|Traffic Masters]] |
+| hormozi-squad | Estrutura de oferta premium, conversão e precificação | [[../../03-Squads/hormozi-squad/README\|Hormozi Squad]] |
+| Brand Squad | Posicionamento corporativo — endereço + patrimônio + polo empresarial | [[../../03-Squads/Brand-Squad/00-INDEX-Brand-Squad\|Brand Squad]] |
+| Design Squad | Materiais visuais e criativos por público | [[../../03-Squads/Design-Squad/00-INDEX-Design-Squad\|Design Squad]] |
+>>>>>>> 9845489 (Reorganize vault: squads expandidos, wiki compilado, agentes SKILL.md, sistema docs)
 
 ---
 
@@ -139,3 +173,5 @@ Validar conversas reais com:
 - laje comercial.
 
 Esses testes devem alimentar o `REAL-TESTS.md` e depois atualizar este projeto.
+
+

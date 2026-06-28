@@ -1,0 +1,46 @@
+{
+  "name": "07. Hermes Tool — Escalar Alexandre (Versão Simplificada)",
+  "_vault_note": "Versao alternativa do sub-workflow 07. NAO aplica labels, NAO atribui Alexandre, NAO move step — apenas envia mensagem ao cliente e nota privada. Compare com 07-Escalar-Alexandre.json (versao completa). Exportado em 2026-06-18.",
+  "tipo": "sub_workflow_ferramenta",
+  "trigger": "executeWorkflowTrigger",
+  "numero_ferramenta": "07",
+  "versao": "simplificada",
+  "diferenca_vs_versao_completa": "Esta versao NAO faz: apply label lead-quente, assign Alexandre, move step 34. Apenas check horario + mensagem + nota privada.",
+  "inputs_esperados": {
+    "account_id": "number",
+    "inbox_id": "number",
+    "conversation_id": "number",
+    "task_id": "number",
+    "board_id": "number",
+    "mensagem_cliente": "string — opcional, tem fallback",
+    "motivo_escalada": "string — aparece na nota privada"
+  },
+  "fluxo": [
+    "1. Verifica horario comercial (seg-sab 8h-20h, America/Sao_Paulo)",
+    "2a. Dentro do horario: envia mensagem ao cliente (mensagem_cliente ou fallback presencial)",
+    "2b. Fora do horario: envia mensagem avisando retorno proximo dia util",
+    "3. Cria nota privada para Alexandre com motivo_escalada",
+    "4. Retorna: {status: 'escalado_alexandre', motivo_escalada, mensagem_enviada}"
+  ],
+  "mensagens": {
+    "dentro_horario_fallback": "Pelo que você me explicou, faz sentido o Alexandre Borges, CRECI-SC 45148, te passar a opção mais adequada com segurança. Vou acionar ele agora e ele te retorna em breve por aqui. 🤝",
+    "fora_horario_fallback": "Perfeito, anotei tudo! O Alexandre Borges vai te retornar no próximo horário comercial — seg a sáb, das 8h às 20h. 😊",
+    "nota_privada": "⚠️ Escalação para Alexandre\n\nMotivo: {motivo_escalada}\n\nCliente aguarda contato. Por favor retorne por este WhatsApp."
+  },
+  "nodes": [
+    {"id": "53dd5f83", "nome": "Gatilho", "tipo": "executeWorkflowTrigger"},
+    {"id": "hc07-0001", "nome": "Horario comercial?", "tipo": "if"},
+    {"id": "8d117794", "nome": "Enviar mensagem cliente", "tipo": "httpRequest", "privado": false},
+    {"id": "hc07-0002", "nome": "Enviar fora do horario", "tipo": "httpRequest", "privado": false},
+    {"id": "6f39bf00", "nome": "Criar nota privada", "tipo": "httpRequest", "privado": true},
+    {"id": "a1753fd9", "nome": "Resposta ao agente", "tipo": "set"}
+  ],
+  "observacoes": [
+    "Token Chatwoot hardcoded — usar variavel de ambiente CHATWOOT_TOKEN",
+    "Versao mais simples que 07-Escalar-Alexandre.json — use esta quando o workflow principal ja fez assign/labels",
+    "A nota privada vem DEPOIS de ambos os caminhos (horario/fora) — sempre criada"
+  ],
+  "meta": {
+    "instanceId": "b61fc3510ca407dff389465d1339cbc17d60de9706e44070f51a4676f6e8d320"
+  }
+}

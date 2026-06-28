@@ -30,7 +30,7 @@ entrega_prevista: 12/2026
 
 ## Entrega prevista
 
-- **Hotel + Centro Médico + Mall:** 12/2026
+- **Hotel + Centro Médico + Mall:** 12/2026 (data oficial — SDR não cita proativamente; se perguntado, redirecionar para Alexandre)
 
 ---
 
@@ -228,7 +228,7 @@ Estou entrando em contato porque temos um ativo muito específico disponível de
 
 Não é uma sala comercial comum. É um hub médico premium dentro de um Hilton no litoral de Santa Catarina.
 
-A entrega está prevista para dezembro de 2026 e ainda estamos em fase de negociação direta com o incorporador.
+Ainda estamos em fase de negociação direta com o incorporador. *(SDR: não mencionar data de entrega proativamente — se o lead perguntar, redirecionar para Alexandre)*
 
 Faz sentido conversar sobre isso?
 

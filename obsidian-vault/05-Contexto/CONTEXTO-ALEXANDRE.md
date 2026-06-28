@@ -1,6 +1,6 @@
 ---
 tags: [contexto, alexandre, pessoal, claude]
-data: 2025-05-09
+data: 2026-06-14
 tipo: contexto-pessoal
 ---
 
@@ -28,13 +28,13 @@ tipo: contexto-pessoal
 - Desenvolvimento de ferramentas de marketing e automação
 
 ### Lotus Business
-- Empreendimento imobiliário comercial em Porto Velho/RO
-- 112 salas comerciais, salas a partir de 60m²
-- Renda estimada: R$ 100/m²/mês
-- Parceria exclusiva com 2-3 imobiliárias
+- Torre comercial em Itapema/SC
+- Salas comerciais para profissionais liberais, empresas e investidores
+- Públicos: médicos, advogados, empresários, investidores corporativos
+- Fase atual: organização comercial base (argumentário, scripts, follow-up)
 
 ### Lotus Landing
-- Landing pages e funis de captação de leads
+- Landing page em backlog — aguardando validação comercial real
 - Integração com HubSpot CRM
 
 ---
@@ -92,6 +92,7 @@ tipo: contexto-pessoal
 
 ## Links Importantes
 
-- Dashboard principal: [[01-Dashboard/Index]]
+- Dashboard principal: [[01-Dashboard/Dashboard]]
 - Skills disponíveis: [[04-Skills/N8N]]
 - Treinamentos: [[03-Squads/Instagram-Imoveis/Treinamento-Kaka-HKnove/Notas-Completas]]
+

@@ -1,4 +1,4 @@
----
+﻿---
 tags: [skills, index, automacao, marketing, crm]
 status: operacional
 data: 2026-06-09
@@ -13,6 +13,7 @@ data: 2026-06-09
 ## Criação de skills
 
 - [[Skill-Builder-Operacional]] — transforma conhecimento comercial em skills operacionais reutilizáveis.
+- [[Karpathy-Guidelines]] — diretrizes de qualidade para código gerado por IA (pensar antes, simplicidade, mudanças cirúrgicas, critérios verificáveis).
 
 ### Skills comerciais propostas
 
@@ -27,9 +28,9 @@ data: 2026-06-09
 
 | Skill | Uso principal | Agente/Projeto conectado |
 |---|---|---|
-| [[N8N]] | Automação de workflows, WhatsApp, CRM e notificações | [[../03-Squads/Agentes-Operacionais/Gestor-Operacional|Gestor Operacional]] |
-| [[HubSpot]] | CRM, funil, oportunidades e histórico comercial | [[../03-Squads/Agentes-Operacionais/Follow-Up-Inteligente|Follow-Up Inteligente]] |
-| [[Claude-WhatsApp-Leads]] | Apoio em leads e conversas via WhatsApp | [[../03-Squads/Agentes-Operacionais/SDR-Hilton|SDR-Hilton]] / [[../03-Squads/Agentes-Operacionais/SDR-Lotus-Business|SDR-Lotus Business]] |
+| [[N8N]] | Automação de workflows, WhatsApp, CRM e notificações | [[../03-Squads/Agentes-Operacionais/agents/Gestor-Operacional|Gestor Operacional]] |
+| [[HubSpot]] | CRM, funil, oportunidades e histórico comercial | [[../03-Squads/Agentes-Operacionais/agents/Follow-Up-Inteligente|Follow-Up Inteligente]] |
+| [[Claude-WhatsApp-Leads]] | Apoio em leads e conversas via WhatsApp | [[../03-Squads/Agentes-Operacionais/agents/SDR-Hilton|SDR-Hilton]] / [[../03-Squads/Agentes-Operacionais/agents/SDR-Lotus-Business|SDR-Lotus Business]] / [[../03-Squads/Agentes-Operacionais/agents/SDR-HK-Nove|SDR-HK-Nove]] |
 
 ---
 
@@ -37,9 +38,16 @@ data: 2026-06-09
 
 | Skill | Uso principal | Agente/Projeto conectado |
 |---|---|---|
+<<<<<<< HEAD
 | [[Instagram]] | Conteúdo, autoridade e engajamento | [[../03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]] |
 | [[Meta-Ads]] | Tráfego pago, campanhas e segmentação | [[../03-Squads/Traffic-Masters/Index|Traffic Masters]] |
 | [[SEO-AEO-GEO]] | Busca, autoridade, páginas, FAQs e presença em mecanismos/IA | [[../03-Squads/Brand-Squad/Index|Brand Squad]] / [[../03-Squads/Copy-Squad/Index|Copy Squad]] / [[../03-Squads/Storytelling/Index|Storytelling]] |
+=======
+| [[Instagram]] | Conteúdo, autoridade e engajamento | [[../03-Squads/Instagram-Imoveis/00-INDEX-Instagram-Imoveis|Instagram Imóveis]] |
+| [[Meta-Ads]] | Tráfego pago, campanhas e segmentação | [[../03-Squads/Traffic-Masters/00-INDEX-Traffic-Masters|Traffic Masters]] |
+| [[SEO-AEO-GEO]] | Busca, autoridade e presença em mecanismos/IA | [[../03-Squads/Brand-Squad/00-INDEX-Brand-Squad|Brand Squad]] |
+| [[Open-Design]] | Design, criativos, Figma, PPT, vídeo e geração de imagem IA | [[../03-Squads/Design-Squad/00-INDEX-Design-Squad|Design Squad]] / [[../03-Squads/Brand-Squad/00-INDEX-Brand-Squad|Brand Squad]] |
+>>>>>>> 9845489 (Reorganize vault: squads expandidos, wiki compilado, agentes SKILL.md, sistema docs)
 
 ---
 
@@ -106,3 +114,4 @@ Antes de criar ou manter uma skill, ela deve estar conectada a pelo menos um des
 - rotina de execução;
 - automação real;
 - canal de aquisição.
+

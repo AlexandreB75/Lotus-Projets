@@ -1,0 +1,124 @@
+{
+  "name": "04. Sync Chatwoot → Supabase (Step Kanban → Status Lead)",
+  "_vault_note": "Workflow de sincronizacao INVERSA: mudanca de step no Kanban Chatwoot atualiza status do lead na tabela 'leads' do Supabase. Exportado em 2026-06-18.",
+  "tipo": "sync_chatwoot_para_supabase",
+  "direcao": "Chatwoot Kanban → Supabase leads",
+  "complementar_a": "04-Sync-Steps-CRM.json (que vai na direcao CRM XD PRO → Chatwoot)",
+  "trigger": {
+    "tipo": "webhook",
+    "metodo": "POST",
+    "path": "chatwoot-crm-sync",
+    "url_completa": "https://n8n.alexandreborges.site/webhook/chatwoot-crm-sync",
+    "evento_origem": "Chatwoot dispara quando board_step_id muda em uma conversa"
+  },
+  "fluxo": [
+    "1. Recebe POST do Chatwoot com evento de mudanca de step",
+    "2. Extrai: event_type, step_id (board_step_id.current_value), phone (contact.phone_number sem mascara)",
+    "3. Mapeia step_id para crm_status (ver tabela abaixo)",
+    "4. Valida: crm_status e phone nao vazios — se invalido, descarta silenciosamente",
+    "5. GET Supabase: busca lead pelo whatsapp (campo 'phone')",
+    "6. Se lead existe: PATCH Supabase atualizando campo 'status' com crm_status mapeado",
+    "7. Se lead nao existe: ignora (sem criacao automatica)",
+    "8. Responde HTTP 200 ao Chatwoot confirmando recebimento do evento"
+  ],
+  "mapeamento_step_status": {
+    "30": "lead_novo",
+    "31": "em_contato",
+    "32": "visita_agendada",
+    "33": "proposta_enviada",
+    "34": "em_negociacao",
+    "35": "fechado",
+    "36": "fechado",
+    "37": "perdido",
+    "38": "lead_novo"
+  },
+  "integracao_supabase": {
+    "url_base": "https://supabase.alexandreborges.site",
+    "tabela": "leads",
+    "busca": "GET /rest/v1/leads?whatsapp=eq.{phone}&select=id,status&limit=1 com headers via $vars.SUPABASE_ANON_KEY",
+    "atualizacao": "PATCH /rest/v1/leads?id=eq.{id} com headers via $vars.SUPABASE_ANON_KEY",
+    "campo_atualizado": "status",
+    "credencial": "n8n variable SUPABASE_ANON_KEY"
+  },
+  "nodes": [
+    {
+      "id": "cctm-0001",
+      "nome": "Receber Chatwoot",
+      "tipo": "webhook",
+      "path": "chatwoot-crm-sync"
+    },
+    {
+      "id": "cctm-0002",
+      "nome": "Extrair Dados",
+      "tipo": "set",
+      "campos": [
+        "event_type",
+        "step_id",
+        "phone",
+        "crm_status"
+      ]
+    },
+    {
+      "id": "cctm-0003",
+      "nome": "Step valido?",
+      "tipo": "if",
+      "condicao": "crm_status notEmpty AND phone notEmpty"
+    },
+    {
+      "id": "cctm-0004",
+      "nome": "Buscar Lead",
+      "tipo": "httpRequest",
+      "metodo": "GET",
+      "endpoint": "Supabase leads por phone"
+    },
+    {
+      "id": "cctm-0005",
+      "nome": "Lead existe?",
+      "tipo": "if",
+      "condicao": "id notEmpty"
+    },
+    {
+      "id": "cctm-0006",
+      "nome": "Atualizar Status CRM",
+      "tipo": "httpRequest",
+      "metodo": "PATCH",
+      "endpoint": "Supabase leads por id"
+    },
+    {
+      "id": "cctm-0007",
+      "nome": "Responder 200",
+      "tipo": "respondToWebhook",
+      "statusCode": 200,
+      "responseBody": {
+        "ok": true,
+        "workflow": "04-Sync-Chatwoot-Supabase",
+        "message": "Evento recebido"
+      }
+    }
+  ],
+  "observacoes": [
+    "Step 35 e 36 mapeiam para 'fechado' (Proposta Aceita e Contrato Assinado sao ambos 'fechado' no Supabase)",
+    "Step 38 (Reativacao) reinicia como 'lead_novo' — comportamento intencional?",
+    "Complementar ao 04-Sync-Steps-CRM.json: juntos formam sincronizacao bidirecional Chatwoot <-> Supabase",
+    "CORRIGIDO: adicionar node Respond to Webhook retornando 200 OK ao Chatwoot.",
+    "CORRIGIDO NA INSTANCIA: headers Supabase usam $vars.SUPABASE_ANON_KEY em vez de chave literal hardcoded."
+  ],
+  "meta": {
+    "instanceId": "b61fc3510ca407dff389465d1339cbc17d60de9706e44070f51a4676f6e8d320"
+  },
+  "resposta_webhook": {
+    "node": "Responder 200",
+    "tipo": "respondToWebhook",
+    "statusCode": 200,
+    "body": {
+      "message": "Evento recebido",
+      "ok": true,
+      "workflow": "04-Sync-Chatwoot-Supabase"
+    }
+  },
+  "seguranca": {
+    "supabase_headers": "via $vars.SUPABASE_ANON_KEY",
+    "hardcoded_supabase_key": false,
+    "versao_n8n_publicada": "7cd13153-0d82-4b40-a8af-217f1e2091af"
+  }
+}

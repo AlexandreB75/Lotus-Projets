@@ -1,4 +1,4 @@
----
+﻿---
 tags: [hilton, residencial, pool, operacao, index]
 status: operacional
 data: 2026-06-09
@@ -12,16 +12,21 @@ produto: Residencial com opção de pool
 
 ---
 
-## Material base
+## Objetivo comercial-operacional
+
+Explicar com clareza as opções do proprietário: uso próprio, locação particular ou participação no pool administrado. Residencial **não é entregue mobiliado**.
 
 - [[../Scripts-Operacionais#Script 02 — Residencial com opção de pool|Script operacional do Residencial com Pool]]
 - [[../Multipropriedade-Hilton/00-INDEX-Multipropriedade-Hilton|Multipropriedade Hilton]] — produto anexo ao Residencial, com unidades específicas dos finais 5, 6, 7 e 8 do 19º ao 22º andar.
 
 ---
 
-## Objetivo comercial-operacional
+## Arquivos do hub
 
-Explicar com clareza as opções do proprietário: uso próprio, locação particular ou participação no pool administrado.
+- [[Residencial-Pool-Dados-Comerciais]] — dados, 3 opções do proprietário, posicionamento por perfil e objeções
+- [[Scripts-WhatsApp-Residencial-Pool]] — 5 scripts: alinhamento operacional, lead novo, casal/família, objeção mobília, follow-up
+- [[Qualificacao-Leads-Residencial-Pool]] — pergunta de abertura, mapa por intenção, score BANT e handoff Alexandre
+- [[../Scripts-Operacionais#Script 02 — Residencial com opção de pool|Script operacional base]]
 
 Atenção: **multipropriedade não é a mesma coisa que pool**. A multipropriedade é um produto separado, anexo ao Residencial Hilton, com cotas de uso por semanas em unidades específicas.
 

@@ -17,8 +17,8 @@ HubSpot é uma plataforma de CRM que integra marketing, vendas e atendimento em 
 
 ## Squads que Usam
 
-- [[03-Squads/Instagram-Imoveis/Index|Instagram Imóveis]]
-- [[03-Squads/Traffic-Masters/Index|Traffic Masters]]
+- [[03-Squads/Instagram-Imoveis/00-INDEX-Instagram-Imoveis|Instagram Imóveis]]
+- [[03-Squads/Traffic-Masters/00-INDEX-Traffic-Masters|Traffic Masters]]
 
 ## Integração com N8N
 
@@ -74,3 +74,4 @@ Ver [[04-Skills/N8N|N8N]] para automações que conectam HubSpot com outros sist
 - Usar **lifecycle stage** para segmentar (Lead → MQL → SQL → Customer)
 - Criar **listas dinâmicas** baseadas em comportamento
 - Nunca deixar deal sem **próxima atividade** agendada
+
