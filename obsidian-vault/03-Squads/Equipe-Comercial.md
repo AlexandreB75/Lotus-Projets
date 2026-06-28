@@ -1,134 +1,69 @@
 ---
-tags: [squad, comercial, gtm, vendas, marketing]
-links: "[[01-Dashboard/Dashboard]]"
-created: 2026-06-28
+tags: [squad, comercial, gtm, vendas, index]
+status: operacional
+data: 2026-06-28
 ---
 
-# Equipe Comercial — Estrutura GTM
+# Equipe Comercial — Índice de Integração
 
-> Operação lean de marketing e vendas para Lotus Business + Hilton Garden Inn + outros projetos. 9 papéis, 11 etapas do pipeline.
+> Mapa das funções comerciais e seus agentes/squads operacionais. Os agentes já têm o conhecimento documentado — este arquivo é a visão do fluxo completo.
 
 ---
 
-## Fluxo Completo (11 Etapas)
+## Fluxo de 11 Etapas
 
 ```
-Briefing → Pesquisa → Estratégia → Copy+Criativo → Landing → Distribuição
-→ Qualificação → Reunião → Proposta → Fechamento → Feedback CRM
+Briefing → Pesquisa → Estratégia → Copy+Criativo → Landing
+→ Distribuição → Qualificação → Reunião → Proposta → Fechamento → Feedback CRM
 ```
 
 ---
 
-## Os 9 Papéis
+## Agentes Operacionais (já documentados)
 
-### 1. Head de Growth / GTM
-**Skill:** `[[04-Skills/GTM-Strategy]]`
-
-- Define metas de receita, ICP e posicionamento
-- Prioriza canais e projetos
-- Facilita briefings e alinha squads
-- Responsável pelo Pipeline de Oportunidades no [[04-Skills/HubSpot]]
-
----
-
-### 2. Pesquisador / Product Marketing
-**Skill:** `[[04-Skills/Market-Research]]`
-
-- Mapeia concorrentes, tendências e dores do ICP
-- Gera insumos para Copy e Estratégia
-- Alimenta [[00-Sistema/Metodo-Karpathy]] com fontes brutas
+| Função | Agente | Projetos |
+|--------|--------|---------|
+| Qualificação Hilton | [[Agentes-Operacionais/SDR-Hilton\|SDR-Hilton]] | Hilton, Centro Médico, Hotel, Residencial Pool |
+| Qualificação Lótus | [[Agentes-Operacionais/SDR-Lotus-Business\|SDR-Lotus Business]] | Lótus Business |
+| Fechamento e proposta | [[Agentes-Operacionais/Closer-Alexandre\|Closer-Alexandre]] | Todos os projetos |
+| Reativação de leads | [[Agentes-Operacionais/Follow-Up-Inteligente\|Follow-Up Inteligente]] | Todos os projetos |
+| Rotinas e processos | [[Agentes-Operacionais/Gestor-Operacional\|Gestor Operacional]] | Operacional geral |
 
 ---
 
-### 3. Copywriter de Performance
-**Skill:** `[[04-Skills/Copy-Performance]]`
-
-- Escreve copies para anúncios, landing pages, e-mails e WhatsApp
-- Segue [[06-Scripts/Atendimento-Inicial]] e [[06-Scripts/Apresentacao-Evento]]
-- Cobre [[07-Objecoes/Respostas-Completas]]
-
----
-
-### 4. Designer / Creative & Landing
-**Skill:** `[[04-Skills/Design-Conversion]]`
-
-- Cria peças visuais para [[04-Skills/Instagram]] e [[04-Skills/Meta-Ads]]
-- Desenvolve e otimiza landing pages
-- Mantém identidade visual Lotus + Hilton
-
----
-
-### 5. Paid Media / CRO
-**Skill:** `[[04-Skills/Paid-CRO]]`
-
-- Gerencia campanhas no [[04-Skills/Meta-Ads]]
-- Monitora CPL, CTR, ROAS por projeto
-- Testa variações (A/B) de copy e criativo
-- Integra [[04-Skills/SEO-AEO-GEO]] para visibilidade orgânica
-
----
-
-### 6. SDR / Outbound & Qualificação
-**Skill:** `[[04-Skills/SDR-Outbound]]`
-
-- Executa primeiro contato via WhatsApp seguindo [[06-Scripts/Atendimento-Inicial]]
-- Qualifica leads: momento, decisor, budget, necessidade
-- Agenda reunião com o Closer
-- Usa [[04-Skills/Claude-WhatsApp-Leads]] para triagem inteligente
-
----
-
-### 7. Closer / AE
-**Skill:** `[[04-Skills/Sales-Execution]]`
-
-- Conduz reunião de apresentação e evento
-- Aplica [[06-Scripts/Apresentacao-Evento]] com cronômetro e regra do casal
-- Contorna objeções com [[07-Objecoes/Respostas-Completas]]
-- Fecha proposta e registra no [[04-Skills/HubSpot]]
-
----
-
-### 8. Sales Enablement / Docs
-**Skill:** `[[04-Skills/Sales-Enablement-Docs]]`
-
-- Mantém materiais de vendas atualizados (decks, propostas, scripts)
-- Documenta playbooks em [[06-Scripts/]]
-- Treina SDRs e Closers com material baseado no [[03-Squads/Instagram-Imoveis/Treinamento-Kaka-HKnove/Notas-Completas]]
-
----
-
-### 9. RevOps / MarOps / Analytics
-**Skill:** `[[04-Skills/RevOps-Analytics]]`
-
-- Gerencia o stack: [[04-Skills/HubSpot]] + [[04-Skills/N8N]] + Meta Ads
-- Cria dashboards de receita e funil
-- Garante qualidade dos dados no CRM
-- Automatiza handoffs entre squads com [[04-Skills/N8N]]
-
----
-
-## Squads Relacionados
+## Squads de Marketing (já documentados)
 
 | Squad | Função |
 |-------|--------|
-| [[03-Squads/Brand-Squad/Index\|Brand Squad]] | Identidade visual e posicionamento |
-| [[03-Squads/Copy-Squad/Index\|Copy Squad]] | Copies e scripts |
-| [[03-Squads/Design-Squad/Index\|Design Squad]] | Peças e landing pages |
-| [[03-Squads/Traffic-Masters/Index\|Traffic Masters]] | Tráfego pago e distribuição |
-| [[03-Squads/Instagram-Imoveis/Index\|Instagram Imóveis]] | Conteúdo e prospecção orgânica |
+| [[Instagram-Imoveis/Index\|Instagram Imóveis]] | Conteúdo, autoridade e captação orgânica |
+| [[Copy-Squad/Index\|Copy Squad]] | Copies, scripts e mensagens comerciais |
+| [[Traffic-Masters/Index\|Traffic Masters]] | Tráfego pago e campanhas |
+| [[Storytelling/Index\|Storytelling]] | Narrativas e ângulo de conversão |
+| [[Oferta-Hormozi/Index\|Oferta Hormozi]] | Estrutura de oferta e valor percebido |
+| [[Brand-Squad/Index\|Brand Squad]] | Posicionamento e identidade |
+| [[Design-Squad/Index\|Design Squad]] | Materiais visuais |
 
 ---
 
-## KPIs por Papel
+## Skills de Apoio
 
-| Papel | KPI Principal |
-|-------|--------------|
-| Head GTM | Receita gerada / mês |
-| Pesquisador | Insumos entregues / sprint |
-| Copywriter | CTR e taxa de abertura |
-| Designer | Taxa de conversão landing |
-| Paid Media | CPL e ROAS |
-| SDR | Reuniões agendadas / semana |
-| Closer | Taxa de fechamento |
-| Enablement | NPS do time de vendas |
-| RevOps | Saúde do pipeline (deals por etapa) |
+| Skill | Uso |
+|-------|-----|
+| [[../04-Skills/SDR-Outbound\|SDR Outbound]] | Protocolo BANT, metas, fluxo de 7 dias |
+| [[../04-Skills/Sales-Execution\|Sales Execution]] | Regras de evento: casal, vinho, cronômetro |
+| [[../04-Skills/GTM-Strategy\|GTM Strategy]] | ICP por projeto, ciclo semanal |
+| [[../04-Skills/RevOps-Analytics\|RevOps & Analytics]] | Stack HubSpot + N8N, dashboard funil |
+
+---
+
+## Scripts e Objeções
+
+- [[../06-Scripts/Atendimento-Inicial\|Atendimento Inicial]] — WhatsApp SDR
+- [[../06-Scripts/Apresentacao-Evento\|Apresentação de Evento]] — Script do Closer
+- [[../07-Objecoes/Respostas-Completas\|Respostas Completas]] — 8 objeções com roteiro
+
+---
+
+## Regra de prioridade
+
+O agente operacional tem precedência sobre a skill genérica. Se existir um agente para o projeto, usar o agente. Criar skill nova só quando não existe agente ou rotina documentada.
