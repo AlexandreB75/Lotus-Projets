@@ -53,6 +53,24 @@ data: 2026-06-09
 
 ---
 
+## Equipe Comercial
+
+[[03-Squads/Equipe-Comercial\|Estrutura da Equipe GTM]] — 9 papéis, 11 etapas
+
+| Papel | Skill |
+|-------|-------|
+| Head GTM | [[04-Skills/GTM-Strategy\|GTM Strategy]] |
+| Pesquisador | [[04-Skills/Market-Research\|Market Research]] |
+| Copywriter | [[04-Skills/Copy-Performance\|Copy Performance]] |
+| Designer | [[04-Skills/Design-Conversion\|Design & Landing]] |
+| Paid Media | [[04-Skills/Paid-CRO\|Paid Media / CRO]] |
+| SDR | [[04-Skills/SDR-Outbound\|SDR Outbound]] |
+| Closer | [[04-Skills/Sales-Execution\|Sales Execution]] |
+| Enablement | [[04-Skills/Sales-Enablement-Docs\|Sales Enablement]] |
+| RevOps | [[04-Skills/RevOps-Analytics\|RevOps & Analytics]] |
+
+---
+
 ## Skills
 
 | Skill | Uso |
@@ -63,6 +81,7 @@ data: 2026-06-09
 | [[04-Skills/Instagram|Instagram]] | conteúdo |
 | [[04-Skills/Meta-Ads|Meta Ads]] | tráfego |
 | [[04-Skills/Claude-WhatsApp-Leads|Claude WhatsApp Leads]] | apoio comercial |
+| [[04-Skills/SEO-AEO-GEO|SEO+AEO+GEO]] | visibilidade tridimensional |
 
 ---
 
