@@ -1,0 +1,16 @@
+# .indexignore — exclui arquivos sensíveis do índice de busca semântica (Smart Connections)
+# Sintaxe: igual ao .gitignore
+
+# Dados pessoais e financeiros
+05-Contexto/
+
+# Scripts de sistema (não devem aparecer em buscas comerciais)
+reorganize-vault.ps1
+
+# Arquivos temporários e de sistema
+.obsidian/
+**/.DS_Store
+**/Thumbs.db
+
+# Rascunhos não revisados
+08-Raw/
