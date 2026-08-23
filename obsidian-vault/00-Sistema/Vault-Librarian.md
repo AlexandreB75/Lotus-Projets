@@ -33,20 +33,20 @@ N8N workflow: `vault-librarian-semanal.json`
 - Puxa `git pull` antes de analisar
 - Envia resultado no Slack
 
-## Invocar via Omnigent
+## Análise do relatório com Claude Code
 
-```bash
-omnigent run ~/Lotus-Projets/omnigent-agents/vault-librarian.yaml
+Após rodar o script, abra o relatório no Obsidian (`01-Dashboard/Relatorio-Manutencao.md`) e peça ao Claude Code para interpretar e sugerir ações:
+
 ```
-
-Útil para analisar o relatório e receber sugestões de ação.
+Analise o Relatorio-Manutencao.md e sugira o que fazer com os links quebrados e as notas órfãs
+```
 
 ## Arquivos do sistema
 
 - Script: `scripts/vault-librarian.py`
-- Agente Omnigent: `omnigent-agents/vault-librarian.yaml`
 - Workflow N8N: `n8n-workflows/vault-librarian-semanal.json`
 - Relatório gerado: `01-Dashboard/Relatorio-Manutencao.md`
+- Arquivo histórico (YAML Omnigent descontinuado): `_arquivo/omnigent-agents/vault-librarian.yaml`
 
 ## Regras de operação
 

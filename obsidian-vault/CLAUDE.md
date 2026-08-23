@@ -45,8 +45,19 @@ Antes de responder sobre qualquer projeto, agente, script ou objeção:
 - **Hilton Garden Inn** → `02-Projetos/Hilton Garden Inn Itapema/MASTER - Hilton Garden Inn Itapema.md`
 - **Centro Médico Hilton** → `02-Projetos/Hilton Garden Inn Itapema/Centro-Medico-Hilton/`
 
-## Automação no N8N
+## Arquitetura de Automação
 
-- Workflow Manager-Comercial → `n8n-workflows/manager-comercial-workflow.json`
-- Documentação → `06-Scripts/n8n/Manager-Comercial-N8N.md`
-- Agentes Omnigent → `omnigent-agents/`
+### Atendimento (Fazer.ai + Chatwoot)
+- Agente principal → `agente.alexandreborgescorretor.com.br`
+- Entrada: WhatsApp → Chatwoot → Fazer.ai
+- Escopo: qualificação, atendimento e roteamento de leads (Lótus Business + Hilton)
+
+### N8N — Automações paralelas
+- Vault Librarian semanal → `n8n-workflows/vault-librarian-semanal.json`
+- Uso: relatórios, integrações CRM, follow-up programado, notificações Slack
+
+### Arquivo histórico
+- Agentes Omnigent (descontinuados) → `_arquivo/omnigent-agents/`
+- Referência de arquitetura N8N → `06-Scripts/n8n/Manager-Comercial-N8N.md`
+
+→ Ver arquitetura completa em `00-Sistema/ARCHITECTURE.md`

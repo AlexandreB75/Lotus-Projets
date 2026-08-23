@@ -1,10 +1,12 @@
 ---
 tags: [n8n, workflow, whatsapp, claude, manager-agent]
-status: operacional
+status: arquivo
 projeto: Lótus Business + Hilton Garden Inn Itapema
 ---
 
-# Manager-Comercial — Workflow N8N
+> **Nota:** Este workflow foi supersedido pelo Fazer.ai + Chatwoot (`agente.alexandreborgescorretor.com.br`). Mantido como referência de arquitetura — não reimplementar sem necessidade específica.
+
+# Manager-Comercial — Workflow N8N (Referência)
 
 > WhatsApp → N8N → Claude API (Manager Agent) → resposta automática → WhatsApp
 
