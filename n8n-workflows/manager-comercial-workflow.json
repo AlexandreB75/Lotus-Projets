@@ -1,0 +1,150 @@
+{
+  "name": "Manager-Comercial — Atendimento WhatsApp",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "manager-comercial",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "node-webhook",
+      "name": "Webhook WhatsApp",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [200, 300],
+      "notes": "Configure sua URL no Z-API ou Evolution API apontando para este webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extrai mensagem e telefone de diferentes provedores WhatsApp\n// Suporta: Z-API, Evolution API, Chatwoot\n\nconst body = $input.item.json.body || $input.item.json;\n\nlet phone = '';\nlet message = '';\nlet providerName = '';\n\n// Z-API\nif (body.phone && body.text && body.text.message) {\n  phone = body.phone;\n  message = body.text.message;\n  providerName = 'z-api';\n}\n// Evolution API\nelse if (body.data && body.data.key && body.data.message) {\n  phone = body.data.key.remoteJid.replace('@s.whatsapp.net', '');\n  message = body.data.message.conversation || \n            body.data.message.extendedTextMessage?.text || \n            '';\n  providerName = 'evolution';\n}\n// Chatwoot\nelse if (body.conversation && body.content) {\n  phone = body.conversation?.meta?.sender?.phone_number || '';\n  message = body.content;\n  providerName = 'chatwoot';\n}\n// Genérico (fallback)\nelse {\n  phone = body.phone || body.from || '';\n  message = body.message || body.text || body.content || '';\n  providerName = 'generic';\n}\n\nif (!message) {\n  throw new Error('Mensagem vazia — ignorando.');\n}\n\nreturn [{ json: { phone, message, providerName } }];"
+      },
+      "id": "node-extract",
+      "name": "Extrai Mensagem",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [420, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $vars.ANTHROPIC_API_KEY }}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-5\",\n  \"max_tokens\": 1024,\n  \"system\": \"Você é o gestor comercial de Alexandre Borges, corretor e gestor em Porto Velho/RO.\\n\\nSEUS PROJETOS:\\n- Lótus Business: salas comerciais em Porto Velho/RO (112 unidades, ~R$100/m²)\\n- Hilton Garden Inn Itapema: multipropriedade, hotel, Centro Médico e Residencial com Pool em Itapema/SC\\n\\nSUA FUNÇÃO:\\nAnalisar cada mensagem e responder diretamente como SDR especialista. Identifique qual projeto é o mais relevante e qualifique o lead com naturalidade.\\n\\nREGRAS DE ROTEAMENTO INTERNO:\\n→ Mensagem sobre sala comercial, Porto Velho ou Lótus: responda como SDR-Lotus\\n→ Mensagem sobre Hilton, Itapema, multipropriedade, hotel ou Centro Médico: responda como SDR-Hilton\\n→ Lead que não respondeu / frio: crie mensagem de follow-up\\n→ Lead com reunião ou objeção complexa: apoie como Closer\\n\\nREGRAS INVIOLÁVEIS:\\n- Nunca prometa valorização ou renda garantida\\n- Use 'potencial' ou 'estimada' ao falar de renda\\n- Qualifique antes de enviar material pesado\\n- Seja humano, não robótico\\n- Mensagens curtas e diretas para WhatsApp (máx 3 parágrafos)\\n\\nSAÍDA: apenas a mensagem de WhatsApp pronta para enviar, sem prefixo ou explicação.\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": {{ JSON.stringify($json.message) }}\n    }\n  ]\n}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-claude",
+      "name": "Claude — Manager Agent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [640, 300],
+      "notes": "Adicione ANTHROPIC_API_KEY nas variáveis do N8N (Settings → Variables)"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extrai o texto da resposta do Claude\nconst response = $input.item.json;\nconst text = response.content?.[0]?.text || '';\n\nif (!text) {\n  throw new Error('Claude não retornou texto.');\n}\n\nconst phone = $('Extrai Mensagem').item.json.phone;\nconst provider = $('Extrai Mensagem').item.json.providerName;\n\nreturn [{ json: { phone, resposta: text, provider } }];"
+      },
+      "id": "node-format",
+      "name": "Formata Resposta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [860, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.ZAPI_URL }}/send-text",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Client-Token",
+              "value": "={{ $vars.ZAPI_TOKEN }}"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"phone\": \"{{ $json.phone }}\",\n  \"message\": \"{{ $json.resposta }}\"\n}",
+        "options": {}
+      },
+      "id": "node-whatsapp",
+      "name": "Envia WhatsApp (Z-API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1080, 220],
+      "notes": "Configure ZAPI_URL e ZAPI_TOKEN nas variáveis do N8N. Para Evolution API, troque este nó."
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"status\": \"ok\" }"
+      },
+      "id": "node-respond",
+      "name": "Responde Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1080, 400]
+    }
+  ],
+  "connections": {
+    "Webhook WhatsApp": {
+      "main": [
+        [{ "node": "Extrai Mensagem", "type": "main", "index": 0 }]
+      ]
+    },
+    "Extrai Mensagem": {
+      "main": [
+        [{ "node": "Claude — Manager Agent", "type": "main", "index": 0 }]
+      ]
+    },
+    "Claude — Manager Agent": {
+      "main": [
+        [{ "node": "Formata Resposta", "type": "main", "index": 0 }]
+      ]
+    },
+    "Formata Resposta": {
+      "main": [
+        [
+          { "node": "Envia WhatsApp (Z-API)", "type": "main", "index": 0 },
+          { "node": "Responde Webhook", "type": "main", "index": 0 }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": ["comercial", "whatsapp", "manager-agent", "claude"]
+}

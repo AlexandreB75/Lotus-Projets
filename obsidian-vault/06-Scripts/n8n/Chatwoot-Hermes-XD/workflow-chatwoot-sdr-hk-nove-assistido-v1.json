@@ -1,0 +1,536 @@
+{
+  "name": "HK Nove — SDR HK Nove Assistido v1",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chatwoot-hermes-xd",
+        "options": {}
+      },
+      "id": "webhook-chatwoot",
+      "name": "Webhook Chatwoot",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1008,
+        0
+      ],
+      "webhookId": "chatwoot-hermes-xd"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $json.body || $json;\nconst event = body.event || body.webhook_event || body.event_name || '';\nconst message = body.message || body;\nconst conversation = body.conversation || message.conversation || body.conversation_meta || {};\nconst inbox = body.inbox || conversation.inbox || {};\nconst contact = body.contact || conversation.contact || message.sender || {};\n\nconst messageType = message.message_type;\nconst isIncoming = messageType === 'incoming' || messageType === 0 || messageType === '0';\nconst isPrivate = Boolean(message.private);\nconst content = String(message.content || body.content || '').trim();\nconst conversationId = conversation.id || body.conversation_id || message.conversation_id;\nconst messageId = message.id || body.message_id || body.id;\nconst inboxId = inbox.id || conversation.inbox_id || body.inbox_id;\nconst existingLabels = conversation.labels || body.labels || [];\nconst assigneeId = conversation.assignee_id || conversation.meta?.assignee?.id || null;\n\nconst ACCOUNT_ID = 1;\nconst WHATSAPP_INBOX_ID = 2;\nconst TEST_LABEL = 'testando-agente';\nconst AUTO_REPLY_LABEL = 'sdr-auto-responder';\nconst HUMAN_OFF_LABEL = 'agente-off';\nconst headers = body.headers || $json.headers || {};\nconst hasChatwootSignature = Boolean(headers['x-chatwoot-signature'] || headers['X-Chatwoot-Signature']) && Boolean(headers['x-chatwoot-timestamp'] || headers['X-Chatwoot-Timestamp']);\n\nconst isTestConversation = existingLabels.includes(TEST_LABEL);\nconst autoReplyEnabled = existingLabels.includes(AUTO_REPLY_LABEL);\nconst shouldSkip = !hasChatwootSignature || !isTestConversation || !conversationId || !messageId || !content || isPrivate || !isIncoming || Number(inboxId) !== WHATSAPP_INBOX_ID || existingLabels.includes(HUMAN_OFF_LABEL);\n\nfunction includesAny(text, terms) {\n  const t = text.toLowerCase();\n  return terms.some(term => t.includes(term));\n}\nfunction cleanName(name) {\n  const n = String(name || '').trim().split(' ')[0];\n  return n && !/^\\+?\\d/.test(n) ? n : '';\n}\n\nconst text = content.toLowerCase();\nlet produto = 'indefinido';\nlet memoria = 'memoria_geral_hk_nove';\nlet perfil = 'indefinido';\nlet score = 20;\nconst gatilhos = [];\nconst labelsAdd = ['sdr-hk-nove-v1'];\nlet resposta = '';\nlet handoffReason = '';\n\nif (includesAny(text, ['multipropriedade', 'cota', 'semanas', 'interval', 'férias', 'ferias'])) {\n  produto = 'multipropriedade_hilton'; memoria = 'memoria_multipropriedade_hilton'; perfil = 'ferias_multipropriedade'; score += 25;\n  labelsAdd.push('produto-multipropriedade-hilton', 'perfil-temporada');\n}\nif (includesAny(text, ['lótus', 'lotus', 'sala comercial', 'sala', 'consultório', 'consultorio', 'escritório', 'escritorio'])) {\n  produto = 'lotus_business'; memoria = 'memoria_lotus_business'; score += 25; labelsAdd.push('produto-lotus');\n}\nif (includesAny(text, ['centro médico', 'centro medico', 'medcenter', 'clínica', 'clinica', 'médico', 'medico', 'dentista'])) {\n  produto = (produto === 'indefinido' || produto === 'lotus_business') ? 'centro_medico_hilton' : produto; memoria = produto === 'centro_medico_hilton' ? 'memoria_centro_medico_hilton' : memoria;\n  perfil = 'medico_clinica'; score += 20; labelsAdd.push('produto-centro-medico-hilton', 'perfil-saude');\n}\nif (includesAny(text, ['the spot', 'airbnb', 'temporada'])) {\n  produto = 'the_spot_one'; memoria = 'memoria_the_spot_one'; perfil = perfil === 'indefinido' ? 'investidor' : perfil; score += 15; labelsAdd.push('produto-the-spot', 'perfil-investidor');\n}\nif (includesAny(text, ['hilton residencial', 'apartamento', 'pool', 'unidade residencial'])) {\n  produto = produto === 'indefinido' ? 'hilton_residencial' : produto; memoria = produto === 'hilton_residencial' ? 'memoria_hilton_residencial' : memoria;\n  score += 15; labelsAdd.push('produto-hilton-residencial');\n}\nif (produto === 'indefinido' && includesAny(text, ['hilton', 'hotel'])) {\n  produto = 'hilton_indefinido'; memoria = 'memoria_hilton_geral'; score += 20; labelsAdd.push('produto-hilton');\n}\n\nif (includesAny(text, ['investir', 'investimento', 'investidor', 'renda', 'locação', 'locacao'])) { perfil = perfil === 'indefinido' ? 'investidor' : perfil; score += 15; labelsAdd.push('perfil-investidor'); }\nif (includesAny(text, ['empresa', 'empresário', 'empresario', 'cnpj', 'sede'])) { perfil = 'empresario'; score += 15; labelsAdd.push('perfil-empresa'); }\nif (includesAny(text, ['advogado', 'advocacia'])) { perfil = 'advogado'; score += 15; labelsAdd.push('perfil-advogado'); }\nif (includesAny(text, ['corretor', 'parceria', 'parceiro'])) { perfil = 'corretor_parceiro'; labelsAdd.push('perfil-corretor-parceiro'); }\n\nif (includesAny(text, ['tabela'])) { gatilhos.push('pediu_tabela'); labelsAdd.push('gatilho-pediu-tabela'); score += 30; }\nif (includesAny(text, ['disponibilidade', 'disponível', 'disponivel'])) { gatilhos.push('pediu_disponibilidade'); labelsAdd.push('gatilho-pediu-disponibilidade'); score += 35; }\nif (includesAny(text, ['valor', 'preço', 'preco', 'entrada', 'parcela', 'parcelamento'])) { gatilhos.push('perguntou_preco'); labelsAdd.push('gatilho-perguntou-preco'); score += 35; }\nif (includesAny(text, ['proposta', 'simulação', 'simulacao'])) { gatilhos.push('pediu_proposta'); labelsAdd.push('gatilho-pediu-proposta'); score += 40; }\nif (includesAny(text, ['reunião', 'reuniao', 'visita', 'agendar', 'agenda'])) { gatilhos.push('agendou_reuniao'); labelsAdd.push('gatilho-agendou-reuniao'); score += 50; }\nif (includesAny(text, ['urgente', 'hoje', 'essa semana', 'fechar'])) { gatilhos.push('urgencia'); labelsAdd.push('gatilho-urgencia'); score += 25; }\n\nscore = Math.max(0, Math.min(100, score));\nconst temperatura = score >= 80 ? 'quente' : score >= 40 ? 'morno' : 'frio';\nconst assumirAlexandre = score >= 80 || gatilhos.length > 0;\n\nlet etapa = 'atendimento_inicial';\nif (produto !== 'indefinido' || perfil !== 'indefinido') etapa = 'qualificacao';\nif (produto !== 'indefinido' && produto !== 'hilton_indefinido') etapa = 'produto_direcionado';\nif (gatilhos.includes('pediu_tabela') || gatilhos.includes('perguntou_preco') || gatilhos.includes('pediu_disponibilidade')) etapa = 'material_enviado';\nif (gatilhos.includes('agendou_reuniao')) etapa = 'reuniao_visita_agendada';\n\nconst etapaLabelMap = {\n  atendimento_inicial: 'etapa-atendimento-inicial', qualificacao: 'etapa-qualificacao', produto_direcionado: 'etapa-produto-direcionado', material_enviado: 'etapa-material-enviado', reuniao_visita_agendada: 'etapa-reuniao-visita'\n};\nlabelsAdd.push(etapaLabelMap[etapa] || 'etapa-atendimento-inicial');\nlabelsAdd.push(`lead-${temperatura}`);\nif (assumirAlexandre) labelsAdd.push('lead-prioridade-alexandre');\nif (perfil === 'indefinido') labelsAdd.push('perfil-geral');\nif (produto === 'indefinido') labelsAdd.push('produto-indefinido');\n\nconst nome = cleanName(contact.name || contact.pushname);\nconst saudacao = nome ? `Olá, ${nome}. Tudo bem?` : 'Olá, tudo bem?';\n\nif ((gatilhos || []).includes('agendou_reuniao')) {\n  resposta = `${saudacao} Perfeito. Me fala o melhor dia e horário que eu já deixo a visita alinhada${produto === 'indefinido' ? ' e confirmo o empreendimento certo' : ''}.`;\n} else if (produto === 'lotus_business') {\n  resposta = `${saudacao} Claro. O Lótus Business é um empreendimento comercial em Itapema, voltado para salas corporativas, profissionais liberais e investidores.\\n\\nVocê está buscando uma sala para uso próprio/empresa ou pensando mais como investimento?`;\n} else if (produto === 'multipropriedade_hilton') {\n  resposta = `${saudacao} Claro. A multipropriedade do Hilton é uma opção para quem quer usar o empreendimento em períodos definidos do ano, com uma proposta voltada a férias e uso planejado.\\n\\nVocê quer entender mais sobre como funcionam as semanas de uso ou sobre valores e disponibilidade?`;\n} else if (produto === 'hilton_residencial') {\n  resposta = `${saudacao} Claro. O Hilton Garden Inn Itapema tem opções residenciais voltadas para uso próprio e investimento, conforme regras e disponibilidade do empreendimento.\\n\\nVocê busca mais para investir ou para uso próprio em Itapema?`;\n} else if (produto === 'centro_medico_hilton') {\n  resposta = `${saudacao} Claro. O Centro Médico Hilton é voltado para profissionais da saúde, clínicas e consultórios em uma localização estratégica em Itapema.\\n\\nVocê atua na área da saúde ou está avaliando como investimento?`;\n} else if (produto === 'the_spot_one') {\n  resposta = `${saudacao} Claro. O The Spot One é um produto premium com forte apelo para investimento e uso em temporada, sempre conforme regras e disponibilidade.\\n\\nVocê está buscando mais renda com locação ou valorização patrimonial?`;\n} else if (produto === 'hilton_indefinido') {\n  resposta = `${saudacao} Claro, te ajudo com as informações do Hilton Garden Inn Itapema.\\n\\nVocê quer saber mais sobre unidade residencial, multipropriedade, investimento ou uso em temporada?`;\n} else {\n  resposta = `${saudacao} Claro, te ajudo. Para eu te enviar a informação certa, você quer saber sobre o Lótus Business, Hilton Garden Inn Itapema ou outro empreendimento?`;\n}\n\nif (assumirAlexandre) {\n  handoffReason = gatilhos.join(', ') || 'lead quente';\n  if (!(gatilhos || []).includes('agendou_reuniao')) {\n    resposta += `\\n\\nJá vou deixar seu atendimento direcionado para o comercial confirmar os detalhes com a tabela vigente.`;\n  }\n}\n\nconst removablePrefixes = ['etapa-', 'lead-frio', 'lead-morno', 'lead-quente', 'produto-', 'perfil-', 'gatilho-'];\nconst preservedLabels = existingLabels.filter(l => !removablePrefixes.some(p => l.startsWith(p)));\nconst finalLabels = [...new Set([...preservedLabels, ...labelsAdd])];\n\nlet skipReason = '';\nif (!hasChatwootSignature) skipReason = 'sem assinatura/timestamp do Chatwoot';\nelse if (!isTestConversation) skipReason = 'conversa sem label testando-agente';\nelse if (!conversationId || !messageId) skipReason = 'payload sem conversation_id/message_id';\nelse if (!content) skipReason = 'mensagem vazia';\nelse if (isPrivate || !isIncoming) skipReason = 'mensagem não recebida do cliente';\nelse if (Number(inboxId) !== WHATSAPP_INBOX_ID) skipReason = `inbox inválido: ${inboxId}`;\nelse if (existingLabels.includes(HUMAN_OFF_LABEL)) skipReason = 'agente-off';\n\nconst resumo = shouldSkip ? `Evento ignorado pelo SDR HK Nove: ${skipReason}.` : `Produto: ${produto}; Memória: ${memoria}; Perfil: ${perfil}; Score: ${score}; Temperatura: ${temperatura}; Gatilhos: ${gatilhos.join(', ') || 'nenhum'}; Auto-resposta: ${autoReplyEnabled ? 'habilitada' : 'só sugestão'}.`;\n\nreturn [{ json: {\n  shouldSkip, event, account_id: ACCOUNT_ID, conversation_id: conversationId, message_id: messageId, inbox_id: inboxId,\n  contact_id: contact.id || null, contact_name: contact.name || contact.pushname || '', contact_phone: contact.phone_number || contact.identifier || '',\n  message_text: content, existing_labels: existingLabels, final_labels: finalLabels, assignee_id: assigneeId,\n  sdr_mode: autoReplyEnabled ? 'auto_reply_test' : 'suggestion_only',\n  shouldSendPublicReply: !shouldSkip && autoReplyEnabled,\n  reply_text: resposta,\n  classification: {\n    agente: 'SDR HK Nove', produto_interesse: produto, memoria_consultada: memoria, perfil_lead: perfil, funil_etapa: etapa,\n    lead_score: score, lead_temperatura: temperatura, gatilhos, assumir_alexandre: assumirAlexandre,\n    motivo_handoff: handoffReason, proxima_acao: assumirAlexandre ? 'alexandre_assumir' : 'continuar_qualificacao',\n    resumo_interno: resumo, resposta_sugerida: resposta, risco_compliance: false, observacoes_compliance: ''\n  }\n}}];"
+      },
+      "id": "code-normalize-classify",
+      "name": "SDR HK Nove — Classificar + responder v1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -768,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{!$json.shouldSkip}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "if-valid-event",
+      "name": "Evento válido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/conversations/{{$json.conversation_id}}/custom_attributes",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { custom_attributes: { funil_etapa: $json.classification.funil_etapa, lead_score: $json.classification.lead_score, lead_temperatura: $json.classification.lead_temperatura, produto_interesse: $json.classification.produto_interesse, perfil_lead: $json.classification.perfil_lead, memoria_consultada: $json.classification.memoria_consultada, gatilho_quente: $json.classification.gatilhos.join(','), responsavel_sugerido: $json.classification.assumir_alexandre ? 'alexandre' : 'sdr_hk_nove', proxima_acao: $json.classification.proxima_acao, ultimo_resumo_hermes: $json.classification.resumo_interno, ultima_resposta_sugerida: $json.reply_text, ultima_classificacao_em: new Date().toISOString().slice(0,10) } } }}",
+        "options": {}
+      },
+      "id": "http-custom-attributes",
+      "name": "Chatwoot — Atualizar atributos",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -256,
+        -128
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/conversations/{{$json.conversation_id}}/labels",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { labels: $json.final_labels } }}",
+        "options": {}
+      },
+      "id": "http-labels",
+      "name": "Chatwoot — Atualizar labels",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -256,
+        80
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/conversations/{{$json.conversation_id}}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { content: `🤖 SDR HK Nove v1 — ${$json.sdr_mode}\n${$json.classification.resumo_interno}\nPróxima ação: ${$json.classification.proxima_acao}\nSugestão/resposta: ${$json.reply_text}\nMensagem analisada: ${$json.message_text}`, message_type: 'outgoing', private: true } }}",
+        "options": {}
+      },
+      "id": "http-private-note",
+      "name": "Chatwoot — Nota interna",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        32,
+        0
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.classification.assumir_alexandre}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "if-assign-alexandre",
+      "name": "Assumir Alexandre?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        272,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/conversations/{{$json.conversation_id}}/assignments",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { assignee_id: 1 } }}",
+        "options": {}
+      },
+      "id": "http-assign-alexandre",
+      "name": "Chatwoot — Atribuir Alexandre",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        528,
+        -80
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/kanban/tasks?board_id=3&conversation_id={{$json.conversation_id}}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http-kanban-find-task",
+      "name": "Kanban — Buscar task da conversa",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -260,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const source = $('SDR HK Nove — Classificar + responder v1').first().json;\nconst tasks = $json.tasks || [];\nconst task = tasks.find(t => (t.conversation_ids || []).map(Number).includes(Number(source.conversation_id))) || tasks[0];\n\nconst stepMap = {\n  novo_lead: 17,\n  atendimento_inicial: 17,\n  qualificacao: 18,\n  produto_direcionado: 18,\n  material_enviado: 18,\n  reuniao_visita_agendada: 19,\n  proposta_negociacao: 21,\n  fechado: 22,\n  perdido_nutricao: 24\n};\n\nconst cls = source.classification;\nlet boardStepId = stepMap[cls.funil_etapa] || 17;\nif ((cls.gatilhos || []).includes('pediu_proposta')) boardStepId = 20;\nif ((cls.gatilhos || []).includes('agendou_reuniao')) boardStepId = 19;\n\nconst hermesBlock = [\n  '---',\n  `🤖 SDR HK Nove — ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`,\n  `Produto: ${cls.produto_interesse}`,\n  `Perfil: ${cls.perfil_lead}`,\n  `Score: ${cls.lead_score} — ${cls.lead_temperatura}`,\n  `Etapa Hermes: ${cls.funil_etapa}`,\n  `Gatilhos: ${(cls.gatilhos || []).join(', ') || 'nenhum'}`,\n  `Próxima ação: ${cls.proxima_acao}`,\n  `Resumo: ${cls.resumo_interno}`\n].join('\n');\n\nconst customAttributes = {\n  hermes_score: cls.lead_score,\n  hermes_temperatura: cls.lead_temperatura,\n  hermes_produto: cls.produto_interesse,\n  hermes_perfil: cls.perfil_lead,\n  hermes_etapa: cls.funil_etapa,\n  hermes_proxima_acao: cls.proxima_acao\n};\n\nif (!task?.id) {\n  const name = source.contact_name || source.contact_phone || 'Lead sem nome';\n  return [{ json: {\n    hasTask: false,\n    action: 'create',\n    board_id: 3,\n    board_step_id: boardStepId,\n    title: `Conversa #${source.conversation_id} - ${name}`,\n    description: hermesBlock,\n    custom_attributes: Object.assign({}, customAttributes, { hermes_origem: 'workflow_auto_create' }),\n    conversation_ids: [Number(source.conversation_id)],\n    conversation_id: source.conversation_id\n  }}];\n}\n\nconst originalDescription = task.description || '';\nreturn [{ json: {\n  hasTask: true,\n  action: 'update',\n  task_id: task.id,\n  board_id: task.board_id || 3,\n  board_step_id: boardStepId,\n  current_step_id: task.board_step_id,\n  title: task.title,\n  description: originalDescription ? `${originalDescription}\n\n${hermesBlock}` : hermesBlock,\n  custom_attributes: Object.assign({}, task.custom_attributes || {}, customAttributes),\n  conversation_id: source.conversation_id\n}}];"
+      },
+      "id": "code-kanban-prepare-update",
+      "name": "Kanban — Preparar atualização",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.hasTask}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "if-kanban-has-task",
+      "name": "Tem task Kanban?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/kanban/tasks/{{$json.task_id}}?board_id=3",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { board_step_id: $json.board_step_id, description: $json.description, custom_attributes: $json.custom_attributes } }}",
+        "options": {}
+      },
+      "id": "http-kanban-update-card",
+      "name": "Kanban — Atualizar card",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/kanban/tasks?board_id=3",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { board_id: 3, board_step_id: $json.board_step_id, title: $json.title, description: $json.description, custom_attributes: $json.custom_attributes, conversation_ids: $json.conversation_ids } }}",
+        "options": {}
+      },
+      "id": "http-kanban-create-card",
+      "name": "Kanban — Criar card",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        460
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.shouldSendPublicReply}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "if-send-public-reply",
+      "name": "Enviar resposta pública?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        272,
+        -260
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/conversations/{{$json.conversation_id}}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { content: $json.reply_text, message_type: 'outgoing', private: false } }}",
+        "options": {}
+      },
+      "id": "http-public-reply",
+      "name": "Chatwoot — Resposta pública SDR",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        528,
+        -260
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Chatwoot": {
+      "main": [
+        [
+          {
+            "node": "SDR HK Nove — Classificar + responder v1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evento válido?": {
+      "main": [
+        [
+          {
+            "node": "Chatwoot — Atualizar atributos",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Chatwoot — Atualizar labels",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Chatwoot — Nota interna",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Kanban — Buscar task da conversa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chatwoot — Nota interna": {
+      "main": [
+        [
+          {
+            "node": "Assumir Alexandre?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Enviar resposta pública?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assumir Alexandre?": {
+      "main": [
+        [
+          {
+            "node": "Chatwoot — Atribuir Alexandre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kanban — Buscar task da conversa": {
+      "main": [
+        [
+          {
+            "node": "Kanban — Preparar atualização",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kanban — Preparar atualização": {
+      "main": [
+        [
+          {
+            "node": "Tem task Kanban?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tem task Kanban?": {
+      "main": [
+        [
+          {
+            "node": "Kanban — Atualizar card",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Kanban — Criar card",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SDR HK Nove — Classificar + responder v1": {
+      "main": [
+        [
+          {
+            "node": "Evento válido?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar resposta pública?": {
+      "main": [
+        [
+          {
+            "node": "Chatwoot — Resposta pública SDR",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}

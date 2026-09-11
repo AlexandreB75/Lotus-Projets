@@ -1,0 +1,938 @@
+<style>
+  .lotus-prospecting-app,
+  .lotus-prospecting-app * {
+    box-sizing: border-box;
+  }
+
+  .lotus-prospecting-app {
+    --gold: #C9A96E;
+    --gold-dim: #8B6E42;
+    --bg: #080808;
+    --surface: #0F0F0F;
+    --surface2: #161616;
+    --surface3: #1E1E1E;
+    --border: #2A2A2A;
+    --text: #E8E0D0;
+    --text-dim: #8E8173;
+    --green: #4ADE80;
+    --red: #F87171;
+    --blue: #60A5FA;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+  }
+
+  .lotus-prospecting-header {
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+
+  .lotus-prospecting-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .lotus-prospecting-logo {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 2px;
+  }
+
+  .lotus-prospecting-sep {
+    color: var(--border);
+    font-size: 18px;
+  }
+
+  .lotus-prospecting-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .lotus-prospecting-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .lotus-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 18px rgba(74, 222, 128, .45);
+  }
+
+  .lotus-tabs {
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .lotus-tab {
+    border: 0;
+    background: transparent;
+    color: var(--text-dim);
+    padding: 16px 22px;
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-right: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .lotus-tab.active {
+    color: var(--gold);
+    background: var(--surface);
+  }
+
+  .lotus-main {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 34px 20px 60px;
+  }
+
+  .lotus-tab-panel {
+    display: none;
+  }
+
+  .lotus-tab-panel.active {
+    display: block;
+  }
+
+  .lotus-section-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(32px, 5vw, 58px);
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .lotus-section-sub {
+    color: var(--text-dim);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 26px;
+  }
+
+  .lotus-grid-2 {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .lotus-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .lotus-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .lotus-panel-header {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .lotus-panel-title {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .lotus-panel-body {
+    padding: 18px;
+  }
+
+  .lotus-form-group {
+    margin-bottom: 15px;
+  }
+
+  .lotus-form-label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .lotus-form-input,
+  .lotus-form-select,
+  .lotus-form-textarea {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid var(--border);
+    background: var(--surface3);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 0 12px;
+    outline: none;
+    font: inherit;
+  }
+
+  .lotus-form-textarea {
+    min-height: 90px;
+    padding-top: 12px;
+    resize: vertical;
+  }
+
+  .lotus-form-input:focus,
+  .lotus-form-select:focus,
+  .lotus-form-textarea:focus {
+    border-color: var(--gold-dim);
+  }
+
+  .lotus-form-select option {
+    background: var(--surface2);
+  }
+
+  .lotus-btn {
+    border: 0;
+    min-height: 46px;
+    padding: 0 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: opacity .2s ease, transform .2s ease;
+  }
+
+  .lotus-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .lotus-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+  }
+
+  .lotus-btn-gold {
+    color: #080808;
+    background: linear-gradient(135deg, var(--gold), #A7854D);
+  }
+
+  .lotus-copy-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 7px 10px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .lotus-copy-btn:hover {
+    color: var(--gold);
+    border-color: var(--gold-dim);
+  }
+
+  .lotus-tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .lotus-tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+  }
+
+  .tag-green { color: var(--green); border-color: rgba(74,222,128,.35); }
+  .tag-red { color: var(--red); border-color: rgba(248,113,113,.35); }
+  .tag-blue { color: var(--blue); border-color: rgba(96,165,250,.35); }
+  .tag-gold { color: var(--gold); border-color: rgba(201,169,110,.35); }
+
+  .lotus-score {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .lotus-score-value {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 50px;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .lotus-score-bar {
+    height: 5px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .lotus-score-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    transition: width .8s ease;
+  }
+
+  .lotus-result-block {
+    border-bottom: 1px solid var(--border);
+    padding: 13px 0;
+  }
+
+  .lotus-result-block:last-child {
+    border-bottom: 0;
+  }
+
+  .lotus-result-label {
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .lotus-result-text {
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .lotus-msg-preview {
+    border: 1px solid var(--border);
+    background: var(--surface3);
+    border-radius: 10px;
+    padding: 15px;
+    color: var(--text);
+    white-space: pre-wrap;
+    line-height: 1.65;
+  }
+
+  .lotus-empty {
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-dim);
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 11px;
+  }
+
+  .lotus-empty-icon {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 58px;
+    color: var(--border);
+  }
+
+  .lotus-loading-bar {
+    height: 4px;
+    border-radius: 99px;
+    overflow: hidden;
+    background: var(--border);
+    margin: 16px 0;
+  }
+
+  .lotus-loading-fill {
+    height: 100%;
+    width: 45%;
+    background: var(--gold);
+    animation: lotus-loading 1.15s infinite alternate;
+  }
+
+  @keyframes lotus-loading {
+    from { transform: translateX(-80%); }
+    to { transform: translateX(170%); }
+  }
+
+  .lotus-metric {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 22px;
+  }
+
+  .lotus-metric-value {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--gold);
+    font-size: 38px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .lotus-metric-label {
+    color: var(--text-dim);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .lotus-stage {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 12px;
+  }
+
+  .lotus-stage-num {
+    color: var(--gold);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 22px;
+  }
+
+  .lotus-stage-name {
+    color: var(--text);
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .lotus-stage-desc,
+  .lotus-stage-count {
+    color: var(--text-dim);
+    font-size: 12px;
+  }
+
+  .lotus-connector {
+    width: 1px;
+    height: 14px;
+    background: var(--border);
+    margin-left: 36px;
+  }
+
+  .lotus-arch-node {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .lotus-arch-node.highlight {
+    border-color: rgba(201,169,110,.42);
+  }
+
+  .lotus-arch-node-title {
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+
+  .lotus-arch-node-desc {
+    color: var(--text-dim);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .lotus-arch-arrow {
+    text-align: center;
+    color: var(--gold-dim);
+    padding: 7px 0;
+  }
+
+  .lotus-code {
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    padding: 14px;
+    border-radius: 8px;
+    color: var(--green);
+    font-family: Consolas, Monaco, monospace;
+    font-size: 12px;
+    line-height: 1.65;
+    overflow-x: auto;
+  }
+
+  .lotus-signature {
+    margin-top: 22px;
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .lotus-grid-2,
+    .lotus-grid-3 {
+      grid-template-columns: 1fr;
+    }
+
+    .lotus-prospecting-header {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 8px;
+      padding: 16px 20px;
+    }
+  }
+</style>
+
+<div class="lotus-prospecting-app" id="lotus-prospecting-app">
+  <header class="lotus-prospecting-header">
+    <div class="lotus-prospecting-brand">
+      <span class="lotus-prospecting-logo">LÓTUS</span>
+      <span class="lotus-prospecting-sep">|</span>
+      <span class="lotus-prospecting-sub">Inteligência Comercial</span>
+    </div>
+    <div class="lotus-prospecting-status"><span class="lotus-dot"></span>N8N · ONLINE</div>
+  </header>
+
+  <nav class="lotus-tabs">
+    <button class="lotus-tab active" data-tab="inteligencia">Inteligência de Lead</button>
+    <button class="lotus-tab" data-tab="pipeline">Pipeline</button>
+    <button class="lotus-tab" data-tab="arquitetura">Arquitetura</button>
+  </nav>
+
+  <main class="lotus-main">
+    <section class="lotus-tab-panel active" id="lotus-tab-inteligencia">
+      <div class="lotus-section-title">Diagnóstico Comercial</div>
+      <div class="lotus-section-sub">Perfil + mensagem personalizada via n8n</div>
+
+      <div class="lotus-grid-2">
+        <div class="lotus-panel">
+          <div class="lotus-panel-header"><span class="lotus-panel-title">Dados do Lead</span></div>
+          <div class="lotus-panel-body">
+            <form id="lotus-prospecting-form">
+              <div class="lotus-form-group">
+                <label class="lotus-form-label" for="prospect-nome">Nome</label>
+                <input class="lotus-form-input" id="prospect-nome" name="nome" placeholder="Dr. João Oliveira" required>
+              </div>
+
+              <div class="lotus-form-group">
+                <label class="lotus-form-label" for="prospect-profissao">Profissão</label>
+                <select class="lotus-form-select" id="prospect-profissao" name="profissao">
+                  <option>Médico / Cirurgião</option>
+                  <option>Dentista</option>
+                  <option>Advogado / Sócio</option>
+                  <option>Empresário / CEO</option>
+                  <option>Arquiteto / Designer</option>
+                  <option>Engenheiro</option>
+                  <option>Contador / CFO</option>
+                  <option>Consultor Financeiro</option>
+                  <option>Outro Profissional Liberal</option>
+                </select>
+              </div>
+
+              <div class="lotus-form-group">
+                <label class="lotus-form-label" for="prospect-situacao">Situação Atual</label>
+                <select class="lotus-form-select" id="prospect-situacao" name="situacao">
+                  <option>Trabalha em clínica/escritório de terceiros</option>
+                  <option>Home office no apartamento</option>
+                  <option>Atende em outra cidade (Balneário/Floripa)</option>
+                  <option>Já tem sala mas quer upgrade</option>
+                  <option>Investidor puro de imóveis</option>
+                </select>
+              </div>
+
+              <div class="lotus-form-group">
+                <label class="lotus-form-label" for="prospect-origem">Origem do Lead</label>
+                <select class="lotus-form-select" id="prospect-origem" name="origem">
+                  <option>Comprou apartamento em Itapema</option>
+                  <option>Indicação de cliente/parceiro</option>
+                  <option>Redes sociais (Instagram/LinkedIn)</option>
+                  <option>Evento / networking local</option>
+                  <option>Pesquisa orgânica</option>
+                </select>
+              </div>
+
+              <div class="lotus-grid-2">
+                <div class="lotus-form-group">
+                  <label class="lotus-form-label" for="prospect-tempo">Tempo em Itapema</label>
+                  <input class="lotus-form-input" id="prospect-tempo" name="tempo_itapema" placeholder="ex: 2 anos">
+                </div>
+                <div class="lotus-form-group">
+                  <label class="lotus-form-label" for="prospect-valor">Valor Residencial</label>
+                  <input class="lotus-form-input" id="prospect-valor" name="valor_residencial" placeholder="ex: 3.000.000">
+                </div>
+              </div>
+
+              <div class="lotus-form-group">
+                <label class="lotus-form-label" for="prospect-canal">Canal de Abordagem</label>
+                <select class="lotus-form-select" id="prospect-canal" name="canal_preferido">
+                  <option value="whatsapp">WhatsApp</option>
+                  <option value="linkedin">LinkedIn</option>
+                  <option value="instagram">Instagram DM</option>
+                  <option value="email">E-mail</option>
+                </select>
+              </div>
+
+              <div class="lotus-form-group">
+                <label class="lotus-form-label" for="prospect-notas">Notas</label>
+                <textarea class="lotus-form-textarea" id="prospect-notas" name="notas" placeholder="Ex: atende em clínica parceira em BC, mora no Condomínio Acqua..."></textarea>
+              </div>
+
+              <button class="lotus-btn lotus-btn-gold" id="lotus-analyze-btn" type="submit" style="width: 100%;">Gerar diagnóstico do lead</button>
+              <div class="lotus-status" id="lotus-prospecting-status" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+
+        <div id="lotus-result-area">
+          <div class="lotus-panel">
+            <div class="lotus-panel-body lotus-empty">
+              <div class="lotus-empty-icon">◈</div>
+              <div>Preencha os dados e execute<br>o diagnóstico para ver os resultados</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lotus-tab-panel" id="lotus-tab-pipeline">
+      <div class="lotus-section-title">Pipeline de Prospecção</div>
+      <div class="lotus-section-sub">Funil ativo · Lótus Business 2025-2028</div>
+
+      <div class="lotus-grid-3" style="margin-bottom: 24px;">
+        <div class="lotus-metric"><div class="lotus-metric-value">0</div><div class="lotus-metric-label">Prospects mapeados</div></div>
+        <div class="lotus-metric"><div class="lotus-metric-value">0</div><div class="lotus-metric-label">Em qualificação</div></div>
+        <div class="lotus-metric"><div class="lotus-metric-value">R$0</div><div class="lotus-metric-label">Pipeline potencial</div></div>
+      </div>
+
+      <div class="lotus-grid-2">
+        <div>
+          <div class="lotus-section-sub">Estágios do funil</div>
+          <div id="lotus-pipeline-stages"></div>
+        </div>
+
+        <div class="lotus-panel">
+          <div class="lotus-panel-header"><span class="lotus-panel-title">Fontes de prospecção</span></div>
+          <div class="lotus-panel-body" id="lotus-sources-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lotus-tab-panel" id="lotus-tab-arquitetura">
+      <div class="lotus-section-title">Arquitetura do Sistema</div>
+      <div class="lotus-section-sub">Stack atual + n8n + HubSpot + Chatwoot</div>
+
+      <div class="lotus-grid-2">
+        <div id="lotus-architecture-flow"></div>
+        <div class="lotus-panel">
+          <div class="lotus-panel-header"><span class="lotus-panel-title">Integração crítica</span></div>
+          <div class="lotus-panel-body">
+            <div class="lotus-result-text" style="color: var(--text-dim); margin-bottom: 14px;">
+              O formulário envia os dados para o webhook do n8n. O n8n pode enriquecer o lead, criar/atualizar contato no HubSpot, abrir conversa no Chatwoot e notificar o Telegram.
+            </div>
+            <div class="lotus-code">
+              POST n8n webhook<br>
+              Body: lead data → score + mensagem + CRM<br>
+              Destino: HubSpot + Chatwoot + WhatsApp comercial
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="lotus-signature">Alexandre Borges | CRECI-SC 45148 | Gerente Comercial</div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var N8N_WEBHOOK_URL = "https://n8n.alexandreborges.site/webhook/d1c74c0f-66fc-4fb0-b726-5149d5829204/9bbfa001-93a1-4841-94c2-fc82626717ec";
+  var WHATSAPP_NUMBER = "5547988695350";
+
+  var pipelineStages = [
+    { n: "01", name: "Identificação", desc: "LinkedIn · CRM SC · OAB · CNPJ", count: "—" },
+    { n: "02", name: "Enriquecimento", desc: "n8n gera perfil + score", count: "—" },
+    { n: "03", name: "Abordagem", desc: "Mensagem personalizada por canal", count: "—" },
+    { n: "04", name: "Qualificação", desc: "Chatwoot · n8n · agente 24/7", count: "—" },
+    { n: "05", name: "Visita Presencial", desc: "Tour no Lótus · fechamento consultivo", count: "—" },
+    { n: "06", name: "Proposta", desc: "Documentação · condições", count: "—" },
+    { n: "07", name: "Contrato Assinado", desc: "Venda confirmada", count: "—" }
+  ];
+
+  var sources = [
+    { src: "LinkedIn Itapema", type: "Empresários / Executivos", status: "ATIVO" },
+    { src: "CRM Santa Catarina", type: "Médicos / Cirurgiões", status: "ATIVO" },
+    { src: "OAB SC", type: "Advogados / Sócios", status: "ATIVO" },
+    { src: "CNPJ Receita Federal", type: "Empresas sediadas em Itapema", status: "ATIVO" },
+    { src: "Instagram Geolocalização", type: "Meia Praia / Condomínios Premium", status: "ATIVO" },
+    { src: "Indicações / Rede", type: "Compradores residenciais", status: "ATIVO" }
+  ];
+
+  var architecture = [
+    ["Fontes de Dados", "LinkedIn · CRM · OAB · CNPJ · Instagram"],
+    ["n8n · Orquestrador", "Recebe lead, normaliza dados e aciona automações"],
+    ["IA / Diagnóstico", "Classifica temperatura, score e mensagem personalizada"],
+    ["HubSpot CRM", "Cria contato, registra origem e status de qualificação"],
+    ["Chatwoot / WhatsApp", "Centraliza atendimento e continuidade comercial"],
+    ["Alexandre · Fechamento", "Recebe lead quente com briefing comercial"]
+  ];
+
+  function qs(selector) { return document.querySelector(selector); }
+  function qsa(selector) { return Array.prototype.slice.call(document.querySelectorAll(selector)); }
+
+  function escapeHtml(value) {
+    return String(value == null ? "" : value).replace(/[&<>"']/g, function (char) {
+      return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[char];
+    });
+  }
+
+  function setStatus(message, type) {
+    var el = qs("#lotus-prospecting-status");
+    if (!el) return;
+    el.textContent = message || "";
+    el.className = "lotus-status" + (type ? " " + type : "");
+  }
+
+  function collectPayload() {
+    var form = qs("#lotus-prospecting-form");
+    var data = new FormData(form);
+    return {
+      nome: (data.get("nome") || "").toString().trim(),
+      profissao: (data.get("profissao") || "").toString(),
+      situacao: (data.get("situacao") || "").toString(),
+      origem: (data.get("origem") || "").toString(),
+      tempo_itapema: (data.get("tempo_itapema") || "").toString().trim(),
+      valor_residencial: (data.get("valor_residencial") || "").toString().trim(),
+      canal_preferido: (data.get("canal_preferido") || "whatsapp").toString(),
+      notas: (data.get("notas") || "").toString().trim(),
+      projeto_interesse: "Lótus Business",
+      origem_sistema: "lotus_prospecting_html",
+      responsavel: "Alexandre Borges",
+      creci: "CRECI-SC 45148",
+      timestamp: new Date().toISOString()
+    };
+  }
+
+  function fallbackAnalysis(payload) {
+    var score = 62;
+    var categoria = "NECESSIDADE_LATENTE";
+    var temperatura = "MORNO";
+    var profissao = (payload.profissao || "").toLowerCase();
+    var situacao = (payload.situacao || "").toLowerCase();
+
+    if (situacao.indexOf("terceiros") >= 0 || situacao.indexOf("upgrade") >= 0) {
+      score += 16;
+      categoria = "NECESSIDADE_IMEDIATA";
+      temperatura = "QUENTE";
+    }
+
+    if (situacao.indexOf("investidor") >= 0) {
+      score += 8;
+      categoria = "INVESTIDOR_PURO";
+    }
+
+    if (profissao.indexOf("médico") >= 0 || profissao.indexOf("dentista") >= 0 || profissao.indexOf("advogado") >= 0) {
+      score += 7;
+    }
+
+    score = Math.max(0, Math.min(100, score));
+
+    var canalKey = "mensagem_" + payload.canal_preferido;
+    var msg = "Olá, " + payload.nome + ". Pensei no Lótus Business olhando para seu perfil de " + payload.profissao + ". Antes de te mandar material solto, queria entender se hoje faria mais sentido para uso próprio, presença profissional ou patrimônio. Posso te mostrar de forma objetiva?";
+
+    var output = {
+      categoria: categoria,
+      temperatura: temperatura,
+      score: score,
+      dor_principal: "Entender se uma sala comercial em Itapema faz sentido para uso, imagem profissional ou patrimônio.",
+      argumento_chave: "O Lótus deve ser analisado como endereço profissional e ativo patrimonial, não apenas como metragem.",
+      objecao_provavel: "Não sei se agora é o momento certo ou se faz sentido para minha profissão.",
+      resposta_objecao: "A melhor forma é comparar objetivo, uso, permanência e cenário de Itapema antes de falar em compra.",
+      proximos_passos: [
+        "Confirmar objetivo principal: uso próprio, presença ou investimento.",
+        "Enviar apresentação curta por perfil.",
+        "Convidar para uma conversa ou visita objetiva."
+      ]
+    };
+    output[canalKey] = msg;
+    return output;
+  }
+
+  function normalizeResult(data, payload) {
+    if (!data || typeof data !== "object") return fallbackAnalysis(payload);
+    var result = data.result || data.analysis || data.diagnostico || data;
+    if (!result.score && result.score !== 0) return fallbackAnalysis(payload);
+    return result;
+  }
+
+  function tagClass(value) {
+    var v = String(value || "").toUpperCase();
+    if (v.indexOf("QUENTE") >= 0 || v.indexOf("IMEDIATA") >= 0) return "tag-red";
+    if (v.indexOf("FRIO") >= 0) return "tag-blue";
+    if (v.indexOf("MORNO") >= 0 || v.indexOf("LATENTE") >= 0) return "tag-gold";
+    return "tag-green";
+  }
+
+  function renderLoading() {
+    qs("#lotus-result-area").innerHTML = '<div class="lotus-panel"><div class="lotus-panel-body"><div class="lotus-panel-title">Processando via n8n</div><div class="lotus-loading-bar"><div class="lotus-loading-fill"></div></div><div class="lotus-result-text" style="color: var(--text-dim); text-align:center;">Analisando perfil · calculando temperatura · gerando mensagem...</div></div></div>';
+  }
+
+  function renderResult(result, payload) {
+    var canalKey = "mensagem_" + payload.canal_preferido;
+    var mensagem = result[canalKey] || result.mensagem || result.mensagem_whatsapp || "Mensagem não retornada pelo diagnóstico.";
+    var passos = Array.isArray(result.proximos_passos) ? result.proximos_passos : [];
+    var score = Number(result.score || 0);
+
+    qs("#lotus-result-area").innerHTML = '' +
+      '<div class="lotus-panel" style="margin-bottom:12px;">' +
+        '<div class="lotus-panel-header"><span class="lotus-panel-title">Score de Conversão</span><div class="lotus-tag-row"><span class="lotus-tag ' + tagClass(result.categoria) + '">' + escapeHtml(result.categoria || "CATEGORIA") + '</span><span class="lotus-tag ' + tagClass(result.temperatura) + '">' + escapeHtml(result.temperatura || "TEMPERATURA") + '</span></div></div>' +
+        '<div class="lotus-panel-body"><div class="lotus-score"><span class="lotus-score-value">' + escapeHtml(score) + '</span><span style="color: var(--text-dim);">/ 100</span></div><div class="lotus-score-bar"><div class="lotus-score-fill" style="width:' + Math.max(0, Math.min(100, score)) + '%;"></div></div></div>' +
+      '</div>' +
+      '<div class="lotus-panel" style="margin-bottom:12px;">' +
+        '<div class="lotus-panel-header"><span class="lotus-panel-title">Diagnóstico</span></div>' +
+        '<div class="lotus-panel-body">' +
+          resultBlock('◆ Dor Principal', result.dor_principal) +
+          resultBlock('◆ Argumento-Chave', result.argumento_chave) +
+          resultBlock('⚠ Objeção Provável', result.objecao_provavel) +
+          resultBlock('✓ Como Contornar', result.resposta_objecao) +
+        '</div>' +
+      '</div>' +
+      '<div class="lotus-panel" style="margin-bottom:12px;">' +
+        '<div class="lotus-panel-header"><span class="lotus-panel-title">Mensagem Personalizada · ' + escapeHtml(payload.canal_preferido.toUpperCase()) + '</span><button class="lotus-copy-btn" id="lotus-copy-message">Copiar</button></div>' +
+        '<div class="lotus-panel-body"><div class="lotus-msg-preview" id="lotus-message-text">' + escapeHtml(mensagem) + '</div></div>' +
+      '</div>' +
+      '<div class="lotus-panel"><div class="lotus-panel-header"><span class="lotus-panel-title">Próximos Passos</span></div><div class="lotus-panel-body">' +
+        (passos.length ? passos.map(function (p, i) { return '<div class="lotus-result-block"><div class="lotus-result-label">' + (i + 1) + '.</div><div class="lotus-result-text">' + escapeHtml(p) + '</div></div>'; }).join('') : '<div class="lotus-result-text">Sem próximos passos retornados.</div>') +
+      '</div></div>';
+
+    var copyBtn = qs("#lotus-copy-message");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", function () {
+        navigator.clipboard.writeText(mensagem).then(function () {
+          copyBtn.textContent = "Copiado";
+          setTimeout(function () { copyBtn.textContent = "Copiar"; }, 1600);
+        });
+      });
+    }
+  }
+
+  function resultBlock(label, text) {
+    return '<div class="lotus-result-block"><div class="lotus-result-label">' + escapeHtml(label) + '</div><div class="lotus-result-text">' + escapeHtml(text || "—") + '</div></div>';
+  }
+
+  function openWhatsApp(payload) {
+    var message = "Olá, quero falar sobre o Lótus Business.\nNome: " + payload.nome + "\nPerfil: " + payload.profissao + "\nObjetivo/Situação: " + payload.situacao;
+    window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message), "_blank");
+  }
+
+  function setupTabs() {
+    qsa(".lotus-tab").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var tab = button.getAttribute("data-tab");
+        qsa(".lotus-tab").forEach(function (b) { b.classList.remove("active"); });
+        qsa(".lotus-tab-panel").forEach(function (p) { p.classList.remove("active"); });
+        button.classList.add("active");
+        qs("#lotus-tab-" + tab).classList.add("active");
+      });
+    });
+  }
+
+  function setupForm() {
+    var form = qs("#lotus-prospecting-form");
+    var button = qs("#lotus-analyze-btn");
+    if (!form) return;
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      var payload = collectPayload();
+      if (!payload.nome) {
+        setStatus("Nome do lead obrigatório.", "error");
+        return;
+      }
+
+      renderLoading();
+      setStatus("Enviando para o n8n...", "");
+      button.disabled = true;
+
+      fetch(N8N_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then(function (response) {
+          if (!response.ok) throw new Error("Falha no webhook");
+          return response.text();
+        })
+        .then(function (text) {
+          var data = null;
+          try { data = text ? JSON.parse(text) : null; } catch (e) { data = null; }
+          var result = normalizeResult(data, payload);
+          renderResult(result, payload);
+          setStatus("Diagnóstico gerado. Se necessário, copie a mensagem ou continue pelo WhatsApp.", "success");
+        })
+        .catch(function () {
+          var result = fallbackAnalysis(payload);
+          renderResult(result, payload);
+          setStatus("Webhook não retornou diagnóstico. Usei uma análise local segura como alternativa.", "error");
+        })
+        .finally(function () {
+          button.disabled = false;
+        });
+    });
+  }
+
+  function renderPipeline() {
+    var stagesEl = qs("#lotus-pipeline-stages");
+    if (stagesEl) {
+      stagesEl.innerHTML = pipelineStages.map(function (s, i) {
+        return '<div class="lotus-stage"><div class="lotus-stage-num">' + s.n + '</div><div><div class="lotus-stage-name">' + escapeHtml(s.name) + '</div><div class="lotus-stage-desc">' + escapeHtml(s.desc) + '</div></div><div class="lotus-stage-count">' + s.count + '</div></div>' + (i < pipelineStages.length - 1 ? '<div class="lotus-connector"></div>' : '');
+      }).join('');
+    }
+
+    var sourcesEl = qs("#lotus-sources-list");
+    if (sourcesEl) {
+      sourcesEl.innerHTML = sources.map(function (f) {
+        return '<div class="lotus-result-block"><div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;"><div><div class="lotus-result-text">' + escapeHtml(f.src) + '</div><div style="color:var(--text-dim);font-size:12px;">' + escapeHtml(f.type) + '</div></div><span class="lotus-tag tag-green">' + escapeHtml(f.status) + '</span></div></div>';
+      }).join('');
+    }
+  }
+
+  function renderArchitecture() {
+    var el = qs("#lotus-architecture-flow");
+    if (!el) return;
+    el.innerHTML = architecture.map(function (item, i) {
+      return '<div class="lotus-arch-node ' + (i > 0 && i < architecture.length - 1 ? 'highlight' : '') + '"><div class="lotus-arch-node-title">' + escapeHtml(item[0]) + '</div><div class="lotus-arch-node-desc">' + escapeHtml(item[1]) + '</div></div>' + (i < architecture.length - 1 ? '<div class="lotus-arch-arrow">↓</div>' : '');
+    }).join('');
+  }
+
+  setupTabs();
+  setupForm();
+  renderPipeline();
+  renderArchitecture();
+})();
+</script>

@@ -1,0 +1,87 @@
+{
+  "name": "Vault Librarian — Revisão Semanal",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1"
+            }
+          ]
+        }
+      },
+      "id": "c4bd57cf-f91a-4e35-8572-99b68a9bec82",
+      "name": "Toda segunda às 08:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "command": "python3 \"<CAMINHO_LOCAL_DO_VAULT>/scripts/vault-librarian.py\" --vault-root \"<CAMINHO_LOCAL_DO_VAULT>\" --dry-run"
+      },
+      "id": "a0497e48-ae79-46c0-b969-ea866f500699",
+      "name": "Executar Vault Librarian (dry-run)",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [240, 0]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "<SLACK_CHANNEL_ID>",
+        "text": "=Vault Librarian — revisão semanal concluída.\n\n{{$json.stdout}}\n\nRelatório: consulte a linha 'Report:' acima no vault local.",
+        "otherOptions": {}
+      },
+      "id": "1aa071cb-2b31-4527-b13e-a8672eb855ea",
+      "name": "Publicar resumo no Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [500, 0],
+      "credentials": {
+        "slackApi": {
+          "id": "<SLACK_CREDENTIAL_ID>",
+          "name": "<SLACK_CREDENTIAL_NAME>"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Toda segunda às 08:00": {
+      "main": [
+        [
+          {
+            "node": "Executar Vault Librarian (dry-run)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Executar Vault Librarian (dry-run)": {
+      "main": [
+        [
+          {
+            "node": "Publicar resumo no Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

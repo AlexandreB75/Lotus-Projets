@@ -1,0 +1,21 @@
+.obsidian/
+_backup-duplicados-fora-vault_*/
+
+# Claude Code / swarm coordination state
+.claude-flow/
+.swarm/
+
+# Node.js (site projects inside vault)
+node_modules/
+.next/
+tsconfig.tsbuildinfo
+
+
+
+
+# Ignore Smart Environment folder
+.smart-env
+
+# Repositorios git independentes (remote proprio, nao devem virar gitlink aqui)
+/crm-xd-pro/
+obsidian-vault/02-Projetos/Imobiliaria Online/hk9/

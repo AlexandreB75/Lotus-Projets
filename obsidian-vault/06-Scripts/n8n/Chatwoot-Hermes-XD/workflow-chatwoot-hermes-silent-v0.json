@@ -1,0 +1,464 @@
+{
+  "name": "HK Nove — Chatwoot Hermes XD Silent v0",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chatwoot-hermes-xd",
+        "options": {}
+      },
+      "id": "webhook-chatwoot",
+      "name": "Webhook Chatwoot",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1008,
+        0
+      ],
+      "webhookId": "chatwoot-hermes-xd"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $json.body || $json;\nconst event = body.event || body.webhook_event || body.event_name || '';\nconst message = body.message || body;\nconst conversation = body.conversation || message.conversation || body.conversation_meta || {};\nconst inbox = body.inbox || conversation.inbox || {};\nconst contact = body.contact || conversation.contact || message.sender || {};\n\nconst messageType = message.message_type;\nconst isIncoming = messageType === 'incoming' || messageType === 0 || messageType === '0';\nconst isPrivate = Boolean(message.private);\nconst content = String(message.content || body.content || '').trim();\nconst conversationId = conversation.id || body.conversation_id || message.conversation_id;\nconst messageId = message.id || body.message_id || body.id;\nconst inboxId = inbox.id || conversation.inbox_id || body.inbox_id;\nconst existingLabels = conversation.labels || body.labels || [];\nconst assigneeId = conversation.assignee_id || conversation.meta?.assignee?.id || null;\n\nconst WHATSAPP_INBOX_ID = 2;\nconst headers = body.headers || $json.headers || {};\nconst hasChatwootSignature = Boolean(headers['x-chatwoot-signature'] || headers['X-Chatwoot-Signature']) && Boolean(headers['x-chatwoot-timestamp'] || headers['X-Chatwoot-Timestamp']);\n\nconst isTestConversation = existingLabels.includes('testando-agente');\nconst shouldSkip = !hasChatwootSignature || !isTestConversation || !conversationId || !messageId || !content || isPrivate || !isIncoming || Number(inboxId) !== WHATSAPP_INBOX_ID || existingLabels.includes('agente-off');\n\nfunction includesAny(text, terms) {\n  const t = text.toLowerCase();\n  return terms.some(term => t.includes(term));\n}\n\nlet produto = 'indefinido';\nlet perfil = 'indefinido';\nlet score = 20;\nconst gatilhos = [];\nconst labelsAdd = [];\n\nconst text = content.toLowerCase();\n\nif (includesAny(text, ['multipropriedade', 'cota', 'semanas', 'interval', 'férias', 'ferias'])) {\n  produto = 'multipropriedade_hilton';\n  perfil = 'ferias_multipropriedade';\n  score += 25;\n  labelsAdd.push('produto-multipropriedade-hilton', 'perfil-temporada');\n}\nif (includesAny(text, ['lótus', 'lotus', 'sala comercial', 'sala', 'consultório', 'consultorio', 'escritório', 'escritorio'])) {\n  produto = 'lotus_business';\n  score += 25;\n  labelsAdd.push('produto-lotus');\n}\nif (includesAny(text, ['centro médico', 'centro medico', 'medcenter', 'clínica', 'clinica', 'médico', 'medico', 'dentista'])) {\n  produto = (produto === 'indefinido' || produto === 'lotus_business') ? 'centro_medico_hilton' : produto;\n  perfil = 'medico_clinica';\n  score += 20;\n  labelsAdd.push('produto-centro-medico-hilton', 'perfil-saude');\n}\nif (includesAny(text, ['the spot', 'airbnb', 'temporada'])) {\n  produto = 'the_spot_one';\n  perfil = perfil === 'indefinido' ? 'investidor' : perfil;\n  score += 15;\n  labelsAdd.push('produto-the-spot', 'perfil-investidor');\n}\nif (includesAny(text, ['hilton residencial', 'apartamento', 'pool'])) {\n  produto = produto === 'indefinido' ? 'hilton_residencial' : produto;\n  score += 15;\n  labelsAdd.push('produto-hilton-residencial');\n}\n\nif (includesAny(text, ['investir', 'investimento', 'investidor', 'renda', 'locação', 'locacao'])) {\n  perfil = perfil === 'indefinido' ? 'investidor' : perfil;\n  score += 15;\n  labelsAdd.push('perfil-investidor');\n}\nif (includesAny(text, ['empresa', 'empresário', 'empresario', 'cnpj', 'sede'])) {\n  perfil = 'empresario';\n  score += 15;\n  labelsAdd.push('perfil-empresa');\n}\nif (includesAny(text, ['advogado', 'advocacia'])) {\n  perfil = 'advogado';\n  score += 15;\n  labelsAdd.push('perfil-advogado');\n}\nif (includesAny(text, ['corretor', 'parceria', 'parceiro'])) {\n  perfil = 'corretor_parceiro';\n  labelsAdd.push('perfil-corretor-parceiro');\n}\n\nif (includesAny(text, ['tabela'])) { gatilhos.push('pediu_tabela'); labelsAdd.push('gatilho-pediu-tabela'); score += 30; }\nif (includesAny(text, ['disponibilidade', 'disponível', 'disponivel'])) { gatilhos.push('pediu_disponibilidade'); labelsAdd.push('gatilho-pediu-disponibilidade'); score += 35; }\nif (includesAny(text, ['valor', 'preço', 'preco', 'entrada', 'parcela', 'parcelamento'])) { gatilhos.push('perguntou_preco'); labelsAdd.push('gatilho-perguntou-preco'); score += 35; }\nif (includesAny(text, ['proposta', 'simulação', 'simulacao'])) { gatilhos.push('pediu_proposta'); labelsAdd.push('gatilho-pediu-proposta'); score += 40; }\nif (includesAny(text, ['reunião', 'reuniao', 'visita', 'agendar', 'agenda'])) { gatilhos.push('agendou_reuniao'); labelsAdd.push('gatilho-agendou-reuniao'); score += 50; }\nif (includesAny(text, ['urgente', 'hoje', 'essa semana', 'fechar'])) { gatilhos.push('urgencia'); labelsAdd.push('gatilho-urgencia'); score += 25; }\n\nscore = Math.max(0, Math.min(100, score));\nconst temperatura = score >= 80 ? 'quente' : score >= 40 ? 'morno' : 'frio';\nconst assumirAlexandre = score >= 80 || gatilhos.length > 0;\n\nlet etapa = 'atendimento_inicial';\nif (produto !== 'indefinido' || perfil !== 'indefinido') etapa = 'qualificacao';\nif (gatilhos.includes('pediu_tabela') || gatilhos.includes('perguntou_preco')) etapa = 'material_enviado';\nif (gatilhos.includes('agendou_reuniao')) etapa = 'reuniao_visita_agendada';\n\nconst etapaLabelMap = {\n  atendimento_inicial: 'etapa-atendimento-inicial',\n  qualificacao: 'etapa-qualificacao',\n  material_enviado: 'etapa-material-enviado',\n  reuniao_visita_agendada: 'etapa-reuniao-visita'\n};\nlabelsAdd.push(etapaLabelMap[etapa] || 'etapa-atendimento-inicial');\nlabelsAdd.push(`lead-${temperatura}`);\nif (assumirAlexandre) labelsAdd.push('lead-prioridade-alexandre');\nif (perfil === 'indefinido') labelsAdd.push('perfil-geral');\nif (produto === 'indefinido') labelsAdd.push('produto-indefinido');\n\nconst removablePrefixes = ['etapa-', 'lead-frio', 'lead-morno', 'lead-quente', 'produto-', 'perfil-', 'gatilho-'];\nconst preservedLabels = existingLabels.filter(l => !removablePrefixes.some(p => l.startsWith(p)));\nconst finalLabels = [...new Set([...preservedLabels, ...labelsAdd])];\n\nlet skipReason = '';\nif (!hasChatwootSignature) skipReason = 'sem assinatura/timestamp do Chatwoot';\nelse if (!isTestConversation) skipReason = 'conversa sem label testando-agente';\nelse if (!conversationId || !messageId) skipReason = 'payload sem conversation_id/message_id';\nelse if (!content) skipReason = 'mensagem vazia';\nelse if (isPrivate || !isIncoming) skipReason = 'mensagem não recebida do cliente';\nelse if (Number(inboxId) !== WHATSAPP_INBOX_ID) skipReason = `inbox inválido: ${inboxId}`;\nelse if (existingLabels.includes('agente-off')) skipReason = 'agente-off';\n\nconst resumo = shouldSkip ? `Evento ignorado pelo workflow Hermes XD: ${skipReason}.` : `Produto: ${produto}; Perfil: ${perfil}; Score: ${score}; Temperatura: ${temperatura}; Gatilhos: ${gatilhos.join(', ') || 'nenhum'}.`;\n\nreturn [{\n  json: {\n    shouldSkip,\n    event,\n    account_id: 1,\n    conversation_id: conversationId,\n    message_id: messageId,\n    inbox_id: inboxId,\n    contact_id: contact.id || null,\n    contact_name: contact.name || contact.pushname || '',\n    contact_phone: contact.phone_number || contact.identifier || '',\n    message_text: content,\n    existing_labels: existingLabels,\n    final_labels: finalLabels,\n    assignee_id: assigneeId,\n    classification: {\n      produto_interesse: produto,\n      perfil_lead: perfil,\n      funil_etapa: etapa,\n      lead_score: score,\n      lead_temperatura: temperatura,\n      gatilhos,\n      assumir_alexandre: assumirAlexandre,\n      proxima_acao: assumirAlexandre ? 'alexandre_assumir' : 'continuar_qualificacao',\n      resumo_interno: resumo\n    }\n  }\n}];"
+      },
+      "id": "code-normalize-classify",
+      "name": "Normalizar + Classificar v0",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -768,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{!$json.shouldSkip}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "if-valid-event",
+      "name": "Evento válido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/conversations/{{$json.conversation_id}}/custom_attributes",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { custom_attributes: { funil_etapa: $json.classification.funil_etapa, lead_score: $json.classification.lead_score, lead_temperatura: $json.classification.lead_temperatura, produto_interesse: $json.classification.produto_interesse, perfil_lead: $json.classification.perfil_lead, gatilho_quente: $json.classification.gatilhos.join(','), responsavel_sugerido: $json.classification.assumir_alexandre ? 'alexandre' : 'hermes', proxima_acao: $json.classification.proxima_acao, ultimo_resumo_hermes: $json.classification.resumo_interno, ultima_classificacao_em: new Date().toISOString().slice(0,10) } } }}",
+        "options": {}
+      },
+      "id": "http-custom-attributes",
+      "name": "Chatwoot — Atualizar atributos",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -256,
+        -128
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/conversations/{{$json.conversation_id}}/labels",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { labels: $json.final_labels } }}",
+        "options": {}
+      },
+      "id": "http-labels",
+      "name": "Chatwoot — Atualizar labels",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -256,
+        80
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/conversations/{{$json.conversation_id}}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { content: `🤖 Hermes XD — modo silencioso\\n${$json.classification.resumo_interno}\\nPróxima ação: ${$json.classification.proxima_acao}\\nMensagem analisada: ${$json.message_text}`, message_type: 'outgoing', private: true } }}",
+        "options": {}
+      },
+      "id": "http-private-note",
+      "name": "Chatwoot — Nota interna",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        32,
+        0
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.classification.assumir_alexandre}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "if-assign-alexandre",
+      "name": "Assumir Alexandre?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        272,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/conversations/{{$json.conversation_id}}/assignments",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { assignee_id: 1 } }}",
+        "options": {}
+      },
+      "id": "http-assign-alexandre",
+      "name": "Chatwoot — Atribuir Alexandre",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        528,
+        -80
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/kanban/tasks?board_id=3&conversation_id={{$json.conversation_id}}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http-kanban-find-task",
+      "name": "Kanban — Buscar task da conversa",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -260,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const source = $('Normalizar + Classificar v0').first().json;\nconst tasks = $json.tasks || [];\nconst task = tasks.find(t => (t.conversation_ids || []).map(Number).includes(Number(source.conversation_id))) || tasks[0];\n\nconst stepMap = {\n  novo_lead: 17,\n  atendimento_inicial: 17,\n  qualificacao: 18,\n  produto_direcionado: 18,\n  material_enviado: 18,\n  reuniao_visita_agendada: 19,\n  proposta_negociacao: 21,\n  fechado: 22,\n  perdido_nutricao: 24\n};\n\nconst cls = source.classification;\nlet boardStepId = stepMap[cls.funil_etapa] || 17;\nif ((cls.gatilhos || []).includes('pediu_proposta')) boardStepId = 20;\nif ((cls.gatilhos || []).includes('agendou_reuniao')) boardStepId = 19;\n\nconst hermesBlock = [\n  '---',\n  `🤖 Hermes XD — ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`,\n  `Produto: ${cls.produto_interesse}`,\n  `Perfil: ${cls.perfil_lead}`,\n  `Score: ${cls.lead_score} — ${cls.lead_temperatura}`,\n  `Etapa Hermes: ${cls.funil_etapa}`,\n  `Gatilhos: ${(cls.gatilhos || []).join(', ') || 'nenhum'}`,\n  `Próxima ação: ${cls.proxima_acao}`,\n  `Resumo: ${cls.resumo_interno}`\n].join('\n');\n\nconst customAttributes = {\n  hermes_score: cls.lead_score,\n  hermes_temperatura: cls.lead_temperatura,\n  hermes_produto: cls.produto_interesse,\n  hermes_perfil: cls.perfil_lead,\n  hermes_etapa: cls.funil_etapa,\n  hermes_proxima_acao: cls.proxima_acao\n};\n\nif (!task?.id) {\n  const name = source.contact_name || source.contact_phone || 'Lead sem nome';\n  return [{ json: {\n    hasTask: false,\n    action: 'create',\n    board_id: 3,\n    board_step_id: boardStepId,\n    title: `Conversa #${source.conversation_id} - ${name}`,\n    description: hermesBlock,\n    custom_attributes: Object.assign({}, customAttributes, { hermes_origem: 'workflow_auto_create' }),\n    conversation_ids: [Number(source.conversation_id)],\n    conversation_id: source.conversation_id\n  }}];\n}\n\nconst originalDescription = task.description || '';\nreturn [{ json: {\n  hasTask: true,\n  action: 'update',\n  task_id: task.id,\n  board_id: task.board_id || 3,\n  board_step_id: boardStepId,\n  current_step_id: task.board_step_id,\n  title: task.title,\n  description: originalDescription ? `${originalDescription}\n\n${hermesBlock}` : hermesBlock,\n  custom_attributes: Object.assign({}, task.custom_attributes || {}, customAttributes),\n  conversation_id: source.conversation_id\n}}];"
+      },
+      "id": "code-kanban-prepare-update",
+      "name": "Kanban — Preparar atualização",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.hasTask}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "if-kanban-has-task",
+      "name": "Tem task Kanban?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/kanban/tasks/{{$json.task_id}}?board_id=3",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { board_step_id: $json.board_step_id, description: $json.description, custom_attributes: $json.custom_attributes } }}",
+        "options": {}
+      },
+      "id": "http-kanban-update-card",
+      "name": "Kanban — Atualizar card",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.alexandreborges.site/api/v1/accounts/1/kanban/tasks?board_id=3",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { board_id: 3, board_step_id: $json.board_step_id, title: $json.title, description: $json.description, custom_attributes: $json.custom_attributes, conversation_ids: $json.conversation_ids } }}",
+        "options": {}
+      },
+      "id": "http-kanban-create-card",
+      "name": "Kanban — Criar card",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        460
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WVX2kNzb8Wt35w1o",
+          "name": "Chatwoot API Token"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Chatwoot": {
+      "main": [
+        [
+          {
+            "node": "Normalizar + Classificar v0",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar + Classificar v0": {
+      "main": [
+        [
+          {
+            "node": "Evento válido?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evento válido?": {
+      "main": [
+        [
+          {
+            "node": "Chatwoot — Atualizar atributos",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Chatwoot — Atualizar labels",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Chatwoot — Nota interna",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Kanban — Buscar task da conversa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chatwoot — Nota interna": {
+      "main": [
+        [
+          {
+            "node": "Assumir Alexandre?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assumir Alexandre?": {
+      "main": [
+        [
+          {
+            "node": "Chatwoot — Atribuir Alexandre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kanban — Buscar task da conversa": {
+      "main": [
+        [
+          {
+            "node": "Kanban — Preparar atualização",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kanban — Preparar atualização": {
+      "main": [
+        [
+          {
+            "node": "Tem task Kanban?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tem task Kanban?": {
+      "main": [
+        [
+          {
+            "node": "Kanban — Atualizar card",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Kanban — Criar card",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}
