@@ -9,3 +9,13 @@ _backup-duplicados-fora-vault_*/
 node_modules/
 .next/
 tsconfig.tsbuildinfo
+
+
+
+
+# Ignore Smart Environment folder
+.smart-env
+
+# Repositorios git independentes (remote proprio, nao devem virar gitlink aqui)
+/crm-xd-pro/
+obsidian-vault/02-Projetos/Imobiliaria Online/hk9/
