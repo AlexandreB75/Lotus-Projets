@@ -1,10 +1,102 @@
-# Arquitetura do Ecossistema de Agentes
-> Versão 2.0 — pós-Hermes. Baseada em engenharia reversa do Fable 5 + melhores práticas 2026.
-> Última atualização: 2026-06-25
+---
+type: sistema
+versao: 2.0
+data: 2026-08-23
+---
+
+# Arquitetura do Ecossistema — OpenBotXD
+
+Visão consolidada de todos os componentes ativos, seus papéis e integrações.
 
 ---
 
-## Diagrama Geral
+## Camada de Atendimento (Fazer.ai + Chatwoot)
+
+```
+Lead → WhatsApp
+         ↓
+    Chatwoot (inbox unificado)
+         ↓
+    Fazer.ai Agent
+    agente.alexandreborgescorretor.com.br
+         ↓
+    Resposta automática → WhatsApp
+```
+
+**Responsabilidade:** qualificação, atendimento e roteamento de leads dos projetos Lótus Business e Hilton Garden Inn Itapema.
+
+**Escopo:** SDR, follow-up, tratamento de objeções, encaminhamento para o Closer (Alexandre).
+
+---
+
+## Camada de Automações Paralelas (N8N)
+
+| Workflow | Função | Arquivo |
+|----------|--------|---------|
+| Vault Librarian Semanal | Manutenção do vault — links quebrados, órfãs, relatório | `n8n-workflows/vault-librarian-semanal.json` |
+
+**Uso atual do N8N:** relatórios, integrações CRM, follow-up programado, notificações Slack.
+
+**Não usar N8N para:** atendimento direto ao lead — isso é responsabilidade do Fazer.ai.
+
+---
+
+## Camada de Conhecimento (Obsidian + Smart Connections)
+
+**Vault:** `obsidian-vault/` — base de conhecimento estruturada em PARA.
+
+**Smart Connections:** embeddings locais (TaylorAI/bge-micro-v2) para busca semântica offline.
+
+**Manutenção:** `scripts/vault-librarian.py` — roda semanalmente via N8N.
+
+---
+
+## Camada de Desenvolvimento (Claude Code)
+
+**Papel:** criação e evolução de arquivos do vault, scripts, workflows N8N, documentação.
+
+**Repositório:** `alexandreb75/lotus-projets` → branch `claude/organize-obsidian-vault-9scbT`
+
+**Sync:** Git — VPS (Hostinger) ↔ GitHub ↔ Obsidian local.
+
+---
+
+## Componentes de Suporte
+
+| Componente | Papel |
+|------------|-------|
+| Supabase | Armazenamento persistente, CRM, vector search |
+| Chatwoot | Inbox unificado — WhatsApp + web |
+| Slack | Notificações internas (alertas N8N, relatórios) |
+| GitHub | Sync e versionamento do vault |
+
+---
+
+## Arquivo Histórico
+
+| Item | Motivo | Localização |
+|------|--------|-------------|
+| Agentes Omnigent (YAMLs) | Substituído pelo Fazer.ai | `_arquivo/omnigent-agents/` |
+| Workflow Manager-Comercial N8N | Substituído pelo Fazer.ai + Chatwoot | `n8n-workflows/manager-comercial-workflow.json` + `06-Scripts/n8n/Manager-Comercial-N8N.md` |
+
+---
+
+## Decisões de Arquitetura
+
+| Data | Decisão |
+|------|---------|
+| 2026-08 | Fazer.ai + Chatwoot adotado como camada de atendimento — Omnigent descontinuado |
+| 2026-08 | N8N restrito a automações paralelas (relatórios, CRM, agendamentos) |
+| 2026-08 | Smart Connections com embeddings locais — sem envio de notas a APIs externas |
+
+---
+
+## Arquitetura Técnica e Histórico do Ecossistema
+
+> Versão 2.0 — pós-Hermes. Baseada em engenharia reversa do Fable 5 + melhores práticas 2026.
+> Última atualização: 2026-06-25
+
+### Diagrama Geral
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -61,9 +153,9 @@
 
 ---
 
-## Responsabilidades de Cada Componente
+### Responsabilidades de Cada Componente
 
-### n8n — Orquestrador Principal
+#### n8n — Orquestrador Principal
 
 **O que faz:**
 - Recebe webhooks do Chatwoot, Slack, Telegram, formulários web
@@ -85,7 +177,7 @@
 
 ---
 
-### OpenClaw — Camada de Persona
+#### OpenClaw — Camada de Persona
 
 **O que é:**
 Cada agente OpenClaw é um conjunto de:
@@ -101,7 +193,7 @@ O agente só sabe o que o n8n injeta. Se algo precisa estar disponível para o a
 
 ---
 
-### Supabase — Fonte de Verdade
+#### Supabase — Fonte de Verdade
 
 **Schema recomendado:**
 
@@ -184,7 +276,7 @@ workflow_runs (
 
 ---
 
-### Chatwoot — Inbox Unificado
+#### Chatwoot — Inbox Unificado
 
 **Papel:** Centralizar todas as mensagens de entrada e manter histórico legível por humanos. Não processa lógica — apenas recebe e encaminha.
 
@@ -194,7 +286,7 @@ workflow_runs (
 
 ---
 
-### Obsidian — Base de Conhecimento Humana
+#### Obsidian — Base de Conhecimento Humana
 
 **O que armazena:**
 - `SKILL.md` de cada agente (fonte de verdade dos prompts)
@@ -209,9 +301,9 @@ workflow_runs (
 
 ---
 
-## Agentes — Design Detalhado
+### Agentes — Design Detalhado
 
-### Router Agent
+#### Router Agent
 
 **Input:** mensagem bruta + metadata (canal, contato, timestamp)
 
@@ -238,7 +330,7 @@ workflow_runs (
 
 ---
 
-### SDR Agent (substitui Hermes VPS)
+#### SDR Agent (substitui Hermes VPS)
 
 **Input:** dados do lead + contexto de memórias anteriores (se existir) + dados de mercado frescos
 
@@ -255,7 +347,7 @@ workflow_runs (
 
 ---
 
-### Follow-up Agent
+#### Follow-up Agent
 
 **Input:** lead_id + stage atual no pipeline + dias desde último contato + histórico
 
@@ -271,7 +363,7 @@ workflow_runs (
 
 ---
 
-### CRM Agent
+#### CRM Agent
 
 **Input:** evento (nova conversa, mudança de status, solicitação de update)
 
@@ -295,7 +387,7 @@ workflow_runs (
 
 ---
 
-### Marketing Agent
+#### Marketing Agent
 
 **Input:** brand-profile.json + brief da campanha + plataforma alvo
 
@@ -310,9 +402,9 @@ Usa os sub-skills do projeto Claude Ads: `ads-meta`, `ads-google`, `ads-creative
 
 ---
 
-## Padrões de Integração
+### Padrões de Integração
 
-### Padrão 1: Enrich-then-Call
+#### Padrão 1: Enrich-then-Call
 Todo workflow que chama Claude deve primeiro enriquecer o contexto:
 
 ```
@@ -326,7 +418,7 @@ Todo workflow que chama Claude deve primeiro enriquecer o contexto:
   → [Enviar resposta ao canal]
 ```
 
-### Padrão 2: Memory Write
+#### Padrão 2: Memory Write
 Após toda interação significativa:
 
 ```
@@ -336,7 +428,7 @@ Após toda interação significativa:
   → [UPSERT agent_memories]
 ```
 
-### Padrão 3: Conversation Compression
+#### Padrão 3: Conversation Compression
 Ao fechar uma conversa (lead respondeu, sessão terminou):
 
 ```
@@ -346,7 +438,7 @@ Ao fechar uma conversa (lead respondeu, sessão terminou):
   → [UPDATE conversations SET summary = $resumo, ended_at = now()]
 ```
 
-### Padrão 4: Semantic Context Retrieval
+#### Padrão 4: Semantic Context Retrieval
 Quando o contexto exato não é suficiente — recuperar por similaridade:
 
 ```
@@ -358,7 +450,7 @@ Quando o contexto exato não é suficiente — recuperar por similaridade:
 
 ---
 
-## Limites e Restrições
+### Limites e Restrições
 
 | Recurso | Limite recomendado |
 |---------|-------------------|
@@ -371,7 +463,7 @@ Quando o contexto exato não é suficiente — recuperar por similaridade:
 
 ---
 
-## Observabilidade
+### Observabilidade
 
 **O que monitorar:**
 1. `workflow_runs` — taxa de erro por workflow

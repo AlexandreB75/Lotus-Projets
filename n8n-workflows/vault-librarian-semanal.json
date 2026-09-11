@@ -1,0 +1,136 @@
+{
+  "name": "Vault Librarian — Manutenção Semanal",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1"
+            }
+          ]
+        }
+      },
+      "id": "node-cron",
+      "name": "Toda Segunda 08h",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [200, 300],
+      "notes": "Roda toda segunda-feira às 08h. Ajuste o horário se necessário."
+    },
+    {
+      "parameters": {
+        "command": "cd /root/Lotus-Projets && git pull origin claude/organize-obsidian-vault-9scbT --quiet && python3 scripts/vault-librarian.py 2>&1"
+      },
+      "id": "node-script",
+      "name": "Roda Vault Librarian",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [420, 300],
+      "notes": "Puxa últimas alterações e roda o script de análise. Ajuste o caminho se o vault estiver em outro local no VPS."
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = $input.item.json.stdout || '';\nconst stderr = $input.item.json.stderr || '';\n\n// Extrai métricas do output\nconst totalMatch = output.match(/Notas encontradas: (\\d+)/);\nconst brokenMatch = output.match(/Wikilinks quebrados: (\\d+)/);\nconst orphansMatch = output.match(/Notas órfãs em 08-Raw: (\\d+)/);\n\nconst total = totalMatch ? parseInt(totalMatch[1]) : 0;\nconst broken = brokenMatch ? parseInt(brokenMatch[1]) : 0;\nconst orphans = orphansMatch ? parseInt(orphansMatch[1]) : 0;\n\nconst status = (broken === 0 && orphans === 0) ? 'OK' : 'ATENÇÃO';\n\nconst summary = [\n  `*Vault Librarian — ${new Date().toLocaleDateString('pt-BR')}*`,\n  `Status: ${status}`,\n  `Notas: ${total}`,\n  `Links quebrados: ${broken}`,\n  `Órfãs em Raw: ${orphans}`,\n  broken > 0 || orphans > 0 ? '\\nVer relatório: `01-Dashboard/Relatorio-Manutencao.md`' : ''\n].filter(Boolean).join('\\n');\n\nreturn [{ json: { summary, total, broken, orphans, status, raw_output: output } }];"
+      },
+      "id": "node-parse",
+      "name": "Processa Resultado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [640, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false
+          },
+          "conditions": [
+            {
+              "id": "cond-issues",
+              "leftValue": "={{ $json.broken + $json.orphans }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ]
+        }
+      },
+      "id": "node-if",
+      "name": "Tem Problemas?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [860, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.SLACK_WEBHOOK_URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $('Processa Resultado').item.json.summary }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-slack-alert",
+      "name": "Slack — Alerta",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1080, 200],
+      "notes": "Envia alerta no Slack quando há links quebrados ou órfãs. Configure SLACK_WEBHOOK_URL nas variáveis de ambiente do N8N."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.SLACK_WEBHOOK_URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $('Processa Resultado').item.json.summary }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-slack-ok",
+      "name": "Slack — OK",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1080, 400],
+      "notes": "Confirma no Slack que o vault está saudável."
+    }
+  ],
+  "connections": {
+    "Toda Segunda 08h": {
+      "main": [[{ "node": "Roda Vault Librarian", "type": "main", "index": 0 }]]
+    },
+    "Roda Vault Librarian": {
+      "main": [[{ "node": "Processa Resultado", "type": "main", "index": 0 }]]
+    },
+    "Processa Resultado": {
+      "main": [[{ "node": "Tem Problemas?", "type": "main", "index": 0 }]]
+    },
+    "Tem Problemas?": {
+      "main": [
+        [{ "node": "Slack — Alerta", "type": "main", "index": 0 }],
+        [{ "node": "Slack — OK", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "notes": "Vault maintenance workflow — roda toda segunda 08h, detecta links quebrados e notas órfãs, notifica no Slack. Requer: SLACK_WEBHOOK_URL nas env vars do N8N, Python3 no VPS, vault clonado em /root/Lotus-Projets."
+  }
+}
